@@ -1,0 +1,12 @@
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\bin\Debug\net6.0\ExcelToCSharpModelConverter.Shared.deps.json
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\bin\Debug\net6.0\ExcelToCSharpModelConverter.Shared.dll
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\bin\Debug\net6.0\ExcelToCSharpModelConverter.Shared.pdb
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.csproj.AssemblyReference.cache
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.AssemblyInfoInputs.cache
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.AssemblyInfo.cs
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.csproj.CoreCompileInputs.cache
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.dll
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\refint\ExcelToCSharpModelConverter.Shared.dll
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ExcelToCSharpModelConverter.Shared.pdb
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.Shared\obj\Debug\net6.0\ref\ExcelToCSharpModelConverter.Shared.dll
