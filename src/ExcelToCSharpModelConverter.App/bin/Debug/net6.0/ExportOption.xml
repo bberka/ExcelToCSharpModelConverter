@@ -4,16 +4,21 @@
   <MinimumLogLevel>Information</MinimumLogLevel>
   <DefaultValueType>String</DefaultValueType>
   <ModelInheritanceString>: BaseSheetModel</ModelInheritanceString>
-  <SetterTypeString>set</SetterTypeString>
-  <SetterAccessModifier />
-  <GetterAccessModifier />
-  <ClassAccessModifier>public</ClassAccessModifier>
-  <ConstructorAccessModifier>public</ConstructorAccessModifier>
+  <SetterTypeString>Set</SetterTypeString>
+  <SetterAccessModifier>None</SetterAccessModifier>
+  <GetterAccessModifier>None</GetterAccessModifier>
+  <ClassAccessModifier>Public</ClassAccessModifier>
+  <ConstructorAccessModifier>Public</ConstructorAccessModifier>
+  <CreateModelAs>Class</CreateModelAs>
   <HeaderColumnIndex>1</HeaderColumnIndex>
   <SetValueTypesAtRowIndex>2</SetValueTypesAtRowIndex>
   <IgnoreExceptions>false</IgnoreExceptions>
-  <IgnoreInvalidFormulas>false</IgnoreInvalidFormulas>
-  <Usings />
+  <IgnoreFormulas>false</IgnoreFormulas>
+  <UsingList>
+    <string>System</string>
+    <string>System.Collections.Generic</string>
+    <string>System.Linq</string>
+  </UsingList>
   <NullValueStrings>
     <string>&lt;null&gt;</string>
     <string>&lt;empty&gt;</string>
@@ -32,6 +37,14 @@
       <ConditionOption>
         <Condition>NotSet</Condition>
         <TypeToValidateCondition>NotSet</TypeToValidateCondition>
+        <InnerCondition>
+          <Condition>NotSet</Condition>
+          <TypeToValidateCondition>NotSet</TypeToValidateCondition>
+          <InnerCondition>
+            <Condition>NotSet</Condition>
+            <TypeToValidateCondition>NotSet</TypeToValidateCondition>
+          </InnerCondition>
+        </InnerCondition>
       </ConditionOption>
       <TypeToReplace>NotSet</TypeToReplace>
     </ReplaceWhen>

@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using ExcelToCSharpModelConverter.Shared.Constants;
 using ExcelToCSharpModelConverter.Shared.Models.Option;
 
 namespace ExcelToCSharpModelConverter.Core.Lib;
@@ -80,7 +81,19 @@ public class OptionLib
         option.NullValueStrings.Add("<null>");
         option.NullValueStrings.Add("<empty>");
         option.TrimWhenConditions.Add(new TrimWhen());
-        option.ReplaceWhenConditions.Add(new ReplaceWhen());
+        option.ReplaceWhenConditions.Add(new ReplaceWhen()
+        {
+            ConditionOption = new ConditionOption()
+            {
+                InnerCondition = new ()
+                {
+                    InnerCondition = new ()
+                }
+            }
+        });
+        option.UsingList.Add("System");
+        option.UsingList.Add("System.Collections.Generic");
+        option.UsingList.Add("System.Linq");
         Option = option;
     }
 }

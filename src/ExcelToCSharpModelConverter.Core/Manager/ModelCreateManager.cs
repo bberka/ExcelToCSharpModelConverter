@@ -46,7 +46,7 @@ public class ModelCreator
         return Result.Success("File created: " + fileOutPath);
     }
 
-   
+
     private string CreateModel()
     {
         var sb = new StringBuilder();
@@ -54,9 +54,10 @@ public class ModelCreator
         foreach (var col in ColumnHeaders)
         {
             AppendHeaderName(sb, col.Name, out var fixedColName);
-            AppendValueTypeString(sb,col.ValueType?.Name,out var valueTypeString);
+            AppendValueTypeString(sb, col.ValueType?.Name, out var valueTypeString);
             AppendProperty(sb, valueTypeString, fixedColName);
         }
+
         AppendEnd(sb);
         return sb.ToString();
     }
@@ -71,30 +72,33 @@ public class ModelCreator
 
         return sb;
     }
-    private StringBuilder AppendValueTypeString(StringBuilder sb, string? valueTypeName,out string valueTypeString)
+
+    private StringBuilder AppendValueTypeString(StringBuilder sb, string? valueTypeName, out string valueTypeString)
     {
         if (valueTypeName.IsNullOrEmpty())
         {
             sb.AppendLine("    [InvalidValueType]");
-            valueTypeName = OptionLib.This.Option.DefaultValueType;
+            valueTypeName = OptionLib.This.Option.DefaultValueType.ToString();
         }
+
         valueTypeString = valueTypeName;
         return sb;
-        
     }
-    private StringBuilder AppendProperty(StringBuilder stringBuilder,string valueTypeString,string fixedColName)
+
+    private StringBuilder AppendProperty(StringBuilder stringBuilder, string valueTypeString, string fixedColName)
     {
         if (fixedColName == FixedSheetName) fixedColName = "_" + fixedColName;
         stringBuilder.AppendLine($"    public {valueTypeString} {fixedColName} {{ get; set; }}");
         return stringBuilder;
     }
+
     private StringBuilder AppendStart(StringBuilder sb)
     {
-        if (OptionLib.This.Option.Usings.Count > 0)
+        if (OptionLib.This.Option.UsingList.Count > 0)
         {
-            foreach (var item in OptionLib.This.Option.Usings)
+            foreach (var item in OptionLib.This.Option.UsingList)
             {
-                sb.AppendLine(item);
+                sb.AppendLine("using " + item + ";");
             }
 
             sb.AppendLine();
@@ -103,10 +107,11 @@ public class ModelCreator
         sb.AppendLine($"namespace {OptionLib.This.Option.NameSpace};");
         sb.AppendLine();
         if (IsAddRealSheetNameAttribute) sb.AppendLine($"[SheetName(\"{SheetName}\")]");
-        sb.AppendLine($"public class {FixedSheetName} {OptionLib.This.Option.ModelInheritanceString}");
+        sb.AppendLine($"{OptionLib.This.Option.ConstructorAccessModifier} {OptionLib.This.Option.CreateModelAs.ToString().ToLower()} {FixedSheetName} {OptionLib.This.Option.ModelInheritanceString}");
         sb.AppendLine("{");
         return sb;
     }
+
     private StringBuilder AppendEnd(StringBuilder sb)
     {
         sb.AppendLine("}");
