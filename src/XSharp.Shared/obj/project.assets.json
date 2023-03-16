@@ -148,11 +148,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Shared\\XSharp.Shared.csproj",
+      "projectUniqueName": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Shared\\XSharp.Shared.csproj",
       "projectName": "XSharp.Shared",
-      "projectPath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Shared\\XSharp.Shared.csproj",
+      "projectPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Shared\\XSharp.Shared.csproj",
       "packagesPath": "C:\\Users\\kkass\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Shared\\obj\\",
+      "outputPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

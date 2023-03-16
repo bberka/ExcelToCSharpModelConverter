@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "otrqFFzxz34L7ltlbU5GUFFEe1+oulXjIPmPY8X9eT3873IEN0k4JfIHmoHBeOimFvNUNjYQAanICEzv7Rdeww==",
+  "dgSpecHash": "XlQfduCU3EYxY713FSRWyE2aOxTErxjbuui6Bj/SPKPfG9n+wAKXgDO6yhEOhAB4zd4K9PGvxUQEgAJvA9bMrA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Core\\XSharp.Core.csproj",
+  "projectFilePath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Core\\XSharp.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kkass\\.nuget\\packages\\epplus\\6.1.3\\epplus.6.1.3.nupkg.sha512",
     "C:\\Users\\kkass\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",

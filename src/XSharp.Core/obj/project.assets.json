@@ -1085,11 +1085,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Core\\XSharp.Core.csproj",
+      "projectUniqueName": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Core\\XSharp.Core.csproj",
       "projectName": "XSharp.Core",
-      "projectPath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Core\\XSharp.Core.csproj",
+      "projectPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Core\\XSharp.Core.csproj",
       "packagesPath": "C:\\Users\\kkass\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Core\\obj\\",
+      "outputPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1110,8 +1110,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Shared\\XSharp.Shared.csproj": {
-              "projectPath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\XSharp.Shared\\XSharp.Shared.csproj"
+            "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Shared\\XSharp.Shared.csproj": {
+              "projectPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Shared\\XSharp.Shared.csproj"
             }
           }
         }

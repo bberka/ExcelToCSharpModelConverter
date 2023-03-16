@@ -1,0 +1,23 @@
+{
+  "InFolderPath": null,
+  "OutFolderPath": null,
+  "NameSpace": "ExcelToCSharpModelConverter.ExportedModels",
+  "MinimumLogLevel": "Information",
+  "DefaultValueType": "String",
+  "ModelInheritanceString": ": BaseSheetModel",
+  "SetterTypeString": "Set",
+  "SetterAccessModifier": "None",
+  "GetterAccessModifier": "None",
+  "ClassAccessModifier": "Public",
+  "ConstructorAccessModifier": "Public",
+  "CreateModelAs": "Class",
+  "HeaderColumnIndex": 1,
+  "SetValueTypesAtRowIndex": 2,
+  "IgnoreExceptions": false,
+  "IgnoreFormulas": false,
+  "UsingList": [],
+  "NullValueStrings": [],
+  "IgnoreWhenConditions": [],
+  "ReplaceWhenConditions": [],
+  "TrimWhenConditions": []
+}

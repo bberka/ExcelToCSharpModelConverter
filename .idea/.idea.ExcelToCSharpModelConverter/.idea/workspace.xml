@@ -6,167 +6,7 @@
     <projectFile>src/XSharp.App/XSharp.App.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddae2f8e-72e1-49a6-b418-2166f313a9c0" name="Changes" comment="json options">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ExcelToCSharpModelConverter/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Core/Lib/ConditionLib.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Core/Usings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/rider.project.restore.info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Reader/XSharp.Reader.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Reader/bin/Debug/net6.0/XSharp.Reader.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Reader/bin/Debug/net6.0/XSharp.Reader.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ExcelToCSharpModelConverter/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ExcelToCSharpModelConverter/.idea/aws.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ExcelToCSharpModelConverter/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ExcelToCSharpModelConverter/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExcelToCSharpModelConverter.sln" beforeDir="false" afterPath="$PROJECT_DIR$/XSharp.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/App.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/ExcelToCSharpModelConverter.App.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/EPPlus.Interfaces.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/EPPlus.System.Drawing.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/EPPlus.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.App.deps.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.App.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.App.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.App.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.App.runtimeconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.Core.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.Core.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/ExportOption.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.Configuration.Abstractions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.Configuration.FileExtensions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.Configuration.Json.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.Configuration.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.FileProviders.Abstractions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.FileProviders.Physical.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.FileSystemGlobbing.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.Logging.Abstractions.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Extensions.Primitives.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.IO.RecyclableMemoryStream.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/Microsoft.Win32.SystemEvents.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/System.Drawing.Common.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/System.Security.Cryptography.Pkcs.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.AssemblyInfoInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.GlobalUsings.g.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.assets.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.csproj.CopyComplete" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.csproj.CoreCompileInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.csproj.FileListAbsolute.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.genruntimeconfig.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ExcelToCSharpModelConverter.App.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/apphost.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/ref/ExcelToCSharpModelConverter.App.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/Debug/net6.0/refint/ExcelToCSharpModelConverter.App.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/ExcelToCSharpModelConverter.App.csproj.nuget.dgspec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/ExcelToCSharpModelConverter.App.csproj.nuget.g.props" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/ExcelToCSharpModelConverter.App.csproj.nuget.g.targets" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/project.assets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/project.nuget.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.App/obj/rider.project.restore.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/EPPlusLicence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/EPPlusLicence.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/ExcelToCSharpModelConverter.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/XSharp.Core.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Exceptions/FileContentIsEmptyException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Exceptions/FileContentIsEmptyException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Exceptions/FixedSheetNameIsEmptyException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Exceptions/FixedSheetNameIsEmptyException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Exceptions/NoColumnHeadersFoundException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Exceptions/NoColumnHeadersFoundException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Exceptions/SheetNameIsEmptyException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Exceptions/SheetNameIsEmptyException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/ExportOption.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/ExportOption.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Extensions/ConditionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Extensions/ConditionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Extensions/EnumExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Extensions/EnumExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Extensions/XlExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Extensions/XlExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Lib/ConditionLib.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Lib/OptionLib.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Lib/OptionLib.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Lib/PathLib.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Lib/PathLib.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Lib/ValueConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Lib/ValueConverter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Manager/ModelCreator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Manager/ModelCreator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Manager/WorkBookManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Manager/WorkBookManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Manager/WorkSheetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/Manager/WorkSheetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/Usings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Core.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Core.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/bin/Debug/net6.0/XSharp.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/bin/Debug/net6.0/XSharp.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.GlobalUsings.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.GlobalUsings.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.CopyComplete" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.CopyComplete" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ExcelToCSharpModelConverter.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/ref/ExcelToCSharpModelConverter.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/ref/ExcelToCSharpModelConverter.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/Debug/net6.0/refint/ExcelToCSharpModelConverter.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/Debug/net6.0/refint/ExcelToCSharpModelConverter.Core.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/ExcelToCSharpModelConverter.Core.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/ExcelToCSharpModelConverter.Core.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/ExcelToCSharpModelConverter.Core.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/ExcelToCSharpModelConverter.Core.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/ExcelToCSharpModelConverter.Core.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/ExcelToCSharpModelConverter.Core.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Core/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Core/obj/rider.project.restore.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Attributes/HeaderNameAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Attributes/HeaderNameAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Attributes/InvalidValueTypeAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Attributes/InvalidValueTypeAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Attributes/SheetNameAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Attributes/SheetNameAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/AccessModifierType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/AccessModifierType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/Actions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/Actions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/Condition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/Condition.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/ModelType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/ModelType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/SetterType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/SetterType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/Types.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/Types.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Constants/ValueType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Constants/ValueType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/ExcelToCSharpModelConverter.Shared.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/XSharp.Shared.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/BaseSheetModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/BaseSheetModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/ExportOption.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/ExportOption.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/HeaderModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/HeaderModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/Option/ConditionOption.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/Option/ConditionOption.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/Option/IgnoreWhen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/Option/IgnoreWhen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/Option/ReplaceWhen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/Option/ReplaceWhen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/Option/TrimWhen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/Option/TrimWhen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/WorkBookModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/WorkBookModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Models/WorkSheetModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Models/WorkSheetModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/Usings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/Usings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/bin/Debug/net6.0/XSharp.Shared.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/bin/Debug/net6.0/ExcelToCSharpModelConverter.Shared.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/bin/Debug/net6.0/XSharp.Shared.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.GlobalUsings.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.GlobalUsings.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ExcelToCSharpModelConverter.Shared.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/ref/ExcelToCSharpModelConverter.Shared.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/ref/ExcelToCSharpModelConverter.Shared.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/Debug/net6.0/refint/ExcelToCSharpModelConverter.Shared.dll" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/Debug/net6.0/refint/ExcelToCSharpModelConverter.Shared.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/ExcelToCSharpModelConverter.Shared.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/ExcelToCSharpModelConverter.Shared.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/ExcelToCSharpModelConverter.Shared.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/ExcelToCSharpModelConverter.Shared.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/ExcelToCSharpModelConverter.Shared.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/ExcelToCSharpModelConverter.Shared.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/src/XSharp.Shared/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExcelToCSharpModelConverter.Shared/obj/rider.project.restore.info" beforeDir="false" />
-    </list>
+    <list default="true" id="ddae2f8e-72e1-49a6-b418-2166f313a9c0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -286,7 +126,7 @@
       <workItem from="1678914394270" duration="202000" />
       <workItem from="1678923994563" duration="6530000" />
       <workItem from="1678967388378" duration="3927000" />
-      <workItem from="1678990799950" duration="5332000" />
+      <workItem from="1678990799950" duration="5524000" />
     </task>
     <task id="LOCAL-00001" summary="new functions and options to enum">
       <created>1678843652236</created>
@@ -302,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678995585918</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="project renaming">
+      <created>1678999400137</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1678999400137</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,6 +161,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="new functions and options to enum" />
     <MESSAGE value="json options" />
-    <option name="LAST_COMMIT_MESSAGE" value="json options" />
+    <MESSAGE value="project renaming" />
+    <option name="LAST_COMMIT_MESSAGE" value="project renaming" />
   </component>
 </project>
