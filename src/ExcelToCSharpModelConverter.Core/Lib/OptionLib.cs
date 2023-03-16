@@ -1,6 +1,12 @@
-﻿using System.Xml.Serialization;
+﻿using System.Text.Json;
+using System.Xml.Serialization;
+using EasMe.Extensions;
+using EasMe.Result;
 using ExcelToCSharpModelConverter.Shared.Constants;
 using ExcelToCSharpModelConverter.Shared.Models.Option;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace ExcelToCSharpModelConverter.Core.Lib;
 
@@ -31,49 +37,32 @@ public class OptionLib
         private set; 
     }
 
-    public void SetOption(ExportOption option)
+
+    public void WriteJson()
     {
-        if (option is null)
+        var json = JsonConvert.SerializeObject(Option, GetJsonSerializerSettings());
+        File.WriteAllText(JsonPath, json);
+        
+    }
+
+   
+    private const string JsonPath = "ExportOption.json";
+    public Result ReadJson()
+    {
+        var fileExists = File.Exists(JsonPath);
+        if (!fileExists)
         {
-            throw new ArgumentNullException(nameof(option));
+            return Result.Error("File not found: " + JsonPath);
+        }
+        var read = File.ReadAllText(JsonPath);
+        var option = JsonConvert.DeserializeObject<ExportOption>(read, GetJsonSerializerSettings());
+        if(option is null)
+        {
+            return Result.Error("Option is null");
         }
         Option = option;
+        return Result.Success();
     }
-    public void SetOption(string path = "ExportOption.xml")
-    {
-        if (path is null)
-        {
-            throw new ArgumentNullException(nameof(path));
-        }
-
-        if (!File.Exists(path))
-        {
-            throw new Exception("File not found: " + path);
-        }
-        var opt = ReadXml(path);
-        if (opt is null)
-        {
-            throw new Exception("Option is null");
-        }
-        Option = opt;
-    }
-    private ExportOption? ReadXml(string path = "ExportOption.xml")
-    {
-        var serializer = new XmlSerializer(typeof(ExportOption));
-        using var reader = new StreamReader(path);
-        var option = (ExportOption?) serializer.Deserialize(reader);
-        return option;
-    }
-
-    public void WriteXml()
-    {
-        var path = "ExportOption.xml";
-        Option ??= new();
-        var serializer = new XmlSerializer(typeof(ExportOption));
-        using var writer = new StreamWriter(path);
-        serializer.Serialize(writer, Option);
-    }
-
     public void SetTestOption()
     {
         var option = new ExportOption();
@@ -92,8 +81,19 @@ public class OptionLib
             }
         });
         option.UsingList.Add("System");
-        option.UsingList.Add("System.Collections.Generic");
-        option.UsingList.Add("System.Linq");
         Option = option;
+    }
+    
+    private static JsonSerializerSettings GetJsonSerializerSettings()
+    {
+        var serializerOption = new JsonSerializerSettings();
+        serializerOption.Formatting = Formatting.Indented;
+        serializerOption.Converters.Add(new StringEnumConverter());
+        serializerOption.NullValueHandling = NullValueHandling.Include;
+        serializerOption.DefaultValueHandling = DefaultValueHandling.Include;
+        serializerOption.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        serializerOption.PreserveReferencesHandling = PreserveReferencesHandling.None;
+        serializerOption.TypeNameHandling = TypeNameHandling.None;
+        return serializerOption;
     }
 }

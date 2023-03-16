@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using EasMe.Extensions;
+using EasMe.Logging;
 using EasMe.Result;
 using ExcelToCSharpModelConverter.Core.Exceptions;
 using ExcelToCSharpModelConverter.Core.Extensions;
@@ -15,17 +16,22 @@ public class ModelCreator
     private bool IsAddRealSheetNameAttribute => SheetName == FixedSheetName;
     public List<HeaderModel> ColumnHeaders { get; }
 
-
-    public ModelCreator(string sheetName, IEnumerable<HeaderModel> colsHeaderModels)
+    public static ResultData<ModelCreator> Create(string sheetName, List<HeaderModel> headers)
+    {
+        if (sheetName.IsNullOrEmpty()) return Result.Warn("SheetName is empty");
+        var fixedSheetName = sheetName.FixName();
+        if (fixedSheetName.IsNullOrEmpty()) return Result.Warn("FixedSheetName is empty. SheetName: " + sheetName);
+        if (headers.Count == 0) return Result.Warn("Headers is empty. SheetName: " + sheetName);
+        return new ModelCreator(sheetName, fixedSheetName, headers);
+    }
+    private ModelCreator(string sheetName, string fixedSheetName,List<HeaderModel> headers)
     {
         SheetName = sheetName;
-        if (sheetName.IsNullOrEmpty()) throw new SheetNameIsEmptyException();
-        FixedSheetName = sheetName.FixName();
-        if (FixedSheetName.IsNullOrEmpty()) throw new FixedSheetNameIsEmptyException();
-        ColumnHeaders = colsHeaderModels.DistinctBy(x => x.Name).ToList();
-        if (ColumnHeaders.Count == 0) throw new NoColumnHeadersFoundException();
+        FixedSheetName = fixedSheetName;
+        ColumnHeaders = headers;
     }
 
+    
     private string BuildFileOutPutPath(string path)
     {
         return Path.Combine(path, $"{FixedSheetName}.cs");
@@ -39,37 +45,42 @@ public class ModelCreator
         {
             return Result.Warn("File already exists: " + fileOutPath);
         }
-
-        var fileContent = CreateModel();
+        var fileContentResult = CreateModel();
+        if (fileContentResult.IsFailure) return fileContentResult.ToResult();
+        var fileContent = fileContentResult.Data;
         if (fileContent.IsNullOrEmpty()) return Result.Error("FileContent is empty");
         File.WriteAllText(fileOutPath, fileContent);
         return Result.Success("File created: " + fileOutPath);
     }
 
 
-    private string CreateModel()
+    private ResultData<string> CreateModel()
     {
+        var errors = new List<string>();
         var sb = new StringBuilder();
         AppendStart(sb);
         foreach (var col in ColumnHeaders)
         {
-            AppendHeaderName(sb, col.Name, out var fixedColName);
+            var fixedColName = col.Name?.FixName();
+            if (fixedColName.IsNullOrEmpty())
+            {
+                errors.Add("FixedColName is empty. ColName: " + col.Name + " SheetName: " + SheetName);
+                continue;
+            }
+            AppendHeaderName(sb, col.Name!, fixedColName!);
             AppendValueTypeString(sb, col.ValueType?.Name, out var valueTypeString);
-            AppendProperty(sb, valueTypeString, fixedColName);
+            AppendProperty(sb, valueTypeString, fixedColName!);
         }
-
         AppendEnd(sb);
-        return sb.ToString();
+        return Result.Success<string>(sb.ToString(),"CreateModel", errors.ToArray());
     }
 
-    private StringBuilder AppendHeaderName(StringBuilder sb, string colName, out string fixedColumnName)
+    private StringBuilder AppendHeaderName(StringBuilder sb, string colName, string fixedColumnName)
     {
-        fixedColumnName = colName.FixName();
         if (fixedColumnName != colName)
         {
             sb.AppendLine($"    [HeaderName(\"{colName}\")]");
         }
-
         return sb;
     }
 
@@ -80,15 +91,14 @@ public class ModelCreator
             sb.AppendLine("    [InvalidValueType]");
             valueTypeName = OptionLib.This.Option.DefaultValueType.ToString();
         }
-
         valueTypeString = valueTypeName;
         return sb;
     }
 
-    private StringBuilder AppendProperty(StringBuilder stringBuilder, string valueTypeString, string fixedColName)
+    private StringBuilder AppendProperty(StringBuilder stringBuilder, string valueTypeString, string propertyName)
     {
-        if (fixedColName == FixedSheetName) fixedColName = "_" + fixedColName;
-        stringBuilder.AppendLine($"    public {valueTypeString} {fixedColName} {{ get; set; }}");
+        if (propertyName == FixedSheetName) propertyName = "_" + propertyName;
+        stringBuilder.AppendLine($"    public {valueTypeString} {propertyName} {{ get; set; }}");
         return stringBuilder;
     }
 
@@ -107,7 +117,11 @@ public class ModelCreator
         sb.AppendLine($"namespace {OptionLib.This.Option.NameSpace};");
         sb.AppendLine();
         if (IsAddRealSheetNameAttribute) sb.AppendLine($"[SheetName(\"{SheetName}\")]");
-        sb.AppendLine($"{OptionLib.This.Option.ConstructorAccessModifier} {OptionLib.This.Option.CreateModelAs.ToString().ToLower()} {FixedSheetName} {OptionLib.This.Option.ModelInheritanceString}");
+        sb.Append(OptionLib.This.Option.ConstructorAccessModifier.ToString().ToLower());
+        sb.Append(' ');
+        sb.Append(FixedSheetName);
+        sb.Append(' ');
+        sb.AppendLine(OptionLib.This.Option.ModelInheritanceString);
         sb.AppendLine("{");
         return sb;
     }

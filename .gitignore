@@ -1,0 +1,10 @@
+/src/ExcelToCSharpModelConverter.Core/bin/
+/src/ExcelToCSharpModelConverter.Core/obj/
+/src/ExcelToCSharpModelConverter.App/obj/
+/src/ExcelToCSharpModelConverter.App/bin/
+/src/ExcelToCSharpModelConverter.Reader/bin/
+/src/ExcelToCSharpModelConverter.Reader/obj/
+/src/ExcelToCSharpModelConverter.Shared/bin/
+/src/ExcelToCSharpModelConverter.Shared/obj/
+/src/ExcelToCSharpModelConverter.Test/bin/
+/src/ExcelToCSharpModelConverter.Test/obj/

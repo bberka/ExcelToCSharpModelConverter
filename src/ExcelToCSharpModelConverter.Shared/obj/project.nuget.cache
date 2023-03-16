@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Zczv/x4ePaZ/4yFl64M4OsbRrGRRcid1aznkl0FTNDGLmwFrZC2t2Lv/kK/2g1ZKOdAukaIM2AYkoJa6cXG2ag==",
+  "dgSpecHash": "Cu21PwwIN8Cw6dBnmE9QqDROwD23qPrHT4R0I/63LfgN8ZBfEjqst9Xd8VP52Ctdt/7k3epDzSQdO1aTHVeg7A==",
   "success": true,
   "projectFilePath": "C:\\Users\\kkass\\source\\repos\\ExcelToCSharpModelConverter\\src\\ExcelToCSharpModelConverter.Shared\\ExcelToCSharpModelConverter.Shared.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kkass\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512"
+    "C:\\Users\\kkass\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\kkass\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

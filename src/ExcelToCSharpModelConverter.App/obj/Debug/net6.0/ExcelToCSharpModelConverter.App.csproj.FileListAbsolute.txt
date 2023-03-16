@@ -44,3 +44,4 @@ C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelCo
 C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.App\bin\Debug\net6.0\EasMe.Result.pdb
 C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.App\bin\Debug\net6.0\EasMe.Logging.pdb
 C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.App\bin\Debug\net6.0\EasMe.pdb
+C:\Users\kkass\source\repos\ExcelToCSharpModelConverter\src\ExcelToCSharpModelConverter.App\bin\Debug\net6.0\Newtonsoft.Json.dll

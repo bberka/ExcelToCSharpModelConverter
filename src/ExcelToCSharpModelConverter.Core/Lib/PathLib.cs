@@ -1,4 +1,6 @@
-﻿namespace ExcelToCSharpModelConverter.Core.Lib;
+﻿using EasMe.Extensions;
+
+namespace ExcelToCSharpModelConverter.Core.Lib;
 
 public static class PathLib
 {
@@ -11,5 +13,21 @@ public static class PathLib
         {
             Directory.CreateDirectory(directory);
         }
+        
     }
+    public static bool CheckFilePath(string? path)
+    {
+        return !path.IsNullOrEmpty() && File.Exists(path);
+    }
+    public static bool CheckDirectoryPath(string? path)
+    {
+        if (path.IsNullOrEmpty()) return false;
+        var exists = Directory.Exists(path);
+        if (!exists)
+        {
+            Directory.CreateDirectory(path);
+        }
+        return true;
+    }
+    
 }

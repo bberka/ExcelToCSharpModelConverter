@@ -6,26 +6,42 @@ using OfficeOpenXml;
 namespace ExcelToCSharpModelConverter.Core.Manager;
 
 
-public class WorkSheetReader
+public class WorkSheetManager
 {
-    private readonly static IEasLog logger = EasLogFactory.CreateLogger();
 
     private readonly ExcelWorksheet _worksheet;
-    public WorkSheetReader(ExcelWorksheet worksheet)
+    private readonly List<HeaderModel> _headers;
+
+    private WorkSheetManager(ExcelWorksheet worksheet,List<HeaderModel> headers)
     {
         _worksheet = worksheet;
+        _headers = headers;
     }
-
+    
+    public static ResultData<WorkSheetManager> Create(ExcelWorksheet worksheet)
+    {
+        if (worksheet is null) return Result.Warn("Worksheet is null");
+        if (worksheet.Dimension is null) return Result.Warn("Worksheet is empty");
+        var sheetColumns = worksheet.GetHeaders();
+        if(sheetColumns.Count == 0) return Result.Warn("Worksheet has no columns");
+        return new WorkSheetManager(worksheet ,sheetColumns);
+    }
     public Result ExportCsharpModel(string exportPath)
     {
-        if (_worksheet.Dimension is null) return Result.Warn("Worksheet is empty");
-        var start = _worksheet.Dimension.Start;
-        var end = _worksheet.Dimension.End;
-        var sheetName = _worksheet.Name;
-        var sheetColumns = _worksheet.GetHeaders();
-        if(sheetColumns.Count == 0) return Result.Warn("Worksheet has no columns");
-        var creator = new ModelCreator(sheetName, sheetColumns);
-        return creator.Write(exportPath);
+        try
+        {
+            var start = _worksheet.Dimension.Start;
+            var end = _worksheet.Dimension.End;
+            var sheetName = _worksheet.Name;
+            var createResult = ModelCreator.Create(sheetName , _headers);
+            if (createResult.IsFailure) return createResult.ToResult();
+            var creator = createResult.Data;
+            return creator!.Write(exportPath);
+        }
+        catch (Exception ex)
+        {
+            return Result.Exception(ex);
+        }
     }
 }
 

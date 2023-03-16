@@ -26,7 +26,7 @@ public static class XlExtensions
             };
         }).ToList();
         columns.RemoveAll(x => x is null);
-        return columns ?? new();
+        return columns.DistinctBy(x => x.Name).ToList() ?? new();
     }
 
  
