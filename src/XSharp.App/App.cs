@@ -3,6 +3,7 @@ using EasMe.Result;
 using Microsoft.Extensions.Logging;
 using XSharp.Core.Lib;
 using XSharp.Core.Manager;
+using XSharp.Shared;
 
 namespace XSharp.App;
 
@@ -28,6 +29,7 @@ public class App
     public void Run()
     {
         InitLoggingSettings();
+        XKernel.Init();
         var optionResult = OptionLib.This.ReadJson();
         if (optionResult.IsFailure)
         {
@@ -40,6 +42,7 @@ public class App
             OptionLib.This.WriteJson();
             return;
         }
+        
         LoopTillExit();
     }
 
@@ -57,7 +60,7 @@ public class App
                 {
                     Console.WriteLine("Enter file path");
                     var path = Console.ReadLine();
-                    var createResult = WorkBookManager.Create(path);
+                    var createResult = XFileManager.Create(path);
                     if (createResult.IsFailure)
                     {
                         Console.WriteLine(createResult.ErrorCode);
@@ -73,7 +76,7 @@ public class App
                 {
                     Console.WriteLine("Enter directory path");
                     var path = Console.ReadLine();
-                    var multipleResult = WorkBookManager.CreateWithDirectory(path);
+                    var multipleResult = XFileManager.CreateWithDirectory(path);
                     if (multipleResult.IsFailure) continue;
                     var manager = multipleResult.Data!;
                     var results = new List<Result>();

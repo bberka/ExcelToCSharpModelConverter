@@ -15,9 +15,64 @@
   "SetValueTypesAtRowIndex": 2,
   "IgnoreExceptions": false,
   "IgnoreFormulas": false,
-  "UsingList": [],
-  "NullValueStrings": [],
-  "IgnoreWhenConditions": [],
-  "ReplaceWhenConditions": [],
-  "TrimWhenConditions": []
+  "UsingList": [
+    "System"
+  ],
+  "NullValueStrings": [
+    "<null>",
+    "<empty>"
+  ],
+  "IgnoreWhenConditions": [
+    {
+      "ConditionOptions": [
+        {
+          "Condition": "Contains",
+          "TypeToValidateCondition": "CellValueType",
+          "Value": "test"
+        },
+        {
+          "Condition": "Equals",
+          "TypeToValidateCondition": "HeaderName",
+          "Value": "test"
+        }
+      ],
+      "TypeToIgnore": "NotSet"
+    }
+  ],
+  "ReplaceWhenConditions": [
+    {
+      "ConditionOptions": [
+        {
+          "Condition": "Contains",
+          "TypeToValidateCondition": "CellValueType",
+          "Value": "test"
+        },
+        {
+          "Condition": "Equals",
+          "TypeToValidateCondition": "HeaderName",
+          "Value": "test"
+        }
+      ],
+      "TypeToReplace": "NotSet",
+      "OldValue": null,
+      "NewValue": null
+    }
+  ],
+  "TrimWhenConditions": [
+    {
+      "ConditionOptions": [
+        {
+          "Condition": "Contains",
+          "TypeToValidateCondition": "CellValueType",
+          "Value": "test"
+        },
+        {
+          "Condition": "Equals",
+          "TypeToValidateCondition": "HeaderName",
+          "Value": "test"
+        }
+      ],
+      "TypeToTrim": "NotSet"
+    }
+  ]
 }

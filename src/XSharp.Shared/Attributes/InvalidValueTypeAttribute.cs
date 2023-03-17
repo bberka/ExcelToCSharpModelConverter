@@ -1,5 +1,5 @@
 namespace XSharp.Shared.Attributes;
 
-public class InvalidValueTypeAttribute : Attribute
+public partial class InvalidValueTypeAttribute : Attribute
 {
 }

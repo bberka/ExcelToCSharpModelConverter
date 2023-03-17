@@ -2,11 +2,11 @@
 
 namespace XSharp.Core;
 
-public class EPPlusLicence
+public static class EPPlusLicence
 {
     public static void Import()
     {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        ExcelPackage.LicenseContext = LicenseContext.Commercial;
         Trace.WriteLine("EPPlus NonCommercial licence activated");
     }
 }

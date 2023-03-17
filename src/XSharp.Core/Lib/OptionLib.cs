@@ -1,14 +1,13 @@
 ﻿using EasMe.Result;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using XSharp.Shared.Constants;
 using XSharp.Shared.Models;
-using XSharp.Shared.Models.Option;
 
 namespace XSharp.Core.Lib;
 
 public class OptionLib
 {
-    
     private OptionLib()
     {
         Option = new();
@@ -25,24 +24,19 @@ public class OptionLib
 
     private static OptionLib? _instance;
 
-    
-    public ExportOption Option
-    {
-        
-        get; 
-        private set; 
-    }
+
+    public XOption Option { get; private set; }
 
 
     public void WriteJson()
     {
         var json = JsonConvert.SerializeObject(Option, GetJsonSerializerSettings());
         File.WriteAllText(JsonPath, json);
-        
     }
 
-   
+
     private const string JsonPath = "ExportOption.json";
+
     public Result ReadJson()
     {
         var fileExists = File.Exists(JsonPath);
@@ -50,36 +44,27 @@ public class OptionLib
         {
             return Result.Error("File not found: " + JsonPath);
         }
+
         var read = File.ReadAllText(JsonPath);
-        var option = JsonConvert.DeserializeObject<ExportOption>(read, GetJsonSerializerSettings());
-        if(option is null)
+        var option = JsonConvert.DeserializeObject<XOption>(read, GetJsonSerializerSettings());
+        if (option is null)
         {
             return Result.Error("Option is null");
         }
+
         Option = option;
         return Result.Success();
     }
+
     public void SetTestOption()
     {
-        var option = new ExportOption();
-        option.IgnoreWhenConditions.Add(new IgnoreWhen());
+        var option = new XOption();
         option.NullValueStrings.Add("<null>");
         option.NullValueStrings.Add("<empty>");
-        option.TrimWhenConditions.Add(new TrimWhen());
-        option.ReplaceWhenConditions.Add(new ReplaceWhen()
-        {
-            ConditionOption = new ConditionOption()
-            {
-                InnerCondition = new ()
-                {
-                    InnerCondition = new ()
-                }
-            }
-        });
         option.UsingList.Add("System");
         Option = option;
     }
-    
+
     private static JsonSerializerSettings GetJsonSerializerSettings()
     {
         var serializerOption = new JsonSerializerSettings();
