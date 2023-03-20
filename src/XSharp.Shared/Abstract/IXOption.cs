@@ -4,7 +4,7 @@ using ValueType = System.ValueType;
 
 namespace XSharp.Shared.Abstract;
 
-public interface IExportOption
+public interface IXOption
 {
     string? InFolderPath { get; set; }
     string? OutFolderPath { get; set; }
