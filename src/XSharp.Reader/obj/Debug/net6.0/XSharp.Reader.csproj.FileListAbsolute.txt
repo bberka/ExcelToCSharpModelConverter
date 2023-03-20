@@ -1,0 +1,12 @@
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\bin\Debug\net6.0\XSharp.Reader.deps.json
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\bin\Debug\net6.0\XSharp.Reader.dll
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\bin\Debug\net6.0\XSharp.Reader.pdb
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.csproj.AssemblyReference.cache
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.AssemblyInfoInputs.cache
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.AssemblyInfo.cs
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.csproj.CoreCompileInputs.cache
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.dll
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\refint\XSharp.Reader.dll
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\XSharp.Reader.pdb
+C:\Users\kkass\source\repos\XSharp\src\XSharp.Reader\obj\Debug\net6.0\ref\XSharp.Reader.dll

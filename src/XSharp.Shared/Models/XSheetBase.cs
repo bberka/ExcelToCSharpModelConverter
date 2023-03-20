@@ -1,6 +1,6 @@
 ﻿namespace XSharp.Shared.Models;
 
-public abstract class BaseSheetModel
+public abstract class XSheetBase
 {
     
 }

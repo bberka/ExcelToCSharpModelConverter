@@ -5,9 +5,9 @@ namespace XSharp.Shared.Abstract;
 
 public interface IXFile
 {
-    string Name { get; internal set;}
-    List<IXSheet> Sheets { get; internal set;}
+    string Name { get; }
+    List<XSheet<object>> Sheets { get; }
     void SetName(string name);
-    void SetSheets(List<IXSheet> sheets);
-    Result AddSheet(IXSheet sheet);
+    void SetSheets(List<XSheet<object>> sheets);
+    Result AddSheet(XSheet<object> sheet);
 }

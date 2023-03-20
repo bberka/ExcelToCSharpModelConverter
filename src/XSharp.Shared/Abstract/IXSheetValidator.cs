@@ -1,6 +1,6 @@
 ﻿namespace XSharp.Shared.Abstract;
 
-public interface IXSheetValidator
+public interface IXSheetValidator: IXBaseValidator
 {
     public bool IsIgnore(string name);
     

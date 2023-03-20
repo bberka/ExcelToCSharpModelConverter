@@ -9,9 +9,14 @@
 
     <ItemGroup>
       <ProjectReference Include="..\XSharp.Core\XSharp.Core.csproj" />
+      <ProjectReference Include="..\XSharp.ExtendExample\XSharp.ExtendExample.csproj" />
+      <ProjectReference Include="..\XSharp.Test\XSharp.Test.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="EasMe">
+        <HintPath>..\..\..\..\build\easme\Release\net6.0\EasMe.dll</HintPath>
+      </Reference>
       <Reference Include="EasMe.Logging">
         <HintPath>..\..\..\..\build\easme\Release\net6.0\EasMe.Logging.dll</HintPath>
       </Reference>

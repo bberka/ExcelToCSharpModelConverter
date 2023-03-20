@@ -579,6 +579,19 @@
           "bin/placeholder/XSharp.Core.dll": {}
         }
       },
+      "XSharp.ExtendExample/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "XSharp.Shared": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/XSharp.ExtendExample.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/XSharp.ExtendExample.dll": {}
+        }
+      },
       "XSharp.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -593,6 +606,20 @@
         },
         "runtime": {
           "bin/placeholder/XSharp.Shared.dll": {}
+        }
+      },
+      "XSharp.Test/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "XSharp.Core": "1.0.0",
+          "XSharp.Shared": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/XSharp.Test.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/XSharp.Test.dll": {}
         }
       }
     }
@@ -1819,16 +1846,28 @@
       "path": "../XSharp.Core/XSharp.Core.csproj",
       "msbuildProject": "../XSharp.Core/XSharp.Core.csproj"
     },
+    "XSharp.ExtendExample/1.0.0": {
+      "type": "project",
+      "path": "../XSharp.ExtendExample/XSharp.ExtendExample.csproj",
+      "msbuildProject": "../XSharp.ExtendExample/XSharp.ExtendExample.csproj"
+    },
     "XSharp.Shared/1.0.0": {
       "type": "project",
       "path": "../XSharp.Shared/XSharp.Shared.csproj",
       "msbuildProject": "../XSharp.Shared/XSharp.Shared.csproj"
+    },
+    "XSharp.Test/1.0.0": {
+      "type": "project",
+      "path": "../XSharp.Test/XSharp.Test.csproj",
+      "msbuildProject": "../XSharp.Test/XSharp.Test.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Newtonsoft.Json >= 13.0.3",
-      "XSharp.Core >= 1.0.0"
+      "XSharp.Core >= 1.0.0",
+      "XSharp.ExtendExample >= 1.0.0",
+      "XSharp.Test >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1865,6 +1904,12 @@
           "projectReferences": {
             "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Core\\XSharp.Core.csproj": {
               "projectPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Core\\XSharp.Core.csproj"
+            },
+            "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.ExtendExample\\XSharp.ExtendExample.csproj": {
+              "projectPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.ExtendExample\\XSharp.ExtendExample.csproj"
+            },
+            "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Test\\XSharp.Test.csproj": {
+              "projectPath": "C:\\Users\\kkass\\source\\repos\\XSharp\\src\\XSharp.Test\\XSharp.Test.csproj"
             }
           }
         }

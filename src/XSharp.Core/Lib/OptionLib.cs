@@ -1,8 +1,11 @@
 ﻿using EasMe.Result;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using XSharp.Shared;
 using XSharp.Shared.Constants;
 using XSharp.Shared.Models;
+using ValueType = XSharp.Shared.Constants.ValueType;
 
 namespace XSharp.Core.Lib;
 
@@ -10,7 +13,9 @@ public class OptionLib
 {
     private OptionLib()
     {
-        Option = new();
+        Option = XKernel.This.GetInstance<IXOption>();
+        SetDefaults();
+        ReadJson();
     }
 
     public static OptionLib This
@@ -25,7 +30,7 @@ public class OptionLib
     private static OptionLib? _instance;
 
 
-    public XOption Option { get; private set; }
+    public IXOption Option { get; private set; }
 
 
     public void WriteJson()
@@ -56,6 +61,21 @@ public class OptionLib
         return Result.Success();
     }
 
+    public void SetDefaults()
+    {
+        Option.DefaultValueType = ValueType.String;
+        Option.NameSpace = "XSharp.Test.ExportedModels";
+        Option.HeaderColumnIndex = 1;
+        Option.SetValueTypesAtRowIndex = 2;
+        Option.ModelInheritanceString = "BaseSheetModel, IBaseSheetModel";
+        Option.MinimumLogLevel = LogLevel.Information;
+        Option.NullValueStrings = new List<string> {"<null>"};
+        Option.UsingList = new List<string>
+        {
+            "System",
+            "XSharp.Shared.Models",
+        };
+    }
     public void SetTestOption()
     {
         var option = new XOption();

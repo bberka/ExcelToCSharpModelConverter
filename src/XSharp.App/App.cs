@@ -1,9 +1,14 @@
-﻿using EasMe.Logging;
+﻿using EasMe.Extensions;
+using EasMe.Logging;
 using EasMe.Result;
 using Microsoft.Extensions.Logging;
+using XSharp.Core.Export;
 using XSharp.Core.Lib;
-using XSharp.Core.Manager;
+using XSharp.Core.Read;
+using XSharp.ExtendExample;
 using XSharp.Shared;
+using XSharp.Shared.Abstract;
+using XSharp.Test;
 
 namespace XSharp.App;
 
@@ -28,8 +33,14 @@ public class App
 
     public void Run()
     {
-        InitLoggingSettings();
         XKernel.Init();
+        InitLoggingSettings();
+        RunReadOption();
+        LoopTillExit();
+    }
+
+    private void RunReadOption()
+    {
         var optionResult = OptionLib.This.ReadJson();
         if (optionResult.IsFailure)
         {
@@ -42,10 +53,21 @@ public class App
             OptionLib.This.WriteJson();
             return;
         }
-        
-        LoopTillExit();
+        if (OptionLib.This.Option.ExtendValidatorDllFilePath.IsNullOrEmpty())
+        {
+            Console.WriteLine("Extend Validator is not specified in ExportOption.json");
+            return;
+        }
+        var dllResult = XKernel.This.LoadDll(OptionLib.This.Option.ExtendValidatorDllFilePath!);
+        if (dllResult.IsFailure)
+        {
+            logger.LogResult(dllResult, "Loading Extend Validator Failed");
+            Console.WriteLine("Loading Extend Validator Failed. Error: " + dllResult.ErrorCode);
+            Console.WriteLine("Press any key to exit");
+            Console.ReadKey();
+            return;
+        }
     }
-
     private void LoopTillExit()
     {
         while (true)
@@ -57,43 +79,28 @@ public class App
                 case null:
                     continue;
                 case "1":
-                {
-                    Console.WriteLine("Enter file path");
-                    var path = Console.ReadLine();
-                    var createResult = XFileManager.Create(path);
-                    if (createResult.IsFailure)
                     {
-                        Console.WriteLine(createResult.ErrorCode);
-                        continue;
+                        Console.WriteLine("Enter file path");
+                        var path = Console.ReadLine();
+                        var exportResult = XFileExportManager.ExportExcelFile(path);
+                        logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
+                        break;
                     }
-
-                    var manager = createResult.Data!;
-                    var exportResult = manager.ExportWorkSheets();
-                    logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
-                    break;
-                }
                 case "2":
-                {
-                    Console.WriteLine("Enter directory path");
-                    var path = Console.ReadLine();
-                    var multipleResult = XFileManager.CreateWithDirectory(path);
-                    if (multipleResult.IsFailure) continue;
-                    var manager = multipleResult.Data!;
-                    var results = new List<Result>();
-                    Parallel.ForEach(manager
-                        , new ParallelOptions { MaxDegreeOfParallelism = 10 }
-                        , sheet =>
-                        {
-                            var result = sheet.ExportWorkSheets();
-                            lock (results)
-                            {
-                                results.Add(result);
-                            }
-                        });
-                    var exportResult = results.Combine("ExportingExcelToCsharpModels");
-                    logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
-                    break;
-                }
+                    {
+                        Console.WriteLine("Enter directory path");
+                        var path = Console.ReadLine();
+                        var exportResult = XFileExportManager.ExportExcelFilesInDirectory(path);
+                        logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
+                        break;
+                    }
+                case "3":
+                    {
+                        var path = @"F:\bdo\data-sheet\DataSheet-Corsair-Base\DataSheet\DropDataSheet\DataSheet_ItemGroupDataTable_MonsterFromDrop_1.xlsm";
+                        var sheet = XLib.GetExcelSheetsFromWorkBookPath(path).FirstOrDefault(x => x.Name == "ItemSubGroup_Table");
+                        var readerResult = XSheetReadManager.Read<ItemSubGroup_Table>(sheet);
+                        break;
+                    }
                 case "0":
                     Environment.Exit(0);
                     break;
@@ -105,6 +112,7 @@ public class App
     {
         Console.WriteLine("1. Export Excel To Csharp Models by single file path");
         Console.WriteLine("2. Export Excel To Csharp Models by directory path");
+        Console.WriteLine("3. Test read excel file");
         Console.WriteLine("0. Exit");
     }
 

@@ -2,9 +2,7 @@ using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Models;
 
-
-
-public partial class XHeader : IXHeader
+public class XHeader : IXHeader
 {
     public int Index { get; set;}
     public string? Name { get; set; }

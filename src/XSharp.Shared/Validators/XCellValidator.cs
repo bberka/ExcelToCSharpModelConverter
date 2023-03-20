@@ -7,8 +7,7 @@ public class XCellValidator : IXCellValidator
 {
     public bool IsIgnore(object? value)
     {
-        if (value is null) return true;
-        if (value is string s && s.IsNullOrEmpty()) return false;
+
         return false;
     }
 

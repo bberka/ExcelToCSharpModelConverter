@@ -2,7 +2,7 @@
 
 namespace XSharp.ExtendExample.Validators;
 
-public class CellValidator : IXCellValidator
+public class CellValidatorExtend : IXCellValidator
 {
     public bool IsIgnore(object? value)
     {

@@ -1,7 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.FormulaParsing;
 using XSharp.Shared.Abstract;
-using XSharp.Shared.Models;
+using XSharp.Shared.Obsolete;
 
 namespace XSharp.Shared;
 
@@ -10,53 +10,46 @@ public static class XFactory
     public static IXHeader CreateHeader(int index, string name, string fixedName, Type valueType)
     {
         var header = XKernel.This.GetInstance<IXHeader>();
-        header.Index = index;
-        header.Name = name;
-        header.FixedName = fixedName;
-        header.ValueType = valueType;
+        header.SetIndex(index);
+        header.SetName(name);
+        header.SetFixedName(fixedName);
+        header.SetValueType(valueType);
         return header;
     }
     public static IXHeader CreateHeader(int index)
     {
         var header = XKernel.This.GetInstance<IXHeader>();
-        header.Index = index;
+        header.SetIndex(index);
         return header;
     }
     public static IXCell CreateCell(object? value, Type? type, IXHeader header)
     {
         var cell = XKernel.This.GetInstance<IXCell>();
-        cell.Value = value;
-        cell.Type = type;
-        cell.Header = header;
+        cell.SetValue(value);
+        cell.SetType(type);
+        cell.SetHeader(header);
         return cell;
     }
 
     public static IXRow CreateRow(List<IXCell> cells, int index)
     {
         var row = XKernel.This.GetInstance<IXRow>();
-        row.Cells = cells;
-        row.Index = index;
+        
+        row.SetCells(cells);
+        row.SetIndex(index);
         return row;
     }
 
-    public static IXSheet CreateSheet(string name, string? fixedName, Type? sheetModelType, ExcelAddressBase dimension, List<IXRow> rows, List<IXHeader> headers)
+    public static IXSheet CreateSheet(string name, string? fixedName, Type? sheetModelType, ExcelAddressBase dimension, List<object> rows, List<IXHeader> headers)
     {
         var sheet = XKernel.This.GetInstance<IXSheet>();
-        sheet.Name = name;
-        sheet.FixedName = fixedName;
-        sheet.SheetModelType = sheetModelType;
-        sheet.Dimension = dimension;
-        sheet.Rows = rows;
-        sheet.Headers = headers;
+        sheet.SetName(name);
+        sheet.SetFixedName(fixedName);
+        sheet.SetType(sheetModelType);
+        sheet.SetDimension(dimension);
+        sheet.SetRows(rows);
+        sheet.SetHeaders(headers);
         return sheet;
-    }
-
-    public static IXFile CreateFile(string name, List<IXSheet> sheets)
-    {
-        var file = XKernel.This.GetInstance<IXFile>();
-        file.Name = name;
-        file.Sheets = sheets;
-        return file;
     }
 
 
@@ -64,10 +57,10 @@ public static class XFactory
     public static IXCell CreateCell(ExcelCell cell)
     {
         var xcell = XKernel.This.GetInstance<IXCell>();
-        xcell.Value = cell.Value;
-        xcell.Type = cell.Value?.GetType();
-        xcell.Header = CreateHeader(cell.ColIndex);
-        xcell.Formula = cell.Formula;
+        xcell.SetValue(cell.Value);
+        xcell.SetType(cell.Value?.GetType());
+        xcell.SetHeader(CreateHeader(cell.ColIndex));
+        xcell.SetFormula(cell.Formula);
         return xcell;
     }
     

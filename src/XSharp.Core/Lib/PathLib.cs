@@ -29,5 +29,20 @@ public static class PathLib
         }
         return true;
     }
-    
+
+    public static List<string> GetExcelFilesFromFolder(string folder)
+    {
+        var isDirectoryExists = Directory.Exists(folder);
+        if (!isDirectoryExists)
+        {
+            return new List<string>();
+        }
+        var files = Directory.GetFiles(folder, "*.*",SearchOption.AllDirectories)
+            .Where(x => x.IsFilePathExcel())
+            .ToList();
+        return files;
+    }
+
+
+
 }

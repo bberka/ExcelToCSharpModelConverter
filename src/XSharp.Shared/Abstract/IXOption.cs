@@ -12,16 +12,9 @@ public interface IXOption
     LogLevel MinimumLogLevel { get; set; }
     Constants.ValueType DefaultValueType { get; set; }
     string ModelInheritanceString { get; set; }
-    SetterType SetterTypeString { get; set; }
-    AccessModifierType SetterAccessModifier { get; set; }
-    AccessModifierType GetterAccessModifier { get; set; }
-    AccessModifierType ClassAccessModifier { get; set; }
-    AccessModifierType ConstructorAccessModifier { get; set; }
-    ModelType CreateModelAs { get; set; }
+    string ExtendValidatorDllFilePath { get; set; }
     long HeaderColumnIndex { get; set; }
     int SetValueTypesAtRowIndex { get; set; }
-    bool IgnoreExceptions { get; set; }
-    bool IgnoreFormulas { get; set; }
     List<string> UsingList { get; set; }
     List<string> NullValueStrings { get; set; }
 }

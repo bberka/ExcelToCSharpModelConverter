@@ -4,23 +4,21 @@ using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Models;
 
-
-
 public partial class XFile : IXFile
 {
     public string Name { get; set; } = string.Empty;
-    public List<IXSheet> Sheets { get; set; } = new List<IXSheet>();
+    public List<XSheet<object>> Sheets { get; set; } = new List<XSheet<object>>();
 
     public void SetName(string name)
     {
         Name = name;
     }
-    public void SetSheets(List<IXSheet> sheets)
+    public void SetSheets(List<XSheet<object>> sheets)
     {
         Sheets = sheets;
     }
 
-    public Result AddSheet(IXSheet sheet)
+    public Result AddSheet(XSheet<object> sheet)
     {
         var any = Sheets.Any(x => x.Name == sheet.Name);
         if (any)

@@ -17,6 +17,9 @@
       <Reference Include="EasMe">
         <HintPath>..\..\..\..\build\easme\Release\net6.0\EasMe.dll</HintPath>
       </Reference>
+      <Reference Include="EasMe.Logging">
+        <HintPath>..\..\..\..\build\easme\Release\net6.0\EasMe.Logging.dll</HintPath>
+      </Reference>
       <Reference Include="EasMe.Result">
         <HintPath>..\..\..\..\build\easme\Release\net6.0\EasMe.Result.dll</HintPath>
       </Reference>

@@ -1,10 +1,10 @@
 {
   "InFolderPath": null,
   "OutFolderPath": null,
-  "NameSpace": "ExcelToCSharpModelConverter.ExportedModels",
+  "NameSpace": "XSharp.Test.ExportedModels",
   "MinimumLogLevel": "Information",
   "DefaultValueType": "String",
-  "ModelInheritanceString": ": BaseSheetModel",
+  "ModelInheritanceString": "BaseSheetModel",
   "SetterTypeString": "Set",
   "SetterAccessModifier": "None",
   "GetterAccessModifier": "None",
@@ -22,57 +22,6 @@
     "<null>",
     "<empty>"
   ],
-  "IgnoreWhenConditions": [
-    {
-      "ConditionOptions": [
-        {
-          "Condition": "Contains",
-          "TypeToValidateCondition": "CellValueType",
-          "Value": "test"
-        },
-        {
-          "Condition": "Equals",
-          "TypeToValidateCondition": "HeaderName",
-          "Value": "test"
-        }
-      ],
-      "TypeToIgnore": "NotSet"
-    }
-  ],
-  "ReplaceWhenConditions": [
-    {
-      "ConditionOptions": [
-        {
-          "Condition": "Contains",
-          "TypeToValidateCondition": "CellValueType",
-          "Value": "test"
-        },
-        {
-          "Condition": "Equals",
-          "TypeToValidateCondition": "HeaderName",
-          "Value": "test"
-        }
-      ],
-      "TypeToReplace": "NotSet",
-      "OldValue": null,
-      "NewValue": null
-    }
-  ],
-  "TrimWhenConditions": [
-    {
-      "ConditionOptions": [
-        {
-          "Condition": "Contains",
-          "TypeToValidateCondition": "CellValueType",
-          "Value": "test"
-        },
-        {
-          "Condition": "Equals",
-          "TypeToValidateCondition": "HeaderName",
-          "Value": "test"
-        }
-      ],
-      "TypeToTrim": "NotSet"
-    }
-  ]
+  "ExtendValidatorDllFilePath": null,
+  "MaxDegreeOfParallelism": 10
 }
