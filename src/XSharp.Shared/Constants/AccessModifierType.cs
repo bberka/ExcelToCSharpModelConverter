@@ -6,5 +6,5 @@ public enum AccessModifierType
     Public,
     Private,
     Protected,
-    Internal,
+    Internal
 }

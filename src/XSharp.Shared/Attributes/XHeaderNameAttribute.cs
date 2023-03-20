@@ -1,9 +1,8 @@
 namespace XSharp.Shared.Attributes;
 
-
-public partial class HeaderNameAttribute : Attribute
+public class XHeaderNameAttribute : Attribute
 {
-    public HeaderNameAttribute(string name)
+    public XHeaderNameAttribute(string name)
     {
         Name = name;
     }

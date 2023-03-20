@@ -1,6 +1,4 @@
-﻿using EasMe.Result;
-using XSharp.Shared.Models;
-
+﻿
 namespace XSharp.Shared.Abstract;
 
 public interface IXFile

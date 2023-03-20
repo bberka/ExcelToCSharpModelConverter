@@ -1,13 +1,11 @@
 ﻿using OfficeOpenXml;
-using XSharp.Shared.Models;
-using XSharp.Shared.Obsolete;
 
 namespace XSharp.Shared.Abstract;
 
 public interface IXSheet
 {
     string Name { get; }
-    string? FixedName { get;  }
+    string? FixedName { get; }
     Type? SheetModelType { get; }
     ExcelAddressBase Dimension { get; }
     List<object> Rows { get; }

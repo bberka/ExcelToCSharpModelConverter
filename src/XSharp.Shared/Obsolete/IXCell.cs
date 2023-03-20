@@ -1,5 +1,4 @@
-﻿using OfficeOpenXml;
-using XSharp.Shared.Abstract;
+﻿using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Obsolete;
 
@@ -17,5 +16,4 @@ public interface IXCell
     public void SetType(Type type);
     public void SetHeader(IXHeader header);
     public void SetAddress(string address);
-
 }

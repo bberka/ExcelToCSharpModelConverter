@@ -5,52 +5,62 @@ namespace XSharp.Test;
 
 public class ItemSubGroup_Table : XSheetBase
 {
-    public String ItemSubGroupKey { get; set; }
-    public String ItemKey { get; set; }
-    [InvalidValueType]
-    public String EnchantLevel { get; set; }
-    [InvalidValueType]
-    public String DoPetAddDrop { get; set; }
-    [InvalidValueType]
-    public String DoSechiAddDrop { get; set; }
-    [HeaderName("%SelectRate_0")]
-    [InvalidValueType]
-    public String SelectRate__0 { get; set; }
-    [HeaderName("%MinCount_0")]
-    [InvalidValueType]
-    public String MinCount__0 { get; set; }
-    [HeaderName("%MaxCount_0")]
-    [InvalidValueType]
-    public String MaxCount__0 { get; set; }
-    [HeaderName("%SelectRate_1")]
-    [InvalidValueType]
-    public String SelectRate__1 { get; set; }
-    [HeaderName("%MinCount_1")]
-    [InvalidValueType]
-    public String MinCount__1 { get; set; }
-    [HeaderName("%MaxCount_1")]
-    [InvalidValueType]
-    public String MaxCount__1 { get; set; }
-    [HeaderName("%SelectRate_2")]
-    [InvalidValueType]
-    public String SelectRate__2 { get; set; }
-    [HeaderName("%MinCount_2")]
-    [InvalidValueType]
-    public String MinCount__2 { get; set; }
-    [HeaderName("%MaxCount_2")]
-    [InvalidValueType]
-    public String MaxCount__2 { get; set; }
-    public Double IntimacyVariation { get; set; }
-    [InvalidValueType]
-    public String ExplorationPoint { get; set; }
-    [InvalidValueType]
-    public String ApplyRandomPrice { get; set; }
-    [InvalidValueType]
-    public String RentTime { get; set; }
-    [InvalidValueType]
-    public String PriceOption { get; set; }
-    [HeaderName("# ItemName")]
-    public String ItemName { get; set; }
-    [HeaderName("#^E_Merge Index")]
-    public String E_MergeIndex { get; set; }
+    public string ItemSubGroupKey { get; set; }
+    public string ItemKey { get; set; }
+
+    [XCellValueTypeInvalid] public string EnchantLevel { get; set; }
+
+    [XCellValueTypeInvalid] public string DoPetAddDrop { get; set; }
+
+    [XCellValueTypeInvalid] public string DoSechiAddDrop { get; set; }
+
+    [XHeaderName("%SelectRate_0")]
+    [XCellValueTypeInvalid]
+    public string SelectRate__0 { get; set; }
+
+    [XHeaderName("%MinCount_0")]
+    [XCellValueTypeInvalid]
+    public string MinCount__0 { get; set; }
+
+    [XHeaderName("%MaxCount_0")]
+    [XCellValueTypeInvalid]
+    public string MaxCount__0 { get; set; }
+
+    [XHeaderName("%SelectRate_1")]
+    [XCellValueTypeInvalid]
+    public string SelectRate__1 { get; set; }
+
+    [XHeaderName("%MinCount_1")]
+    [XCellValueTypeInvalid]
+    public string MinCount__1 { get; set; }
+
+    [XHeaderName("%MaxCount_1")]
+    [XCellValueTypeInvalid]
+    public string MaxCount__1 { get; set; }
+
+    [XHeaderName("%SelectRate_2")]
+    [XCellValueTypeInvalid]
+    public string SelectRate__2 { get; set; }
+
+    [XHeaderName("%MinCount_2")]
+    [XCellValueTypeInvalid]
+    public string MinCount__2 { get; set; }
+
+    [XHeaderName("%MaxCount_2")]
+    [XCellValueTypeInvalid]
+    public string MaxCount__2 { get; set; }
+
+    public double IntimacyVariation { get; set; }
+
+    [XCellValueTypeInvalid] public string ExplorationPoint { get; set; }
+
+    [XCellValueTypeInvalid] public string ApplyRandomPrice { get; set; }
+
+    [XCellValueTypeInvalid] public string RentTime { get; set; }
+
+    [XCellValueTypeInvalid] public string PriceOption { get; set; }
+
+    [XHeaderName("# ItemName")] public string ItemName { get; set; }
+
+    [XHeaderName("#^E_Merge Index")] public string E_MergeIndex { get; set; }
 }

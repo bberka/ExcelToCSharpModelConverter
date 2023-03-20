@@ -8,7 +8,7 @@ public class XSheetValidator : IXSheetValidator
     {
         return false;
     }
-    
+
     public string GetValidSheetName(string name)
     {
         return name;

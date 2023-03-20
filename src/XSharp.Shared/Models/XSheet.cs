@@ -1,9 +1,7 @@
 ﻿using OfficeOpenXml;
 using XSharp.Shared.Abstract;
-using XSharp.Shared.Obsolete;
 
 namespace XSharp.Shared.Models;
-
 
 //public partial class XSheet : IXSheet
 //{
@@ -45,13 +43,11 @@ namespace XSharp.Shared.Models;
 //    }
 //}
 
-
-
 public class XSheet<T> : IXSheet<T>
 {
-    public string Name { get; set; } 
-    public string? FixedName { get; set; }
     public Type SheetModelType => typeof(T);
+    public string Name { get; set; }
+    public string? FixedName { get; set; }
     public ExcelAddressBase Dimension { get; set; }
     public List<T> Rows { get; set; }
     public List<IXHeader> Headers { get; set; }

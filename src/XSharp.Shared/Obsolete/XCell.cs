@@ -1,8 +1,6 @@
-﻿using OfficeOpenXml;
-using XSharp.Shared.Abstract;
+﻿using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Obsolete;
-
 
 [Obsolete]
 public class XCell : IXCell
@@ -12,6 +10,7 @@ public class XCell : IXCell
     public string Address { get; private set; }
     public Type? Type { get; private set; }
     public IXHeader Header { get; private set; } = null!;
+
     public void SetFormula(string formula)
     {
         Formula = formula;

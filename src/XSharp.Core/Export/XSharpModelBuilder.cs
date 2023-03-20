@@ -1,15 +1,16 @@
 ﻿using XSharp.Shared;
+using XSharp.Shared.Attributes;
 
 namespace XSharp.Core.Export;
 
 internal class XSharpModelBuilder
 {
-    private readonly List<IXHeader> _headers;
-    private readonly string _sheetName;
     private readonly string _fixedName;
+    private readonly List<IXHeader> _headers;
     private readonly string _outPath;
+    private readonly string _sheetName;
 
-    private XSharpModelBuilder(List<IXHeader> headers,string sheetName,string fixedName, string outPath)
+    private XSharpModelBuilder(List<IXHeader> headers, string sheetName, string fixedName, string outPath)
     {
         _headers = headers;
         _sheetName = sheetName;
@@ -25,23 +26,19 @@ internal class XSharpModelBuilder
         if (headers.Count == 0) return Result.Warn("Worksheet has no valid headers");
         if (worksheet.Name.IsNullOrEmpty()) return Result.Warn("SheetName is null or empty");
         var fixedName = worksheet.Name.FixName();
-        if (fixedName.IsNullOrEmpty()) return Result.Warn("FixedSheetName is null or empty. SheetName: " + worksheet.Name);
+        if (fixedName.IsNullOrEmpty())
+            return Result.Warn("FixedSheetName is null or empty. SheetName: " + worksheet.Name);
         var sheetName = worksheet.Name;
         var validator = XKernel.This.GetValidator<IXSheetValidator>();
         if (validator is not null)
         {
             var isValidName = validator.IsIgnore(worksheet.Name);
-            if (!isValidName)
-            {
-                return Result.Warn("Invalid sheet name: " + worksheet.Name);
-            }
+            if (!isValidName) return Result.Warn("Invalid sheet name: " + worksheet.Name);
             var validName = validator.GetValidSheetName(sheetName);
-            if (validName != worksheet.Name)
-            {
-                sheetName = validName;
-            }
+            if (validName != worksheet.Name) sheetName = validName;
         }
-        var modelBuilder = new XSharpModelBuilder(headers, sheetName, fixedName , outPath);
+
+        var modelBuilder = new XSharpModelBuilder(headers, sheetName, fixedName, outPath);
         return modelBuilder.ExportSharpModel(outPath);
     }
 
@@ -54,10 +51,7 @@ internal class XSharpModelBuilder
     {
         PathLib.CreateDirectory(outPath);
         var fileOutPath = BuildFileOutPutPath(outPath);
-        if (File.Exists(fileOutPath))
-        {
-            return Result.Warn("File already exists: " + fileOutPath);
-        }
+        if (File.Exists(fileOutPath)) return Result.Warn("File already exists: " + fileOutPath);
         var fileContent = CreateSharpModel();
         File.WriteAllText(fileOutPath, fileContent);
         return Result.Success("File created: " + fileOutPath);
@@ -74,26 +68,26 @@ internal class XSharpModelBuilder
             AppendValueTypeString(sb, col.ValueType?.Name, out var valueTypeString);
             AppendProperty(sb, valueTypeString, col.FixedName!);
         }
+
         AppendEnd(sb);
         return sb.ToString();
     }
 
     private static StringBuilder AppendHeaderName(StringBuilder sb, string colName, string fixedColumnName)
     {
-        if (fixedColumnName != colName)
-        {
-            sb.AppendLine($"    [HeaderName(\"{colName}\")]");
-        }
+        if (fixedColumnName != colName) sb.AppendLine($"    [{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{colName}\")]");
         return sb;
     }
 
-    private static StringBuilder AppendValueTypeString(StringBuilder sb, string? valueTypeName, out string valueTypeString)
+    private static StringBuilder AppendValueTypeString(StringBuilder sb, string? valueTypeName,
+        out string valueTypeString)
     {
         if (valueTypeName.IsNullOrEmpty())
         {
-            sb.AppendLine("    [InvalidValueType]");
+            sb.AppendLine($"    [{nameof(XCellValueTypeInvalidAttribute).RemoveText("Attribute")}]");
             valueTypeName = OptionLib.This.Option.DefaultValueType.ToString();
         }
+
         valueTypeString = valueTypeName;
         return sb;
     }
@@ -107,17 +101,15 @@ internal class XSharpModelBuilder
 
     private StringBuilder AppendStart(StringBuilder sb)
     {
-        if (OptionLib.This.Option.UsingList.Count > 0)
+        if (OptionLib.This.Option.UsingNameSpaceList.Count > 0)
         {
-            foreach (var item in OptionLib.This.Option.UsingList)
-            {
-                sb.AppendLine("using " + item + ";");
-            }
+            foreach (var item in OptionLib.This.Option.UsingNameSpaceList) sb.AppendLine("using " + item + ";");
             sb.AppendLine();
         }
+
         sb.AppendLine($"namespace {OptionLib.This.Option.NameSpace};");
         sb.AppendLine();
-        sb.AppendLine($"[SheetName(\"{_fixedName}\")]");
+        sb.AppendLine($"[{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{_fixedName}\")]");
         sb.Append("public class");
         sb.Append(' ');
         sb.Append(_fixedName);

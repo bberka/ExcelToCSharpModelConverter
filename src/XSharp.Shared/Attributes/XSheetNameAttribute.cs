@@ -1,8 +1,8 @@
 namespace XSharp.Shared.Attributes;
 
-public partial class SheetNameAttribute : Attribute
+public class XSheetNameAttribute : Attribute
 {
-    public SheetNameAttribute(string name)
+    public XSheetNameAttribute(string name)
     {
         Name = name;
     }

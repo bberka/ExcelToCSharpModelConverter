@@ -6,7 +6,7 @@ public class CellValidatorExtend : IXCellValidator
 {
     public bool IsIgnore(object? value)
     {
-        var str = value?.ToString() ;
+        var str = value?.ToString();
         if (str is null) return true;
         if (string.IsNullOrEmpty(str)) return true;
         return false;

@@ -1,20 +1,19 @@
 ﻿using EasMe.Extensions;
 using EasMe.Logging;
-using EasMe.Result;
 using Microsoft.Extensions.Logging;
 using XSharp.Core.Export;
 using XSharp.Core.Lib;
 using XSharp.Core.Read;
-using XSharp.ExtendExample;
 using XSharp.Shared;
-using XSharp.Shared.Abstract;
 using XSharp.Test;
 
 namespace XSharp.App;
 
 public class App
 {
-    private readonly static IEasLog logger = EasLogFactory.CreateLogger();
+    private static readonly IEasLog logger = EasLogFactory.CreateLogger();
+
+    private static App? _instance;
 
     private App()
     {
@@ -24,12 +23,10 @@ public class App
     {
         get
         {
-            _instance ??= new();
+            _instance ??= new App();
             return _instance;
         }
     }
-
-    private static App? _instance;
 
     public void Run()
     {
@@ -53,21 +50,21 @@ public class App
             OptionLib.This.WriteJson();
             return;
         }
+
         if (OptionLib.This.Option.ExtendValidatorDllFilePath.IsNullOrEmpty())
         {
             Console.WriteLine("Extend Validator is not specified in ExportOption.json");
             return;
         }
+
         var dllResult = XKernel.This.LoadDll(OptionLib.This.Option.ExtendValidatorDllFilePath!);
-        if (dllResult.IsFailure)
-        {
-            logger.LogResult(dllResult, "Loading Extend Validator Failed");
-            Console.WriteLine("Loading Extend Validator Failed. Error: " + dllResult.ErrorCode);
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
-            return;
-        }
+        if (!dllResult.IsFailure) return;
+        logger.LogResult(dllResult, "Loading Extend Validator Failed");
+        Console.WriteLine("Loading Extend Validator Failed. Error: " + dllResult.ErrorCode);
+        Console.WriteLine("Press any key to exit");
+        Console.ReadKey();
     }
+
     private void LoopTillExit()
     {
         while (true)
@@ -79,28 +76,30 @@ public class App
                 case null:
                     continue;
                 case "1":
-                    {
-                        Console.WriteLine("Enter file path");
-                        var path = Console.ReadLine();
-                        var exportResult = XFileExportManager.ExportExcelFile(path);
-                        logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
-                        break;
-                    }
+                {
+                    Console.WriteLine("Enter file path");
+                    var path = Console.ReadLine();
+                    var exportResult = XFileExportManager.ExportExcelFile(path);
+                    logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
+                    break;
+                }
                 case "2":
-                    {
-                        Console.WriteLine("Enter directory path");
-                        var path = Console.ReadLine();
-                        var exportResult = XFileExportManager.ExportExcelFilesInDirectory(path);
-                        logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
-                        break;
-                    }
+                {
+                    Console.WriteLine("Enter directory path");
+                    var path = Console.ReadLine();
+                    var exportResult = XFileExportManager.ExportExcelFilesInDirectory(path);
+                    logger.LogResult(exportResult, "Exporting Excel To Csharp Models Completed");
+                    break;
+                }
                 case "3":
-                    {
-                        var path = @"F:\bdo\data-sheet\DataSheet-Corsair-Base\DataSheet\DropDataSheet\DataSheet_ItemGroupDataTable_MonsterFromDrop_1.xlsm";
-                        var sheet = XLib.GetExcelSheetsFromWorkBookPath(path).FirstOrDefault(x => x.Name == "ItemSubGroup_Table");
-                        var readerResult = XSheetReadManager.Read<ItemSubGroup_Table>(sheet);
-                        break;
-                    }
+                {
+                    var path =
+                        @"F:\bdo\data-sheet\DataSheet-Corsair-Base\DataSheet\DropDataSheet\DataSheet_ItemGroupDataTable_MonsterFromDrop_1.xlsm";
+                    var sheet = XLib.GetExcelSheetsFromWorkBookPath(path)
+                        .FirstOrDefault(x => x.Name == "ItemSubGroup_Table");
+                    var readerResult = XSheetReadManager.Read<ItemSubGroup_Table>(sheet);
+                    break;
+                }
                 case "0":
                     Environment.Exit(0);
                     break;

@@ -1,14 +1,13 @@
-using System.Text;
-using EasMe.Extensions;
-using EasMe.Logging;
-using XSharp.Core.Lib;
 using XSharp.Shared;
-using XSharp.Shared.Models;
 
 namespace XSharp.Core.Extensions;
 
 internal static class XExtensions
 {
+    private const string _lowerAll = "abcdefghijklmnoprstuvwxyzq";
+    private const string _upperAll = "ABCDEFGHIJKLMNOPRSTUVWXYZQ";
+    private const string _digits = "0123456789";
+    private const string _validChars = _lowerAll + _upperAll + _digits + "_";
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
 
     public static List<ExcelWorksheet> GetSheets(this ExcelPackage package)
@@ -19,6 +18,7 @@ internal static class XExtensions
             var sheet = package.Workbook.Worksheets[i];
             sheets.Add(sheet);
         }
+
         return sheets;
     }
 
@@ -35,7 +35,7 @@ internal static class XExtensions
     public static List<IXHeader> GetHeaders(this ExcelWorksheet sheet)
     {
         var headerValidator = XKernel.This.GetValidator<IXHeaderValidator>();
-        var valueTypeRow = OptionLib.This.Option.SetValueTypesAtRowIndex;
+        var valueTypeRow = OptionLib.This.Option.SetValueTypesAtRowNumber;
         var firstRow = sheet.Dimension?.Start.Row;
         var firstRowData = sheet.Cells[firstRow ?? 0, 1, firstRow ?? 0, sheet.Dimension?.End.Column ?? 0];
         var exampleRowData = sheet.Cells[valueTypeRow, 1, valueTypeRow, sheet.Dimension?.End.Column ?? 0];
@@ -53,29 +53,25 @@ internal static class XExtensions
                 logger.Warn($"Header value is null or empty at index {i}. SheetName: " + sheet.Name);
                 return null;
             }
+
             xHeader.SetName(headerValue);
-            if(cellValueType == null) xHeader.SetValueType(typeof(String));
+            if (cellValueType == null) xHeader.SetValueType(typeof(string));
             else xHeader.SetValueType(cellValueType);
             xHeader.SetFixedName(xHeader.Name.FixName());
             if (headerValidator is not null)
             {
-                var isIgnore  = headerValidator.IsIgnore(xHeader);
+                var isIgnore = headerValidator.IsIgnore(xHeader);
                 if (isIgnore) return null;
             }
-            if(xHeader.FixedName.IsNullOrEmpty() || xHeader.Name.IsNullOrEmpty()) return null;
+
+            if (xHeader.FixedName.IsNullOrEmpty() || xHeader.Name.IsNullOrEmpty()) return null;
             return xHeader;
         }).ToList();
         columns.RemoveAll(x => x is null);
-        if (columns.Count == 0) return new();
+        if (columns.Count == 0) return new List<IXHeader>();
         return columns.DistinctBy(x => x.Name).ToList();
     }
 
- 
-    const string _lowerAll = "abcdefghijklmnoprstuvwxyzq";
-    const string _upperAll = "ABCDEFGHIJKLMNOPRSTUVWXYZQ";
-    const string _digits = "0123456789";
-    const string _validChars = _lowerAll + _upperAll + _digits + "_";
-    
     public static string FixName(this string name)
     {
         var sb = new StringBuilder();
@@ -88,11 +84,10 @@ internal static class XExtensions
                 sb.Append('_');
                 isFirstChar = false;
             }
+
             sb.Append(c);
         }
+
         return sb.ToString();
     }
-    
-    
-    
 }

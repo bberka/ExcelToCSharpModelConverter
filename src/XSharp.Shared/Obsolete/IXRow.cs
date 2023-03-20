@@ -1,6 +1,4 @@
-﻿using XSharp.Shared.Models;
-
-namespace XSharp.Shared.Obsolete;
+﻿namespace XSharp.Shared.Obsolete;
 
 [Obsolete]
 public interface IXRow

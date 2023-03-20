@@ -3,5 +3,5 @@
 public enum SetterType
 {
     Set,
-    Init,
+    Init
 }

@@ -1,5 +1,4 @@
-﻿using EasMe.Extensions;
-using XSharp.Shared.Abstract;
+﻿using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Validators;
 
@@ -7,7 +6,6 @@ public class XCellValidator : IXCellValidator
 {
     public bool IsIgnore(object? value)
     {
-
         return false;
     }
 

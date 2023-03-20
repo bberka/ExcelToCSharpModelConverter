@@ -1,9 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Reflection;
-using EasMe.Logging;
+﻿using System.Reflection;
 using XSharp.Shared;
-using XSharp.Shared.Validators;
 
 namespace XSharp.Core.Read;
 
@@ -29,6 +25,7 @@ public static class XSheetReadManager
         xSheet.SetRows(rows);
         return xSheet;
     }
+
     public static ResultData<XSheet<T>> Read<T>(ExcelWorksheet? sheet)
     {
         if (sheet is null) return Result.Warn("Worksheet is null");
@@ -47,6 +44,7 @@ public static class XSheetReadManager
         xSheet.SetRows(rows);
         return xSheet;
     }
+
     private static List<object> ReadRows(IReadOnlyCollection<IXHeader> headers, ExcelWorksheet? sheet, Type type)
     {
         var start = sheet.Dimension.Start;
@@ -55,11 +53,10 @@ public static class XSheetReadManager
         var cellValidator = XKernel.This.GetValidator<IXCellValidator>();
         for (var row = start.Row; row <= end.Row; row++)
         {
-            if (row == OptionLib.This.Option.HeaderColumnIndex) continue;
+            if (row == OptionLib.This.Option.HeaderColumnNumber) continue;
             var item = Activator.CreateInstance(type)!;
             var isSetAnyValue = false;
             for (var col = start.Column; col <= end.Column; col++)
-            {
                 try
                 {
                     var cell = sheet.Cells[row, col];
@@ -68,9 +65,11 @@ public static class XSheetReadManager
                     value = cellValidator?.GetValidValue(value) ?? value;
                     var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
                     if (currentHeader is null) continue;
-                    var property = type.GetProperty(currentHeader.Name, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    if(property is null) continue;
-                    var isConvertSuccess = ValueConverter.TryConvert(value, property.PropertyType, out var convertedVal);
+                    var property = type.GetProperty(currentHeader.Name,
+                        BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (property is null) continue;
+                    var isConvertSuccess =
+                        ValueConverter.TryConvert(value, property.PropertyType, out var convertedVal);
                     if (!isConvertSuccess || convertedVal is null) continue;
                     property.SetValue(item, value);
                     isSetAnyValue = true;
@@ -79,12 +78,14 @@ public static class XSheetReadManager
                 {
                     logger.Exception(ex, "Error while reading table");
                 }
-            }
+
             if (!isSetAnyValue) continue;
             rows.Add(item);
         }
+
         return rows;
     }
+
     private static List<T> ReadRows<T>(IReadOnlyCollection<IXHeader> headers, ExcelWorksheet sheet)
     {
         var start = sheet.Dimension.Start;
@@ -94,23 +95,24 @@ public static class XSheetReadManager
         var type = typeof(T);
         for (var row = start.Row; row <= end.Row; row++)
         {
-            if (row == OptionLib.This.Option.HeaderColumnIndex) continue;
+            if (row == OptionLib.This.Option.HeaderColumnNumber) continue;
             var item = (T)Activator.CreateInstance(type)!;
             var isSetAnyValue = false;
             for (var col = start.Column; col <= end.Column; col++)
-            {
                 try
                 {
                     var cell = sheet.Cells[row, col];
                     var value = cell.Value;
-                    if(value is null) continue;
+                    if (value is null) continue;
                     if (cellValidator?.IsIgnore(value) == true) continue;
                     value = cellValidator?.GetValidValue(value) ?? value;
                     var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
-                    if(currentHeader is null) continue;
-                    var property = type.GetProperty(currentHeader.FixedName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    if(property is null) continue;
-                    var isConvertSuccess = ValueConverter.TryConvert(value, property.PropertyType , out var convertedVal);
+                    if (currentHeader is null) continue;
+                    var property = type.GetProperty(currentHeader.FixedName,
+                        BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (property is null) continue;
+                    var isConvertSuccess =
+                        ValueConverter.TryConvert(value, property.PropertyType, out var convertedVal);
                     if (!isConvertSuccess || convertedVal is null) continue;
                     property.SetValue(item, convertedVal);
                     isSetAnyValue = true;
@@ -119,10 +121,11 @@ public static class XSheetReadManager
                 {
                     logger.Exception(ex, "Error while reading table");
                 }
-            }
+
             if (!isSetAnyValue) continue;
             rows.Add(item);
         }
+
         return rows;
     }
 }

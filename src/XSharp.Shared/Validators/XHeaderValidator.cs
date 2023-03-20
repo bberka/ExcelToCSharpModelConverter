@@ -1,5 +1,4 @@
-﻿using EasMe.Extensions;
-using XSharp.Shared.Abstract;
+﻿using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Validators;
 
@@ -9,5 +8,4 @@ public class XHeaderValidator : IXHeaderValidator
     {
         return false;
     }
-  
 }

@@ -3,5 +3,5 @@
 public enum Actions
 {
     NotSet,
-    Ignore,
+    Ignore
 }

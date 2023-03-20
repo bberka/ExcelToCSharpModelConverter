@@ -12,5 +12,4 @@ public class XExtendValidatorBindings : NinjectModule
         Bind<IXFileNameValidator>().To<FileNameValidatorExtend>();
         Bind<IXSheetValidator>().To<SheetValidatorExtend>();
     }
-    
 }
