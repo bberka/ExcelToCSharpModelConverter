@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using XSharp.Core.Export;
 using XSharp.Shared;
 
 namespace XSharp.Core.Extensions;
@@ -7,7 +9,7 @@ internal static class XExtensions
     private const string _lowerAll = "abcdefghijklmnoprstuvwxyzq";
     private const string _upperAll = "ABCDEFGHIJKLMNOPRSTUVWXYZQ";
     private const string _digits = "0123456789";
-    private const string _validChars = _lowerAll + _upperAll + _digits + "_";
+    private const string _validChars = _lowerAll + _upperAll + _digits;
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
 
     public static List<ExcelWorksheet> GetSheets(this ExcelPackage package)
@@ -34,60 +36,56 @@ internal static class XExtensions
 
     public static List<IXHeader> GetHeaders(this ExcelWorksheet sheet)
     {
-        var headerValidator = XKernel.This.GetValidator<IXHeaderValidator>();
-        var valueTypeRow = OptionLib.This.Option.SetValueTypesAtRowNumber;
+        var validator = XOptionLib.This.GetValidator();
+        var valueTypeRow = XOptionLib.This.Option.SetValueTypesAtRowNumber;
         var firstRow = sheet.Dimension?.Start.Row;
         var firstRowData = sheet.Cells[firstRow ?? 0, 1, firstRow ?? 0, sheet.Dimension?.End.Column ?? 0];
         var exampleRowData = sheet.Cells[valueTypeRow, 1, valueTypeRow, sheet.Dimension?.End.Column ?? 0];
         var columns = firstRowData.Select((c, i) =>
         {
-            // var cell = sheet.Cells[1, i + 1];
-            var cellToGetValueType = exampleRowData[valueTypeRow, i + 1];
             if (c.Value is null) return null;
-            var cellValueType = cellToGetValueType.Value?.GetType();
+            var cellToGetValue = exampleRowData[valueTypeRow, i + 1].Value;
             var xHeader = XKernel.This.GetInstance<IXHeader>();
-            xHeader.SetIndex(i);
+            xHeader.Index = i;
             var headerValue = c.Value?.ToString()?.RemoveLineEndings();
             if (headerValue.IsNullOrEmpty() || headerValue == null)
             {
-                logger.Warn($"Header value is null or empty at index {i}. SheetName: " + sheet.Name);
+                logger.Debug($"Header value is null or empty at index {i}. SheetName: " + sheet.Name);
                 return null;
             }
-
-            xHeader.SetName(headerValue);
-            if (cellValueType == null) xHeader.SetValueType(typeof(string));
-            else xHeader.SetValueType(cellValueType);
-            xHeader.SetFixedName(xHeader.Name.FixName());
-            if (headerValidator is not null)
-            {
-                var isIgnore = headerValidator.IsIgnore(xHeader);
-                if (isIgnore) return null;
-            }
-
+            var tryType = XValueConverter.GetTryType(cellToGetValue?.ToString(), typeof(string));//Todo: OptionLib.This.Option.DefaultValueType use this
+            var type = validator.GetHeaderType(headerValue, cellToGetValue, tryType);
+            xHeader.Name = headerValue;
+            xHeader.ValueType = type;
+            xHeader.FixedName= xHeader.Name.FixName();
+            var isIgnore = validator.IsIgnoreHeader(xHeader);
+            if (isIgnore) return null;
             if (xHeader.FixedName.IsNullOrEmpty() || xHeader.Name.IsNullOrEmpty()) return null;
+
+            xHeader.Comment = c?.Comment?.Text;
             return xHeader;
         }).ToList();
         columns.RemoveAll(x => x is null);
-        if (columns.Count == 0) return new List<IXHeader>();
-        return columns.DistinctBy(x => x.Name).ToList();
+        return columns.Count == 0 ? new List<IXHeader>() : columns.DistinctBy(x => x.Name).DistinctBy(x => x.FixedName).ToList();
     }
 
     public static string FixName(this string name)
     {
         var sb = new StringBuilder();
-        name = name.TrimAbsolute().RemoveLineEndings();
-        var isFirstChar = true;
-        foreach (var c in name.Where(c => _validChars.Contains(c)))
+        name = name.TrimAbsolute().RemoveLineEndings().RemoveText("_");
+        var charList = name.Where(c => _validChars.Contains(c)).ToList();
+        for (var i = 0; i < charList.Count; i++)
         {
-            if (isFirstChar && char.IsDigit(c))
+            var ch = charList[i];
+            if (i == 0)
             {
-                sb.Append('_');
-                isFirstChar = false;
+                if (char.IsDigit(ch))
+                    sb.Append('_');
+                if (char.IsLower(ch))
+                    ch = char.ToUpper(ch);
             }
-
-            sb.Append(c);
+            sb.Append(ch);
         }
-
         return sb.ToString();
     }
 }

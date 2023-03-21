@@ -52,28 +52,5 @@ public class XSheet<T> : IXSheet<T>
     public List<T> Rows { get; set; }
     public List<IXHeader> Headers { get; set; }
 
-    public void SetRows(List<T> rows)
-    {
-        Rows = rows;
-    }
 
-    public void SetHeaders(List<IXHeader> headers)
-    {
-        Headers = headers;
-    }
-
-    public void SetName(string workSheetName)
-    {
-        Name = workSheetName;
-    }
-
-    public void SetFixedName(string name)
-    {
-        FixedName = name;
-    }
-
-    public void SetDimension(ExcelAddressBase dimension)
-    {
-        Dimension = dimension;
-    }
 }

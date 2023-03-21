@@ -2,13 +2,10 @@
 
 public interface IXHeader
 {
-    int Index { get; }
-    string Name { get; }
-    string FixedName { get; }
-    Type ValueType { get; }
+    int Index { get; set; }
+    string Name { get; set; }
+    string FixedName { get; set; }
+    string? Comment { get; set; }
+    Type? ValueType { get; set; }
 
-    public void SetIndex(int index);
-    public void SetName(string name);
-    public void SetFixedName(string name);
-    public void SetValueType(Type type);
 }

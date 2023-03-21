@@ -9,8 +9,6 @@ public class XModelBindings : NinjectModule
 {
     public override void Load()
     {
-        //Bind<IXFile>().To<XFile>();
-        //Bind<IXSheet>().To<XSheet>();
         Bind<IXRow>().To<XRow>();
         Bind<IXCell>().To<XCell>();
         Bind<IXHeader>().To<XHeader>();

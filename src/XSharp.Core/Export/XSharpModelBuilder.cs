@@ -1,127 +1,120 @@
-﻿using XSharp.Shared;
+﻿using Microsoft.Extensions.Primitives;
+using System.Text;
+using XSharp.Shared;
 using XSharp.Shared.Attributes;
 
 namespace XSharp.Core.Export;
 
-internal class XSharpModelBuilder
+internal static class XSharpModelBuilder
 {
-    private readonly string _fixedName;
-    private readonly List<IXHeader> _headers;
-    private readonly string _outPath;
-    private readonly string _sheetName;
-
-    private XSharpModelBuilder(List<IXHeader> headers, string sheetName, string fixedName, string outPath)
+    
+    public static Result ExportSharpModel(List<IXHeader> headers, string realSheetName, string fixedName, string outPath)
     {
-        _headers = headers;
-        _sheetName = sheetName;
-        _fixedName = fixedName;
-        _outPath = outPath;
-    }
-
-    public static Result Export(ExcelWorksheet? worksheet, string outPath)
-    {
-        if (worksheet is null) return Result.Warn("Worksheet is null");
-        if (worksheet.Dimension is null) return Result.Warn("Worksheet dimension is null or empty");
-        var headers = worksheet.GetHeaders();
-        if (headers.Count == 0) return Result.Warn("Worksheet has no valid headers");
-        if (worksheet.Name.IsNullOrEmpty()) return Result.Warn("SheetName is null or empty");
-        var fixedName = worksheet.Name.FixName();
-        if (fixedName.IsNullOrEmpty())
-            return Result.Warn("FixedSheetName is null or empty. SheetName: " + worksheet.Name);
-        var sheetName = worksheet.Name;
-        var validator = XKernel.This.GetValidator<IXSheetValidator>();
-        if (validator is not null)
-        {
-            var isValidName = validator.IsIgnore(worksheet.Name);
-            if (!isValidName) return Result.Warn("Invalid sheet name: " + worksheet.Name);
-            var validName = validator.GetValidSheetName(sheetName);
-            if (validName != worksheet.Name) sheetName = validName;
-        }
-
-        var modelBuilder = new XSharpModelBuilder(headers, sheetName, fixedName, outPath);
-        return modelBuilder.ExportSharpModel(outPath);
-    }
-
-    private string BuildFileOutPutPath(string path)
-    {
-        return Path.Combine(path, $"{_fixedName}.cs");
-    }
-
-    public Result ExportSharpModel(string outPath)
-    {
-        PathLib.CreateDirectory(outPath);
-        var fileOutPath = BuildFileOutPutPath(outPath);
+        XPathLib.CreateDirectory(outPath);
+        var fileOutPath = BuildFileOutPutPath(outPath,fixedName);
         if (File.Exists(fileOutPath)) return Result.Warn("File already exists: " + fileOutPath);
-        var fileContent = CreateSharpModel();
+        var fileContent = CreateSharpModel(headers,realSheetName,fixedName);
         File.WriteAllText(fileOutPath, fileContent);
         return Result.Success("File created: " + fileOutPath);
     }
-
-
-    private string CreateSharpModel()
+    
+    private static string CreateSharpModel(List<IXHeader> headers, string realSheetName, string fixedSheetName)
     {
         var sb = new StringBuilder();
-        AppendStart(sb);
-        foreach (var col in _headers)
+        AppendUsingList(sb);
+        AppendNamespace(sb);
+        AppendSheetNameAttribute(sb, realSheetName);
+        AppendClass(sb, fixedSheetName);
+        foreach (var col in headers)
         {
+            AppendComment(sb, col.Comment);
             AppendHeaderName(sb, col.Name, col.FixedName);
-            AppendValueTypeString(sb, col.ValueType?.Name, out var valueTypeString);
-            AppendProperty(sb, valueTypeString, col.FixedName!);
+            var valueType = AppendValueTypeString(sb, col.ValueType?.Name);
+            AppendProperty(sb, valueType, fixedSheetName,col.FixedName);
         }
-
         AppendEnd(sb);
         return sb.ToString();
     }
 
-    private static StringBuilder AppendHeaderName(StringBuilder sb, string colName, string fixedColumnName)
+
+    private static string BuildFileOutPutPath(string path, string fileName)
     {
-        if (fixedColumnName != colName) sb.AppendLine($"    [{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{colName}\")]");
-        return sb;
+        return Path.Combine(path, $"{fileName}.cs");
     }
 
-    private static StringBuilder AppendValueTypeString(StringBuilder sb, string? valueTypeName,
-        out string valueTypeString)
+
+    #region AppendMethods
+
+    private static void AppendProperty(StringBuilder stringBuilder, string valueTypeString, string fixedSheetName, string fixedPropertyName)
     {
-        if (valueTypeName.IsNullOrEmpty())
+        if (fixedSheetName == fixedPropertyName) fixedPropertyName = "_" + fixedPropertyName;
+        if (XOptionLib.This.Option.IsUseNullable)
         {
-            sb.AppendLine($"    [{nameof(XCellValueTypeInvalidAttribute).RemoveText("Attribute")}]");
-            valueTypeName = OptionLib.This.Option.DefaultValueType.ToString();
+            stringBuilder.Append("    public " + valueTypeString + "? " + fixedPropertyName);
         }
-
-        valueTypeString = valueTypeName;
-        return sb;
-    }
-
-    private StringBuilder AppendProperty(StringBuilder stringBuilder, string valueTypeString, string propertyName)
-    {
-        if (propertyName == _fixedName) propertyName = "_" + propertyName;
-        stringBuilder.AppendLine($"    public {valueTypeString} {propertyName} {{ get; set; }}");
-        return stringBuilder;
-    }
-
-    private StringBuilder AppendStart(StringBuilder sb)
-    {
-        if (OptionLib.This.Option.UsingNameSpaceList.Count > 0)
+        else
         {
-            foreach (var item in OptionLib.This.Option.UsingNameSpaceList) sb.AppendLine("using " + item + ";");
-            sb.AppendLine();
+            stringBuilder.Append("    public " + valueTypeString + " " + fixedPropertyName);
         }
-
-        sb.AppendLine($"namespace {OptionLib.This.Option.NameSpace};");
+        stringBuilder.AppendLine(" { get; set; }");
+    }
+    private static void AppendHeaderName(StringBuilder sb, string colName, string fixedColumnName)
+    {
+        if (fixedColumnName == colName) return;
+        sb.AppendLine($"    [{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{colName}\")]");
+    }
+    private static void AppendClass(StringBuilder sb, string className)
+    {
+        sb.Append("public class " + className + " : XSheetBase");
+        if (XOptionLib.This.Option.ModelInheritanceList.Count > 0)
+        {
+            sb.Append("," + string.Join(",", XOptionLib.This.Option.ModelInheritanceList));
+        }
         sb.AppendLine();
-        sb.AppendLine($"[{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{_fixedName}\")]");
-        sb.Append("public class");
-        sb.Append(' ');
-        sb.Append(_fixedName);
-        sb.Append(' ');
-        sb.AppendLine(": XSheetBase," + OptionLib.This.Option.ModelInheritanceString);
         sb.AppendLine("{");
-        return sb;
+    }
+    private static void AppendSheetNameAttribute(StringBuilder sb, string sheetName)
+    {
+        sb.AppendLine($"[{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
+
+    }
+    private static void AppendUsingList(StringBuilder sb)
+    {
+        if (XOptionLib.This.Option.UsingNameSpaceList.Count == 0) return;
+        foreach (var item in XOptionLib.This.Option.UsingNameSpaceList) sb.AppendLine("using " + item + ";");
+        sb.AppendLine();
     }
 
-    private static StringBuilder AppendEnd(StringBuilder sb)
+    private static void AppendNamespace(StringBuilder sb)
+    {
+        sb.AppendLine($"namespace {XOptionLib.This.Option.NameSpace};");
+        sb.AppendLine();
+    }
+    private static void AppendEnd(StringBuilder sb)
     {
         sb.AppendLine("}");
-        return sb;
     }
+    private static string AppendValueTypeString(
+        StringBuilder sb,
+        string? valueTypeName
+        )
+    {
+        if (!valueTypeName.IsNullOrEmpty()) return valueTypeName!;
+        sb.AppendLine($"    [{nameof(XCellValueTypeInvalidAttribute).RemoveText("Attribute")}]");
+        return "String";
+    }
+
+    private static bool AppendComment(
+        StringBuilder sb,
+        string? comment
+        )
+    {
+        if (comment is null || comment.IsNullOrEmpty()) return false;
+        sb.AppendLine("    /// <summary>");
+        sb.AppendLine("    /// " + comment!.RemoveLineEndings());
+        sb.AppendLine("    /// </summary>");
+        return true;
+    }
+    #endregion
+
 }

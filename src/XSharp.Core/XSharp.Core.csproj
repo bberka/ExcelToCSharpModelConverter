@@ -26,10 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ActionHelpers" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\XSharp.Shared\XSharp.Shared.csproj" />
     </ItemGroup>
 

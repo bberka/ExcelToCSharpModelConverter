@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using EasMe.Logging;
 using EasMe.Result;
 using Ninject;
+using OfficeOpenXml;
 using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared;
@@ -33,7 +35,7 @@ public class XKernel : IXKernel
         return _kernel.Get<T>();
     }
 
-    public void Load(Assembly assembly)
+    public void LoadNinjectModules(Assembly assembly)
     {
         _kernel.Load(assembly);
     }
@@ -45,25 +47,16 @@ public class XKernel : IXKernel
         if (!isAbsolutePath) filePath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
         // return Result.Warn("File path is not absolute: " + filePath);
         var assembly = Assembly.LoadFile(filePath);
-        Load(assembly);
+        LoadNinjectModules(assembly);
         return Result.Success();
-    }
-
-    public T? GetValidator<T>() where T : IXBaseValidator
-    {
-        try
-        {
-            return GetInstance<T>();
-        }
-        catch (Exception ex)
-        {
-            logger.Debug(ex, "Failed to get instance: " + typeof(T).Name);
-            return default;
-        }
     }
 
     public static void Init()
     {
+        ExcelPackage.LicenseContext = LicenseContext.Commercial;
+        Trace.WriteLine("EPPlus NonCommercial license activated!!!");
         _ = This;
+        Trace.WriteLine("XKernel initialized!!!");
+        
     }
 }

@@ -12,12 +12,12 @@ public class XOption : IXOption
     //public string? InFolderPath { get; set; }
     //public string? OutFolderPath { get; set; }
     public string NameSpace { get; set; }
-    public LogLevel MinimumLogLevel { get; set; }
     public ValueType DefaultValueType { get; set; }
-    public string ModelInheritanceString { get; set; }
+    public List<string> ModelInheritanceList { get; set; } = new();
     public string ExtendValidatorDllFilePath { get; set; }
     public long HeaderColumnNumber { get; set; }
     public int SetValueTypesAtRowNumber { get; set; }
     public List<string> UsingNameSpaceList { get; set; } = new();
     public List<string> NullValueStrings { get; set; } = new();
+    public bool IsUseNullable { get; set; } = true;
 }

@@ -13,20 +13,13 @@ public interface IXOption
     /// </summary>
     string NameSpace { get; set; }
 
-    /// <summary>
-    ///     Minimum log level to log.
-    /// </summary>
-    LogLevel MinimumLogLevel { get; set; }
 
     /// <summary>
     ///     Default value type for the model class.
     /// </summary>
     ValueType DefaultValueType { get; set; }
 
-    /// <summary>
-    ///     Inheritance string for the model class.
-    /// </summary>
-    string ModelInheritanceString { get; set; }
+    List<string> ModelInheritanceList { get; set; } 
 
     /// <summary>
     ///     Path to the dll file that contains the extend validator for use of the XSharp.App.
@@ -51,5 +44,7 @@ public interface IXOption
     /// <summary>
     ///     String values that will be converted to null value.
     /// </summary>
-    List<string> NullValueStrings { get; set; }
+    List<string> NullValueStrings { get; set; } 
+
+    public bool IsUseNullable { get; set; } 
 }
