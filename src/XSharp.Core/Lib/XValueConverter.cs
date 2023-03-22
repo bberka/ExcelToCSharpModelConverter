@@ -4,6 +4,8 @@ internal static class XValueConverter
 {
     public static bool TryConvert(string? s, Type? toType, out object? convertedType)
     {
+        //var num = s.RemoveText(",").RemoveText(".");
+
         convertedType = null;
         if (s is null || toType is null) return false;
         if (toType == typeof(string))
@@ -39,7 +41,6 @@ internal static class XValueConverter
 
             return false;
         }
-
         if (toType == typeof(long) || toType == typeof(long?))
         {
 
@@ -66,7 +67,6 @@ internal static class XValueConverter
 
         if (toType == typeof(double) || toType == typeof(double?))
         {
-
             if (double.TryParse(s, out var result))
             {
                 convertedType = result;

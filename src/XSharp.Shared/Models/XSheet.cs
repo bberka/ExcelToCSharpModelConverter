@@ -3,54 +3,49 @@ using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Models;
 
-//public partial class XSheet : IXSheet
-//{
-//    private List<OfficeOpenXml.ExcelRow> _rows;
-//    public string Name { get; set; }
-//    public string? FixedName { get; set; }
-//    public Type SheetModelType { get; set; }
-//    public ExcelAddressBase Dimension { get; set;}
 
-//    public List<object> Rows { get; set; }
-//    public List<IXHeader> Headers { get; set;}
-
-//    public void SetRows(List<object> rows)
-//    {
-//        Rows = rows;
-//    }
-
-//    public void SetHeaders(List<IXHeader> headers)
-//    {
-//        Headers = headers;
-//    }
-//    public void SetType(Type type)
-//    {
-//        SheetModelType = type;
-//    }
-//    public void SetName(string workSheetName)
-//    {
-//        Name = workSheetName;
-//    }
-
-//    public void SetFixedName(string name)
-//    {
-//        FixedName = name;
-//    }
-
-//    public void SetDimension(ExcelAddressBase dimension)
-//    {
-//        Dimension = dimension;
-//    }
-//}
-
-public class XSheet<T> : IXSheet<T>
+public class XSheet<T>
 {
     public Type SheetModelType => typeof(T);
+    public string FileName { get; set; }
     public string Name { get; set; }
     public string? FixedName { get; set; }
     public ExcelAddressBase Dimension { get; set; }
-    public List<T> Rows { get; set; }
-    public List<IXHeader> Headers { get; set; }
+    public List<XRow<T>> Rows { get; set; } = new();
+    public List<XHeader> Headers { get; set; } = new();
 
+}
+
+public class XSheet
+{
+    public string FileName { get; set; }
+    public string Name { get; set; }
+    public string? FixedName { get; set; }
+    public ExcelAddressBase Dimension { get; set; }
+    public List<XRow<object>> Rows { get; set; } = new();
+    public List<XHeader> Headers { get; set; } = new();
+
+    public List<XRow<T>> GetRowsAs<T>()
+    {
+        return Rows.Select(x => new XRow<T>()
+        {
+            Index = x.Index,
+            Data = (T)x.Data
+        })
+            .ToList();
+    }
+
+    public XSheet<T> GetAs<T>()
+    {
+        return new XSheet<T>()
+        {
+            Name = Name,
+            FixedName = FixedName,
+            Rows = GetRowsAs<T>(),
+            Dimension = Dimension,
+            FileName = FileName,
+            Headers = Headers
+        };
+    }
 
 }

@@ -8,7 +8,7 @@ namespace XSharp.Core.Export;
 internal static class XSharpModelBuilder
 {
     
-    public static Result ExportSharpModel(List<IXHeader> headers, string realSheetName, string fixedName, string outPath)
+    public static Result ExportSharpModel(List<XHeader> headers, string realSheetName, string fixedName, string outPath)
     {
         XPathLib.CreateDirectory(outPath);
         var fileOutPath = BuildFileOutPutPath(outPath,fixedName);
@@ -18,7 +18,7 @@ internal static class XSharpModelBuilder
         return Result.Success("File created: " + fileOutPath);
     }
     
-    private static string CreateSharpModel(List<IXHeader> headers, string realSheetName, string fixedSheetName)
+    private static string CreateSharpModel(List<XHeader> headers, string realSheetName, string fixedSheetName)
     {
         var sb = new StringBuilder();
         AppendUsingList(sb);
@@ -29,6 +29,7 @@ internal static class XSharpModelBuilder
         {
             AppendComment(sb, col.Comment);
             AppendHeaderName(sb, col.Name, col.FixedName);
+            AppendHeaderIndexAttribute(sb, col.Index);
             var valueType = AppendValueTypeString(sb, col.ValueType?.Name);
             AppendProperty(sb, valueType, fixedSheetName,col.FixedName);
         }
@@ -45,6 +46,11 @@ internal static class XSharpModelBuilder
 
     #region AppendMethods
 
+    private static void AppendHeaderIndexAttribute(StringBuilder sb, int index)
+    {
+        sb.AppendLine($"    [{nameof(XHeaderIndexAttribute).RemoveText("Attribute")}({index})]");
+
+    }
     private static void AppendProperty(StringBuilder stringBuilder, string valueTypeString, string fixedSheetName, string fixedPropertyName)
     {
         if (fixedSheetName == fixedPropertyName) fixedPropertyName = "_" + fixedPropertyName;

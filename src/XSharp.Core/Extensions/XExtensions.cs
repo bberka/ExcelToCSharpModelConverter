@@ -34,7 +34,7 @@ internal static class XExtensions
         return filePath!.EndsWith(".csv");
     }
 
-    public static List<IXHeader> GetHeaders(this ExcelWorksheet sheet)
+    public static List<XHeader> GetHeaders(this ExcelWorksheet sheet)
     {
         var validator = XOptionLib.This.GetValidator();
         var valueTypeRow = XOptionLib.This.Option.SetValueTypesAtRowNumber;
@@ -45,7 +45,7 @@ internal static class XExtensions
         {
             if (c.Value is null) return null;
             var cellToGetValue = exampleRowData[valueTypeRow, i + 1].Value;
-            var xHeader = XKernel.This.GetInstance<IXHeader>();
+            var xHeader = XKernel.This.GetInstance<XHeader>();
             xHeader.Index = i;
             var headerValue = c.Value?.ToString()?.RemoveLineEndings();
             if (headerValue.IsNullOrEmpty() || headerValue == null)
@@ -66,7 +66,7 @@ internal static class XExtensions
             return xHeader;
         }).ToList();
         columns.RemoveAll(x => x is null);
-        return columns.Count == 0 ? new List<IXHeader>() : columns.DistinctBy(x => x.Name).DistinctBy(x => x.FixedName).ToList();
+        return columns.Count == 0 ? new List<XHeader>() : columns.DistinctBy(x => x.Name).DistinctBy(x => x.FixedName).ToList();
     }
 
     public static string FixName(this string name)

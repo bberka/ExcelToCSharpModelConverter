@@ -4,7 +4,7 @@ namespace XSharp.Shared;
 
 public class XDefaultValidator : IXValidator
 {
-    public bool IsIgnoreRow(IXHeader header, int rowIndex, object? cellValue)
+    public bool IsIgnoreRow(XHeader header, int rowIndex, object? cellValue)
     {
         return false;
     }
@@ -14,7 +14,7 @@ public class XDefaultValidator : IXValidator
         return false;
     }
 
-    public bool IsIgnoreHeader(IXHeader header)
+    public bool IsIgnoreHeader(XHeader header)
     {
         return false;
 
@@ -35,7 +35,7 @@ public class XDefaultValidator : IXValidator
         return defaultType;
     }
 
-    public Type GetHeaderType(IXHeader header, Type defaultType)
+    public Type GetHeaderType(XHeader header, Type defaultType)
     {
         return defaultType;
     }

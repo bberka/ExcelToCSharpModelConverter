@@ -11,7 +11,7 @@ public class XOptionLib
 
     private XOptionLib()
     {
-        Option = XKernel.This.GetInstance<IXOption>();
+        Option = XKernel.This.GetInstance<XOption>();
         SetDefaults();
         ReadJson();
     }
@@ -26,7 +26,7 @@ public class XOptionLib
     }
 
 
-    public IXOption Option { get; private set; }
+    public XOption Option { get; private set; }
 
     private IXValidator _validator = new XDefaultValidator();
 

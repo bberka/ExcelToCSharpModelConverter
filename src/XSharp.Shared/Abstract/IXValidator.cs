@@ -2,9 +2,9 @@
 
 public interface IXValidator
 {
-    public bool IsIgnoreRow(IXHeader header, int rowIndex, object? cellValue);
+    public bool IsIgnoreRow(XHeader header, int rowIndex, object? cellValue);
     public bool IsIgnoreSheetByName(string name);
-    public bool IsIgnoreHeader(IXHeader header);
+    public bool IsIgnoreHeader(XHeader header);
     public bool IsIgnoreFileByPath(string filePath);
     public bool IsIgnoreCell(object? value);
     public Type GetHeaderType(string headerName, object? cellValueToGetType, Type defaultType);

@@ -7,7 +7,7 @@ namespace XSharp.Shared.Models;
 
 [Serializable]
 [XmlRoot("ExportOption")]
-public class XOption : IXOption
+public class XOption 
 {
     //public string? InFolderPath { get; set; }
     //public string? OutFolderPath { get; set; }

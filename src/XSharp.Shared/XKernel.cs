@@ -8,7 +8,7 @@ using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared;
 
-public class XKernel : IXKernel
+public class XKernel 
 {
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
     private static XKernel? Instance;

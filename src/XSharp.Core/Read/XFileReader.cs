@@ -44,6 +44,7 @@ public class XFileReader
         if (_isRead && !isReadAgain) return _xFile;
         try
         {
+            var fileName = Path.GetFileName(_path);
             using var p = new ExcelPackage(_path);
             var sheets = p.Workbook.Worksheets;
             foreach (var sheet in sheets)
@@ -56,7 +57,7 @@ public class XFileReader
                     continue;
                 }
 
-                var res = XSheetReader.Read(sheet, sheetType.GetType());
+                var res = XSheetReader.Read(sheet, sheetType.GetType(), fileName);
                 if (res.IsFailure)
                 {
                     logger.Error("Failed to create WorkSheetReader: " + sheet.Name + " : " + res.ErrorCode);
