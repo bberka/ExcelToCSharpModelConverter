@@ -72,7 +72,7 @@ public static class XSheetReader
                     if (currentHeader is null) continue;
                     isIgnoredRow = validator?.IsIgnoreRow(currentHeader, row, value) == true;
                     if (isIgnoredRow) break;
-                    var property = type.GetProperty(currentHeader.Name ?? "",
+                    var property = type.GetProperty(currentHeader.FixedName ?? "",
                         BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                     if (property is null) continue;
                     var isConvertSuccess =

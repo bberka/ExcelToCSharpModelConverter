@@ -14,6 +14,16 @@ public class XDefaultValidator : IXValidator
         return false;
     }
 
+    public bool IsIgnoreSheetByFixedName(string fixedName)
+    {
+        return false;
+    }
+
+    public bool IsIgnoreSheetByHeaders(List<XHeader> headers)
+    {
+        return false;
+    }
+
     public bool IsIgnoreHeader(XHeader header)
     {
         return false;
