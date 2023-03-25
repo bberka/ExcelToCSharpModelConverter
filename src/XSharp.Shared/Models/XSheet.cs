@@ -8,6 +8,7 @@ public class XSheet<T>
 {
     public Type SheetModelType => typeof(T);
     public string FileName { get; set; }
+    public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FileName);
     public string Name { get; set; }
     public string? FixedName { get; set; }
     public ExcelAddressBase Dimension { get; set; }
@@ -19,6 +20,8 @@ public class XSheet<T>
 public class XSheet
 {
     public string FileName { get; set; }
+    public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FileName);
+
     public string Name { get; set; }
     public string? FixedName { get; set; }
     public ExcelAddressBase Dimension { get; set; }
