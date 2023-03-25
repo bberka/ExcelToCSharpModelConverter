@@ -11,3 +11,7 @@ XSharp library projects aims to make it easy to read and write data to excel wit
 - You can also use XOption to set namespaces of created files and more.
 - Once extraction is done it will export .cs files to working directory inside "Output" folder.
 - You can now add those models to your own Excel editor project and use those models to read Excel files easily.
+
+
+## Disclaimer
+This project is not commercial. It uses EPPlus NonCommercial Licence to read Excel files. If you are building a commercial application by using this project you must purchase a licence here [link](https://www.epplussoftware.com/) otherwise creator or contributors of XSharp project can not be held responsible.
