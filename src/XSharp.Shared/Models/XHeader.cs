@@ -1,5 +1,3 @@
-using XSharp.Shared.Abstract;
-
 namespace XSharp.Shared.Models;
 
 public class XHeader
@@ -9,5 +7,4 @@ public class XHeader
     public string? FixedName { get; set; }
     public string? Comment { get; set; }
     public Type? ValueType { get; set; }
-
 }

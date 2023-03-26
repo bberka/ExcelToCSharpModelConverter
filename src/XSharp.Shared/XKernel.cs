@@ -1,15 +1,11 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
-using EasMe.Logging;
-using EasMe.Result;
 using Ninject;
 using OfficeOpenXml;
-using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared;
 
-public class XKernel 
+public class XKernel
 {
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
     private static XKernel? Instance;
@@ -58,6 +54,5 @@ public class XKernel
         Trace.WriteLine("EPPlus NonCommercial license activated!!!");
         _ = This;
         Trace.WriteLine("XKernel initialized!!!");
-        
     }
 }

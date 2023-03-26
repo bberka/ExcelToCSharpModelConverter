@@ -1,6 +1,4 @@
-﻿using XSharp.Shared.Abstract;
-
-namespace XSharp.Shared.Models;
+﻿namespace XSharp.Shared.Models;
 
 public class XSheetStructure
 {

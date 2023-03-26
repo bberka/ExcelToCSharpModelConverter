@@ -1,11 +1,7 @@
-﻿using System.IO;
-using XSharp.Shared.Attributes;
-
-namespace XSharp.Core.Manager;
+﻿namespace XSharp.Core.Manager;
 
 internal static class XSheetModelBuilder
 {
-
     public static Result ExportSharpModel(List<XHeader> headers, string realSheetName, string fixedName, string outPath)
     {
         XPathLib.CreateDirectory(outPath);
@@ -13,14 +9,15 @@ internal static class XSheetModelBuilder
         if (File.Exists(fileOutPath)) return Result.Warn("File already exists: " + fileOutPath);
         var fileContent = CreateSharpModel(headers, realSheetName, fixedName);
         return WriteToFile(fileOutPath, fileContent);
-       
     }
+
     internal static Result WriteToFile(string outPath, string content)
     {
         XPathLib.CreateDirectory(outPath);
         File.WriteAllText(outPath, content);
         return Result.Success("File created: " + outPath);
     }
+
     private static string CreateSharpModel(List<XHeader> headers, string realSheetName, string fixedSheetName)
     {
         var sb = new StringBuilder();
@@ -31,7 +28,7 @@ internal static class XSheetModelBuilder
         foreach (var col in headers)
         {
             var valueType = col.ValueType?.Name;
-           
+
             XBuilderHelper.AppendPropertySummaryIfExists(sb, col.Comment);
             XBuilderHelper.AppendXHeaderNameAttribute(sb, col.Name, col.FixedName);
             XBuilderHelper.AppendHeaderIndexAttribute(sb, col.Index);
@@ -40,13 +37,11 @@ internal static class XSheetModelBuilder
                 valueType = XOptionLib.This.Option.DefaultValueType.ToString();
                 XBuilderHelper.AppendXCellValueTypeInvalidAttribute(sb, valueType);
             }
-            XBuilderHelper.AppendProperty(sb, valueType, fixedSheetName,col.FixedName);
+
+            XBuilderHelper.AppendProperty(sb, valueType, fixedSheetName, col.FixedName);
         }
+
         XBuilderHelper.AppendEnd(sb);
         return sb.ToString();
     }
-
-
-
-
 }

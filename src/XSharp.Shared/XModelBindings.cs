@@ -1,5 +1,4 @@
 ﻿using Ninject.Modules;
-using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared;
 

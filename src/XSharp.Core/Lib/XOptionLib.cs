@@ -9,6 +9,8 @@ public class XOptionLib
 
     private static XOptionLib? _instance;
 
+    private IXValidator _validator = new XDefaultValidator();
+
     private XOptionLib()
     {
         Option = XKernel.This.GetInstance<XOption>();
@@ -28,12 +30,11 @@ public class XOptionLib
 
     public XOption Option { get; private set; }
 
-    private IXValidator _validator = new XDefaultValidator();
-
     public IXValidator GetValidator()
     {
         return _validator;
     }
+
     public void SetValidator(IXValidator validator)
     {
         _validator = validator;
@@ -87,6 +88,4 @@ public class XOptionLib
         option.UsingNameSpaceList.Add("System");
         Option = option;
     }
-
-
 }

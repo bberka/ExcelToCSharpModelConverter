@@ -27,7 +27,6 @@ public class XDefaultValidator : IXValidator
     public bool IsIgnoreHeader(XHeader header)
     {
         return false;
-
     }
 
     public bool IsIgnoreFileByPath(string filePath)
@@ -45,11 +44,6 @@ public class XDefaultValidator : IXValidator
         return defaultType;
     }
 
-    public Type GetHeaderType(XHeader header, Type defaultType)
-    {
-        return defaultType;
-    }
-
     public string GetValidSheetName(string name)
     {
         return name;
@@ -58,5 +52,10 @@ public class XDefaultValidator : IXValidator
     public object? GetValidCellValue(object? value)
     {
         return value;
+    }
+
+    public Type GetHeaderType(XHeader header, Type defaultType)
+    {
+        return defaultType;
     }
 }

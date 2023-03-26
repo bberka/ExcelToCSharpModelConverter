@@ -1,6 +1,3 @@
-using System.Diagnostics;
-using XSharp.Shared;
-
 namespace XSharp.Core.Extensions;
 
 internal static class XExtensions
@@ -11,7 +8,7 @@ internal static class XExtensions
     private const string _validChars = _lowerAll + _upperAll + _digits;
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
 
- 
+
     public static bool IsFilePathExcel(this string filePath)
     {
         return filePath!.EndsWith(".xlsx") || filePath.EndsWith(".xlsm") || filePath.EndsWith(".xls");
@@ -21,7 +18,7 @@ internal static class XExtensions
     {
         return filePath!.EndsWith(".csv");
     }
-    
+
     public static string FixXName(this string name)
     {
         var sb = new StringBuilder();
@@ -37,8 +34,10 @@ internal static class XExtensions
                 if (char.IsLower(ch))
                     ch = char.ToUpper(ch);
             }
+
             sb.Append(ch);
         }
+
         return sb.ToString();
     }
 }

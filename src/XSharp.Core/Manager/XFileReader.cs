@@ -7,8 +7,8 @@ public class XFileReader
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
     private readonly Assembly _assembly;
     private readonly string _path;
-    private bool _isRead;
     private readonly XFile _xFile = new();
+    private bool _isRead;
 
     private XFileReader(Assembly assembly, string path)
     {

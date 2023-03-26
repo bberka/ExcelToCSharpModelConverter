@@ -6,5 +6,6 @@ public class XHeaderIndexAttribute : Attribute
     {
         Index = index;
     }
+
     public int Index { get; set; }
 }

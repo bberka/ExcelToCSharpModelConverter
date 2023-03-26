@@ -1,13 +1,11 @@
 ﻿using System.Xml.Serialization;
-using Microsoft.Extensions.Logging;
-using XSharp.Shared.Abstract;
 using ValueType = XSharp.Shared.Constants.ValueType;
 
 namespace XSharp.Shared.Models;
 
 [Serializable]
 [XmlRoot("ExportOption")]
-public class XOption 
+public class XOption
 {
     //public string? InFolderPath { get; set; }
     //public string? OutFolderPath { get; set; }

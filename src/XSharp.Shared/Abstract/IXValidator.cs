@@ -12,5 +12,4 @@ public interface IXValidator
     public Type GetHeaderType(string headerName, object? cellValueToGetType, Type defaultType);
     public string GetValidSheetName(string name);
     public object? GetValidCellValue(object? value);
-
 }

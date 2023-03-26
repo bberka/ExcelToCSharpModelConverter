@@ -1,9 +1,6 @@
-﻿using EasMe.Result;
-using XSharp.Shared.Abstract;
+﻿namespace XSharp.Shared.Models;
 
-namespace XSharp.Shared.Models;
-
-public class XFile 
+public class XFile
 {
     public string Name { get; set; } = string.Empty;
     public List<XSheet> Sheets { get; set; } = new();

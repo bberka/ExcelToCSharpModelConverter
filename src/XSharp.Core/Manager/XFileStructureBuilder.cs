@@ -1,6 +1,4 @@
-﻿using XSharp.Shared.Models;
-
-namespace XSharp.Core.Manager;
+﻿namespace XSharp.Core.Manager;
 
 internal class XFileStructureBuilder
 {
@@ -11,6 +9,7 @@ internal class XFileStructureBuilder
         _xStructure = new XFileStructure();
         _xStructure.FileName = fileName;
     }
+
     //internal void AddXFile(string fileName, List<XSheetStructure>? sheetStructures = null)
     //{
     //    if(fileName.IsNullOrEmpty()) return;
@@ -33,21 +32,20 @@ internal class XFileStructureBuilder
     {
         lock (_xStructure)
         {
-            _xStructure.XSheetStructures.Add(new XSheetStructure()
+            _xStructure.XSheetStructures.Add(new XSheetStructure
             {
                 Name = sheetName,
-                FixedName = fixedName,
+                FixedName = fixedName
             });
         }
-       
     }
+
     internal void SetXSheets(List<XSheetStructure> structures)
     {
         lock (_xStructure)
         {
             _xStructure.XSheetStructures = structures;
         }
-
     }
     //internal void AddXSheet(string fileName, string sheetName, string fixedName)
     //{
@@ -99,15 +97,13 @@ internal class XFileStructureBuilder
         XBuilderHelper.AppendClassStart(sb, fixedXFileName);
         foreach (var sheet in _xStructure.XSheetStructures)
         {
-
             XBuilderHelper.AppendXSheetNameAttribute(sb, sheet.Name);
             XBuilderHelper.AppendProperty(sb, $"XSheet<{sheet.FixedName}>", fixedXFileName, sheet.FixedName);
-
         }
+
         XBuilderHelper.AppendEnd(sb);
         var fileOutPath = Path.Combine(dir, $"{fixedXFileName}.cs");
         if (File.Exists(fileOutPath)) File.Delete(fileOutPath);
         File.WriteAllText(fileOutPath, sb.ToString());
-
     }
 }

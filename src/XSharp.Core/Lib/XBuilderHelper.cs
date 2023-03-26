@@ -9,10 +9,12 @@ internal static class XBuilderHelper
         sb.AppendLine($"namespace {XOptionLib.This.Option.NameSpace};");
         sb.AppendLine();
     }
+
     internal static void AppendEnd(StringBuilder sb)
     {
         sb.AppendLine("}");
     }
+
     internal static void AppendPropertySummaryIfExists(
         StringBuilder sb,
         string? comment
@@ -27,22 +29,21 @@ internal static class XBuilderHelper
             .ReplaceLineEndings(Environment.NewLine + "  /// <br/>"));
         sb.AppendLine("    /// </summary>");
     }
+
     internal static void AppendComment(
         StringBuilder sb,
         string comment
     )
     {
         if (comment.IsNullOrEmpty()) return;
-        sb.AppendLine("    // " + comment.ReplaceLineEndings(Environment.NewLine + " //" ));
+        sb.AppendLine("    // " + comment.ReplaceLineEndings(Environment.NewLine + " //"));
     }
 
     internal static void AppendClassStart(StringBuilder sb, string className)
     {
         sb.Append("public class " + className + " : XSheetBase");
         if (XOptionLib.This.Option.ModelInheritanceList.Count > 0)
-        {
             sb.Append("," + string.Join(",", XOptionLib.This.Option.ModelInheritanceList));
-        }
         sb.AppendLine();
         sb.AppendLine("{");
     }
@@ -54,24 +55,20 @@ internal static class XBuilderHelper
         sb.AppendLine();
     }
 
-    internal static void AppendProperty(StringBuilder stringBuilder, string valueTypeString, string className, string propertyName)
+    internal static void AppendProperty(StringBuilder stringBuilder, string valueTypeString, string className,
+        string propertyName)
     {
         if (className == propertyName) propertyName = "_" + propertyName;
         if (XOptionLib.This.Option.IsUseNullable)
-        {
             stringBuilder.Append("    public " + valueTypeString + "? " + propertyName);
-        }
         else
-        {
             stringBuilder.Append("    public " + valueTypeString + " " + propertyName);
-        }
         stringBuilder.AppendLine(" { get; set; }");
     }
 
     internal static void AppendHeaderIndexAttribute(StringBuilder sb, int index)
     {
         sb.AppendLine($"    [{nameof(XHeaderIndexAttribute).RemoveText("Attribute")}({index})]");
-
     }
 
     internal static void AppendXHeaderNameAttribute(StringBuilder sb, string colName, string fixedColumnName)
@@ -82,12 +79,11 @@ internal static class XBuilderHelper
     internal static void AppendXSheetNameAttribute(StringBuilder sb, string sheetName)
     {
         sb.AppendLine($"    [{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
-
     }
+
     internal static void AppendXFileNameAttribute(StringBuilder sb, string name)
     {
         sb.AppendLine($"[{nameof(XFileNameAttribute).RemoveText("Attribute")}(\"{name}\")]");
-
     }
 
 

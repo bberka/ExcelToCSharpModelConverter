@@ -1,8 +1,6 @@
-﻿using XSharp.Shared.Abstract;
+﻿namespace XSharp.Shared.Models;
 
-namespace XSharp.Shared.Models;
-
-public class XRow<T> 
+public class XRow<T>
 {
     public T Data { get; init; }
     public int Index { get; init; }

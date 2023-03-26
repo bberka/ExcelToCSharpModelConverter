@@ -11,11 +11,13 @@ public static class XAttributeLib
         var attribute = type.GetCustomAttribute<XSheetNameAttribute>(false);
         return attribute?.Name ?? type.Name;
     }
+
     public static string? GetSheetName(Type type)
     {
         var attribute = type.GetCustomAttribute<XSheetNameAttribute>(false);
         return attribute?.Name ?? type.Name;
     }
+
     public static string GetHeaderName(PropertyInfo propInfo)
     {
         var attribute = propInfo?.GetCustomAttribute<XSheetNameAttribute>(false);
@@ -35,7 +37,6 @@ public static class XAttributeLib
         var attribute = propInfo?.GetCustomAttribute<XHeaderNameAttribute>(false);
         return attribute?.Name ?? propertyName;
     }
-
 
 
     public static int GetHeaderIndex(PropertyInfo propInfo)

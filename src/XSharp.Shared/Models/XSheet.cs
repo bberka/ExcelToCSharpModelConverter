@@ -1,8 +1,6 @@
 ﻿using OfficeOpenXml;
-using XSharp.Shared.Abstract;
 
 namespace XSharp.Shared.Models;
-
 
 public class XSheet<T>
 {
@@ -14,7 +12,6 @@ public class XSheet<T>
     public ExcelAddressBase Dimension { get; set; }
     public List<XRow<T>> Rows { get; set; } = new();
     public List<XHeader> Headers { get; set; } = new();
-
 }
 
 public class XSheet
@@ -30,17 +27,17 @@ public class XSheet
 
     public List<XRow<T>> GetRowsAs<T>()
     {
-        return Rows.Select(x => new XRow<T>()
-        {
-            Index = x.Index,
-            Data = (T)x.Data
-        })
+        return Rows.Select(x => new XRow<T>
+            {
+                Index = x.Index,
+                Data = (T)x.Data
+            })
             .ToList();
     }
 
     public XSheet<T> GetAs<T>()
     {
-        return new XSheet<T>()
+        return new XSheet<T>
         {
             Name = Name,
             FixedName = FixedName,
@@ -50,5 +47,4 @@ public class XSheet
             Headers = Headers
         };
     }
-
 }

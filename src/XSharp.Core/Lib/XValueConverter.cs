@@ -10,7 +10,7 @@ internal static class XValueConverter
         if (s is null || toType is null) return false;
         if (toType == typeof(string))
         {
-            convertedType = s.ToString();
+            convertedType = s;
             return true;
         }
 
@@ -21,6 +21,7 @@ internal static class XValueConverter
                 convertedType = true;
                 return true;
             }
+
             if (s.Equals("false", StringComparison.OrdinalIgnoreCase))
             {
                 convertedType = false;
@@ -41,9 +42,9 @@ internal static class XValueConverter
 
             return false;
         }
+
         if (toType == typeof(long) || toType == typeof(long?))
         {
-
             if (long.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -55,7 +56,6 @@ internal static class XValueConverter
 
         if (toType == typeof(float) || toType == typeof(float?))
         {
-
             if (float.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -78,7 +78,6 @@ internal static class XValueConverter
 
         if (toType == typeof(decimal) || toType == typeof(decimal?))
         {
-
             if (decimal.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -90,7 +89,6 @@ internal static class XValueConverter
 
         if (toType == typeof(int) || toType == typeof(int?))
         {
-
             if (int.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -102,7 +100,6 @@ internal static class XValueConverter
 
         if (toType == typeof(short) || toType == typeof(short?))
         {
-
             if (short.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -114,7 +111,6 @@ internal static class XValueConverter
 
         if (toType == typeof(byte) || toType == typeof(byte?))
         {
-
             if (byte.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -126,7 +122,6 @@ internal static class XValueConverter
 
         if (toType == typeof(char) || toType == typeof(char?))
         {
-
             if (char.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -138,7 +133,6 @@ internal static class XValueConverter
 
         if (toType == typeof(DateTimeOffset) || toType == typeof(DateTimeOffset?))
         {
-
             if (DateTimeOffset.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -151,7 +145,6 @@ internal static class XValueConverter
 
         if (toType == typeof(DateTime) || toType == typeof(DateTime?))
         {
-
             if (DateTime.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -163,7 +156,6 @@ internal static class XValueConverter
 
         if (toType == typeof(TimeSpan) || toType == typeof(TimeSpan?))
         {
-
             if (TimeSpan.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -175,7 +167,6 @@ internal static class XValueConverter
 
         if (toType == typeof(Guid) || toType == typeof(Guid?))
         {
-
             if (Guid.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -187,7 +178,6 @@ internal static class XValueConverter
 
         if (toType == typeof(Uri))
         {
-
             if (Uri.TryCreate(s, UriKind.RelativeOrAbsolute, out var result))
             {
                 convertedType = result;
@@ -199,7 +189,6 @@ internal static class XValueConverter
 
         if (toType == typeof(Version))
         {
-
             if (Version.TryParse(s, out var result))
             {
                 convertedType = result;
@@ -223,11 +212,13 @@ internal static class XValueConverter
             convertedType = true;
             return true;
         }
+
         if (s.Equals("false", StringComparison.OrdinalIgnoreCase))
         {
             convertedType = false;
             return true;
         }
+
         if (long.TryParse(s, out var result1))
         {
             convertedType = result1;
@@ -312,13 +303,16 @@ internal static class XValueConverter
             convertedType = result14;
             return true;
         }
+
         convertedType = s;
         return false;
     }
+
     public static Type GetTryType(string? s, Type defaultType)
     {
         if (s is null) return defaultType;
-        if (s.Equals("false", StringComparison.OrdinalIgnoreCase) || s.Equals("true", StringComparison.OrdinalIgnoreCase))
+        if (s.Equals("false", StringComparison.OrdinalIgnoreCase) ||
+            s.Equals("true", StringComparison.OrdinalIgnoreCase))
             return typeof(bool);
         if (long.TryParse(s, out _))
             return typeof(long);
@@ -348,6 +342,7 @@ internal static class XValueConverter
         //    return typeof(Version);
         return defaultType;
     }
+
     private static object ConvertNumber(Type type, string value)
     {
         if (type == typeof(long) || type == typeof(long?))
