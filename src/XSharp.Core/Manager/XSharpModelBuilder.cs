@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.Primitives;
-using System.Text;
-using XSharp.Shared;
-using XSharp.Shared.Attributes;
+﻿using XSharp.Shared.Attributes;
 
-namespace XSharp.Core.Export;
+namespace XSharp.Core.Manager;
 
 internal static class XSharpModelBuilder
 {
@@ -27,7 +24,7 @@ internal static class XSharpModelBuilder
         AppendClass(sb, fixedSheetName);
         foreach (var col in headers)
         {
-            AppendComment(sb, col.Comment);
+            AppendCommentIfExists(sb, col.Comment);
             AppendHeaderName(sb, col.Name, col.FixedName);
             AppendHeaderIndexAttribute(sb, col.Index);
             var valueType = AppendValueTypeString(sb, col.ValueType?.Name);
@@ -110,16 +107,15 @@ internal static class XSharpModelBuilder
         return "String";
     }
 
-    private static bool AppendComment(
+    private static void AppendCommentIfExists(
         StringBuilder sb,
         string? comment
         )
     {
-        if (comment is null || comment.IsNullOrEmpty()) return false;
+        if (comment is null || comment.IsNullOrEmpty()) return;
         sb.AppendLine("    /// <summary>");
-        sb.AppendLine("    /// " + comment!.RemoveLineEndings());
+        sb.AppendLine("    /// " + comment!.ReplaceLineEndings("/// <br/>"));
         sb.AppendLine("    /// </summary>");
-        return true;
     }
     #endregion
 

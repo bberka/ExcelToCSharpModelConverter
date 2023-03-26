@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿
+using System.Diagnostics;
 using System.Reflection;
 using EasMe.Logging;
 using EasMe.Result;

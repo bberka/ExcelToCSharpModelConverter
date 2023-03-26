@@ -1,4 +1,4 @@
-namespace XSharp.Core.Export;
+namespace XSharp.Core.Manager;
 
 public static class XFileExporter
 {
@@ -13,14 +13,14 @@ public static class XFileExporter
             if (!isValidFilePath) return Result.Warn("Invalid file path: " + filePath);
             var isIgnoreFile = XOptionLib.This.GetValidator().IsIgnoreFileByPath(filePath!);
             if (isIgnoreFile) return Result.Warn("File ignored: " + filePath);
-            using var p = new ExcelPackage(filePath);
+            var p = new ExcelPackage(filePath);
             var sheets = p.Workbook.Worksheets;
             if (sheets.Count == 0) return Result.Warn("No WorkSheet found in Excel WorkBook");
             var outFolder = Path.Combine(Directory.GetCurrentDirectory(), "Output");
             XPathLib.CheckDirectoryPath(outFolder);
             var fileName = Path.GetFileName(filePath);
             XStructureBuilder.AddXFile(fileName);
-            var sheetExportResults = sheets.Select(x => XSheetExporter.Export(x, fileName, outFolder)).ToList();
+            var sheetExportResults = sheets.Select(x => new XSheetManager(x,fileName).Export(outFolder)).ToList();
             return sheetExportResults.CombineErrorArrays(nameof(ExportExcelFile));
            
         }

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace XSharp.Core.Read;
+namespace XSharp.Core.Manager;
 
 public class XFileReader
 {
@@ -49,7 +49,7 @@ public class XFileReader
             var sheets = p.Workbook.Worksheets;
             foreach (var sheet in sheets)
             {
-                var fixedName = sheet.Name.FixName();
+                var fixedName = sheet.Name.FixXName();
                 var sheetType = GetTypeInstanceFromAssemblyByName(fixedName);
                 if (sheetType == null)
                 {
@@ -57,7 +57,7 @@ public class XFileReader
                     continue;
                 }
 
-                var res = XSheetReader.Read(sheet, sheetType.GetType(), fileName);
+                var res = new XSheetManager(sheet, fileName).Read(sheetType.GetType());
                 if (res.IsFailure)
                 {
                     logger.Error("Failed to create WorkSheetReader: " + sheet.Name + " : " + res.ErrorCode);

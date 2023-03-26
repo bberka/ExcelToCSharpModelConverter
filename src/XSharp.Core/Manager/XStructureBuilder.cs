@@ -1,12 +1,10 @@
-﻿using XSharp.Shared;
+﻿namespace XSharp.Core.Manager;
 
-namespace XSharp.Core.Export;
-
-public static class XStructureBuilder
+internal static class XStructureBuilder
 {
     private static readonly XStructure _xStructure = new XStructure();
 
-    internal static void AddXFile(string fileName, List<XSheetStructure> sheetStructures = null)
+    internal static void AddXFile(string fileName, List<XSheetStructure>? sheetStructures = null)
     {
         if(fileName.IsNullOrEmpty()) return;
         if (sheetStructures is null)
@@ -40,12 +38,13 @@ public static class XStructureBuilder
         }
         xFileStructure.XSheetStructures.Add(xSheetStructure);
     }
-    public static void PrintAsJson()
+    internal static void PrintAsJson()
     {
         _xStructure.XFileStructures.RemoveAll(x => x.XSheetStructures.Count == 0);
         var json = XSerializer.SerializeJson(_xStructure);
-        var path = "XStructure.json";
+        const string path = "XStructure.json";
         if(File.Exists(path)) File.Delete(path);
         File.WriteAllText(path, json);
+        _xStructure.XFileStructures = new List<XFileStructure>();
     }
 }
