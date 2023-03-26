@@ -14,30 +14,28 @@ public class XSheetManager : IDisposable
         _worksheet = worksheet;
         _fileName = fileName;
     }
-    public Result Export(string outPath)
+    public Result Export(string outPath,out XSheetStructure? structure)
     {
+        structure = null;
         //if (worksheet is null) return Result.Warn("Worksheet is null");
         if (_worksheet.Dimension is null) return Result.Warn("Worksheet dimension is null or empty");
         var validator = XOptionLib.This.GetValidator();
-        var isIgnore = validator.IsIgnoreSheetByName(_worksheet.Name);
-        if (isIgnore) return Result.Warn("Sheet is ignored by name: " + _worksheet.Name);
         var fixedName = validator.GetValidSheetName(_worksheet.Name).FixXName();
-        if (fixedName.IsNullOrEmpty())
-            return Result.Warn("FixedSheetName is null or empty. SheetName: " + _worksheet.Name);
-        isIgnore = validator.IsIgnoreSheetByFixedName(fixedName);
-        if (isIgnore) return Result.Warn("Sheet is ignored by fixed name: " + _worksheet.Name + " FixedName: " + fixedName);
+        if (fixedName.IsNullOrEmpty()) return Result.Warn("FixedSheetName is null or empty. SheetName: " + _worksheet.Name);
+        var isIgnore = validator.IsIgnoreSheetByName(_worksheet.Name) || validator.IsIgnoreSheetByFixedName(fixedName);
+        if (isIgnore) return Result.Warn("Sheet is ignored: " + _worksheet.Name);
         var headers = GetHeaders();
         if (headers.Count == 0) return Result.Warn("Worksheet has no valid headers");
         isIgnore = validator.IsIgnoreSheetByHeaders(headers);
         if (isIgnore) return Result.Warn("Sheet is ignored by headers: " + _worksheet.Name + " FixedName: " + fixedName);
-        var res = XSharpModelBuilder.ExportSharpModel(headers, _worksheet.Name, fixedName, outPath);
-        if (res.IsSuccess)
+        structure = new XSheetStructure()
         {
-            XStructureBuilder.AddXSheet(_fileName, _worksheet.Name, fixedName);
-        }
-        return res;
+            FixedName = fixedName,
+            Name = _worksheet.Name,
+        };
+        return XSheetModelBuilder.ExportSharpModel(headers, _worksheet.Name, fixedName, outPath);
     }
-    
+
     public ResultData<XSheet> Read(Type type)
     {
         //if (sheet is null) return Result.Warn("Worksheet is null");
@@ -57,7 +55,7 @@ public class XSheetManager : IDisposable
         xSheet.Rows = rows;
         return xSheet;
     }
-    
+
     public List<XRow<object>> ReadRows(IReadOnlyCollection<XHeader> headers, Type type)
     {
         var start = _worksheet.Dimension.Start;
@@ -131,7 +129,7 @@ public class XSheetManager : IDisposable
             Data = (T)x.Data,
         }).ToList();
     }
-    
+
     public IEnumerable<XCell> ReadCells()
     {
         var startRow = _worksheet.Dimension?.Start.Row;
