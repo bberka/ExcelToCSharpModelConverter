@@ -2,32 +2,17 @@
 
 internal class XFileStructureBuilder
 {
+    private readonly string _fileExt;
     private readonly XFileStructure _xStructure;
 
-    public XFileStructureBuilder(string fileName)
+    public XFileStructureBuilder(string fileName,string fileExt)
     {
+        _fileExt = fileExt;
         _xStructure = new XFileStructure();
         _xStructure.FileName = fileName;
     }
 
-    //internal void AddXFile(string fileName, List<XSheetStructure>? sheetStructures = null)
-    //{
-    //    if(fileName.IsNullOrEmpty()) return;
-    //    if (sheetStructures is null)
-    //    {
-    //        _xStructure.XFileStructures.Add(new XFileStructure()
-    //        {
-    //            FileName = fileName,
-    //            XSheetStructures = new List<XSheetStructure>()
-    //        });
-    //        return;
-    //    }
-    //    _xStructure.XFileStructures.Add(new XFileStructure()
-    //    {
-    //        FileName = fileName,
-    //        XSheetStructures = sheetStructures
-    //    });
-    //}
+
     internal void AddXSheet(string sheetName, string fixedName)
     {
         lock (_xStructure)
@@ -47,21 +32,7 @@ internal class XFileStructureBuilder
             _xStructure.XSheetStructures = structures;
         }
     }
-    //internal void AddXSheet(string fileName, string sheetName, string fixedName)
-    //{
-    //    var xSheetStructure = new XSheetStructure()
-    //    {
-    //        Name = sheetName,
-    //        FixedName = fixedName,
-    //    };
-    //    var xFileStructure = _xStructure.XSheetStructures.Find(x => x.FileName == fileName);
-    //    if (xFileStructure is null)
-    //    {
-    //        AddXFile(fileName, new List<XSheetStructure>() { xSheetStructure});
-    //        return;
-    //    }
-    //    xFileStructure.XSheetStructures.Add(xSheetStructure);
-    //}
+   
 
     internal void ExportJson()
     {
@@ -73,17 +44,7 @@ internal class XFileStructureBuilder
         File.WriteAllText(path, json);
     }
 
-    //internal void ExportAsJson()
-    //{
-    //    _xStructure.XFileStructures.RemoveAll(x => x.XSheetStructures.Count == 0);
-    //    var json = XSerializer.SerializeJson(_xStructure);
-    //    var dir = Path.Combine("StructureOutputJson");
-    //    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-    //    string path = Path.Combine(dir, $"XStructure_{}.json");
-    //    if(File.Exists(path)) File.Delete(path);
-    //    File.WriteAllText(path, json);
-    //    _xStructure.XFileStructures = new List<XFileStructure>();
-    //}
+ 
 
     internal void ExportModels()
     {
@@ -93,8 +54,8 @@ internal class XFileStructureBuilder
         var sb = new StringBuilder();
         XBuilderHelper.AppendUsingList(sb);
         XBuilderHelper.AppendNamespace(sb);
-        XBuilderHelper.AppendXFileNameAttribute(sb, _xStructure.FileName);
-        XBuilderHelper.AppendClassStart(sb, fixedXFileName);
+        XBuilderHelper.AppendXFileNameAttribute(sb, _xStructure.FileName,_fileExt);
+        XBuilderHelper.AppendClassStart(sb, fixedXFileName, false);
         foreach (var sheet in _xStructure.XSheetStructures)
         {
             XBuilderHelper.AppendXSheetNameAttribute(sb, sheet.Name);

@@ -2,18 +2,19 @@ namespace XSharp.Core.Manager;
 
 public class XFileExporter
 {
-    private readonly string _filePath;
-    private readonly string _fileName;
-    private readonly XFileStructureBuilder _structureBuilder;
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
+    private readonly string _fileName;
+    private readonly string _filePath;
+    private readonly XFileStructureBuilder _structureBuilder;
 
     public XFileExporter(string filePath)
     {
         _filePath = filePath;
-        _fileName = Path.GetFileNameWithoutExtension(_filePath);
-        _structureBuilder = new XFileStructureBuilder(_fileName);
-
+        _fileName = Path.GetFileName(_filePath);
+        var fileExtension = Path.GetExtension(_filePath);
+        _structureBuilder = new XFileStructureBuilder(_fileName, fileExtension);
     }
+
     public Result ExportExcelFile()
     {
         try
@@ -28,7 +29,7 @@ public class XFileExporter
             var outFolder = Path.Combine(Directory.GetCurrentDirectory(), "Output");
             XPathLib.CheckDirectoryPath(outFolder);
             //_structureBuilder.AddXFile(fileName);
-            var sheetExportResults = sheets.Select(x => new 
+            var sheetExportResults = sheets.Select(x => new
             {
                 Result = new XSheetManager(x, _fileName).Export(outFolder, out var structure),
                 Structure = structure
@@ -38,23 +39,23 @@ public class XFileExporter
             _structureBuilder.ExportJson();
             _structureBuilder.ExportModels();
             return sheetExportResults.Select(x => x.Result).CombineErrorArrays(nameof(ExportExcelFile));
-           
         }
         catch (Exception ex)
         {
             logger.Exception(ex, "Failed to create Excel Exporter. FilePath: " + _filePath);
             return Result.Exception(ex, "Failed to create Excel Exporter. FilePath: " + _filePath);
         }
-
     }
 
     public static Result ExportExcelFilesInDirectory(string folderPath, bool isParallel = false)
     {
         var excelFiles = XPathLib.GetExcelFilesFromFolder(folderPath);
         if (excelFiles.Count == 0) return Result.Warn("No excel file found in directory: " + folderPath);
-        var res =  isParallel
-            ? excelFiles.AsParallel().Select(x => new XFileExporter(x).ExportExcelFile()).CombineAll(nameof(ExportExcelFilesInDirectory))
-            : excelFiles.Select(x => new XFileExporter(x).ExportExcelFile()).CombineAll(nameof(ExportExcelFilesInDirectory));
+        var res = isParallel
+            ? excelFiles.AsParallel().Select(x => new XFileExporter(x).ExportExcelFile())
+                .CombineAll(nameof(ExportExcelFilesInDirectory))
+            : excelFiles.Select(x => new XFileExporter(x).ExportExcelFile())
+                .CombineAll(nameof(ExportExcelFilesInDirectory));
         return res;
     }
 }

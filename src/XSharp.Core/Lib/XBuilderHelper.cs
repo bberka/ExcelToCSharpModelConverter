@@ -39,9 +39,12 @@ internal static class XBuilderHelper
         sb.AppendLine("    // " + comment.ReplaceLineEndings(Environment.NewLine + " //"));
     }
 
-    internal static void AppendClassStart(StringBuilder sb, string className)
+    internal static void AppendClassStart(StringBuilder sb, string className, bool isSheet)
     {
-        sb.Append("public class " + className + " : XSheetBase");
+        if (isSheet)
+            sb.Append("public class " + className + " : XSheetBase");
+        else
+            sb.Append("public class " + className + " : XFileBase");
         if (XOptionLib.This.Option.ModelInheritanceList.Count > 0)
             sb.Append("," + string.Join(",", XOptionLib.This.Option.ModelInheritanceList));
         sb.AppendLine();
@@ -81,9 +84,9 @@ internal static class XBuilderHelper
         sb.AppendLine($"    [{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
     }
 
-    internal static void AppendXFileNameAttribute(StringBuilder sb, string name)
+    internal static void AppendXFileNameAttribute(StringBuilder sb, string name,string ext)
     {
-        sb.AppendLine($"[{nameof(XFileNameAttribute).RemoveText("Attribute")}(\"{name}\")]");
+        sb.AppendLine($"[{nameof(XFileNameAttribute).RemoveText("Attribute")}(\"{name}\",\"{ext}\")]");
     }
 
 

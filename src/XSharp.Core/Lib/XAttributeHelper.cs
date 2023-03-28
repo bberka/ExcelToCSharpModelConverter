@@ -3,7 +3,7 @@ using XSharp.Shared.Attributes;
 
 namespace XSharp.Core.Lib;
 
-public static class XAttributeLib
+public static class XAttributeHelper
 {
     public static string? GetSheetName<T>()
     {

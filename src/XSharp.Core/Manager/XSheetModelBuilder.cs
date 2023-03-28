@@ -24,7 +24,7 @@ internal static class XSheetModelBuilder
         XBuilderHelper.AppendUsingList(sb);
         XBuilderHelper.AppendNamespace(sb);
         XBuilderHelper.AppendXSheetNameAttribute(sb, realSheetName);
-        XBuilderHelper.AppendClassStart(sb, fixedSheetName);
+        XBuilderHelper.AppendClassStart(sb, fixedSheetName, true);
         foreach (var col in headers)
         {
             var valueType = col.ValueType?.Name;
