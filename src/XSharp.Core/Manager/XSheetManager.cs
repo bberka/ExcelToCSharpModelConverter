@@ -71,9 +71,13 @@ public class XSheetManager : IDisposable
         var end = _worksheet.Dimension.End;
         var rows = new List<XRow<object>>();
         var validator = XOptionLib.This.GetValidator();
-        for (var row = start.Row; row <= end.Row; row++)
+
+        Parallel.For(start.Row, end.Row + 1, new ParallelOptions()
         {
-            if (row == XOptionLib.This.Option.HeaderColumnNumber) continue;
+            MaxDegreeOfParallelism = 1000,
+        }, row =>
+        {
+            if (row == XOptionLib.This.Option.HeaderColumnNumber) return;
             var item = Activator.CreateInstance(type)!;
             var isSetAnyValue = false;
             var isIgnoredRow = false;
@@ -104,15 +108,59 @@ public class XSheetManager : IDisposable
                     logger.Exception(ex, "Error while reading table: " + _worksheet.Name);
                 }
 
-            if (!isSetAnyValue || isIgnoredRow) continue;
-            rows.Add(new XRow<object>
+            if (!isSetAnyValue || isIgnoredRow) return;
+            lock (rows)
             {
-                Data = item,
-                Index = row
-            });
-        }
+                rows.Add(new XRow<object>
+                {
+                    Data = item,
+                    Index = row
+                });
+            }
+            
+        });
+        //for (var row = start.Row; row <= end.Row; row++)
+        //{
+        //    if (row == XOptionLib.This.Option.HeaderColumnNumber) continue;
+        //    var item = Activator.CreateInstance(type)!;
+        //    var isSetAnyValue = false;
+        //    var isIgnoredRow = false;
+        //    for (var col = start.Column; col <= end.Column; col++)
+        //        try
+        //        {
+        //            var cell = _worksheet.Cells[row, col];
+        //            var value = cell.Value;
+        //            if (value is null) continue;
+        //            if (validator?.IsIgnoreCell(value) == true) continue;
+        //            value = validator?.GetValidCellValue(value) ?? value;
+        //            var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
+        //            if (currentHeader is null) continue;
+        //            isIgnoredRow = validator?.IsIgnoreRow(currentHeader, row, value) == true;
+        //            if (isIgnoredRow) break;
+        //            var property = type.GetProperty(currentHeader.FixedName ?? "",
+        //                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+        //            if (property is null) continue;
+        //            var isConvertSuccess =
+        //                XValueConverter.TryConvert(value?.ToString(), property.PropertyType, out var convertedVal);
+        //            if (!isConvertSuccess || convertedVal is null) continue;
+        //            property.SetValue(item, convertedVal);
 
-        return rows;
+        //            isSetAnyValue = true;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            logger.Exception(ex, "Error while reading table: " + _worksheet.Name);
+        //        }
+
+        //    if (!isSetAnyValue || isIgnoredRow) continue;
+        //    rows.Add(new XRow<object>
+        //    {
+        //        Data = item,
+        //        Index = row
+        //    });
+        //}
+
+        return rows.OrderBy(x => x.Index).ToList();
     }
 
     public ResultData<XSheet<T>> Read<T>()

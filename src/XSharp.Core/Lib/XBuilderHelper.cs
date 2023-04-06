@@ -4,10 +4,17 @@ namespace XSharp.Core.Lib;
 
 internal static class XBuilderHelper
 {
-    internal static void AppendNamespace(StringBuilder sb)
+    internal static void AppendNamespace(StringBuilder sb,bool isSheet)
     {
-        sb.AppendLine($"namespace {XOptionLib.This.Option.NameSpace};");
+        if (isSheet)
+        {
+            sb.AppendLine($"namespace {XOptionLib.This.Option.SheetModelNameSpace};");
+            sb.AppendLine();
+            return;
+        }
+        sb.AppendLine($"namespace {XOptionLib.This.Option.FileModelNameSpace};");
         sb.AppendLine();
+        
     }
 
     internal static void AppendEnd(StringBuilder sb)
@@ -42,11 +49,21 @@ internal static class XBuilderHelper
     internal static void AppendClassStart(StringBuilder sb, string className, bool isSheet)
     {
         if (isSheet)
+        {
             sb.Append("public class " + className + " : XSheetBase");
+            if (XOptionLib.This.Option.SheetModelInheritanceList.Count > 0)
+            {
+                sb.Append("," + string.Join(",", XOptionLib.This.Option.SheetModelInheritanceList));
+            }
+        }
         else
+        {
             sb.Append("public class " + className + " : XFileBase");
-        if (XOptionLib.This.Option.ModelInheritanceList.Count > 0)
-            sb.Append("," + string.Join(",", XOptionLib.This.Option.ModelInheritanceList));
+            if (XOptionLib.This.Option.FileModelInheritanceList.Count > 0)
+            {
+                sb.Append("," + string.Join(",", XOptionLib.This.Option.FileModelInheritanceList));
+            }
+        }
         sb.AppendLine();
         sb.AppendLine("{");
     }
@@ -79,9 +96,14 @@ internal static class XBuilderHelper
         sb.AppendLine($"    [{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{colName}\")]");
     }
 
-    internal static void AppendXSheetNameAttribute(StringBuilder sb, string sheetName)
+    internal static void AppendXSheetNameAttribute(StringBuilder sb, string sheetName,bool isOnProperty)
     {
-        sb.AppendLine($"    [{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
+        if (isOnProperty)
+        {
+            sb.AppendLine($"    [{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
+            return;
+        }
+        sb.AppendLine($"[{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
     }
 
     internal static void AppendXFileNameAttribute(StringBuilder sb, string name,string ext)

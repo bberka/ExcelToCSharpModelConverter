@@ -35,7 +35,7 @@ public class XSheet
             .ToList();
     }
 
-    public XSheet<T> GetAs<T>()
+    public XSheet<T> GetAsXSheetT<T>()
     {
         return new XSheet<T>
         {

@@ -6,15 +6,13 @@ public class XFileReader
 {
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
     private readonly Assembly _assembly;
-    private readonly string _path;
     private readonly XFile _xFile = new();
     private bool _isRead;
 
     private XFileReader(Assembly assembly, string path)
     {
         _assembly = assembly;
-        _path = path;
-        _xFile.Name = Path.GetFileName(path);
+        _xFile.FilePath = path;
     }
 
     //Assembly must contain exported models for this to work
@@ -24,7 +22,6 @@ public class XFileReader
         {
             var fileExists = File.Exists(path);
             if (!fileExists) return Result.Warn("File not found: " + path);
-
             return new XFileReader(assembly, path);
         }
         catch (Exception ex)
@@ -44,8 +41,7 @@ public class XFileReader
         if (_isRead && !isReadAgain) return _xFile;
         try
         {
-            var fileName = Path.GetFileName(_path);
-            using var p = new ExcelPackage(_path);
+            using var p = new ExcelPackage(_xFile.FilePath);
             var sheets = p.Workbook.Worksheets;
             foreach (var sheet in sheets)
             {
@@ -57,7 +53,7 @@ public class XFileReader
                     continue;
                 }
 
-                var res = new XSheetManager(sheet, fileName).Read(sheetType.GetType());
+                var res = new XSheetManager(sheet, _xFile.NameWithoutExtension).Read(sheetType.GetType());
                 if (res.IsFailure)
                 {
                     logger.Error("Failed to create WorkSheetReader: " + sheet.Name + " : " + res.ErrorCode);
@@ -72,7 +68,7 @@ public class XFileReader
         }
         catch (Exception ex)
         {
-            logger.Exception(ex, "Failed to read workbook: " + _xFile.Name);
+            logger.Exception(ex, "Failed to read workbook: " + _xFile.NameWithoutExtension);
             return Result.Exception(ex);
         }
     }

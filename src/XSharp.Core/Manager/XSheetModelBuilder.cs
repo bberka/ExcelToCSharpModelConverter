@@ -22,8 +22,8 @@ internal static class XSheetModelBuilder
     {
         var sb = new StringBuilder();
         XBuilderHelper.AppendUsingList(sb);
-        XBuilderHelper.AppendNamespace(sb);
-        XBuilderHelper.AppendXSheetNameAttribute(sb, realSheetName);
+        XBuilderHelper.AppendNamespace(sb, true);
+        XBuilderHelper.AppendXSheetNameAttribute(sb, realSheetName, false);
         XBuilderHelper.AppendClassStart(sb, fixedSheetName, true);
         foreach (var col in headers)
         {

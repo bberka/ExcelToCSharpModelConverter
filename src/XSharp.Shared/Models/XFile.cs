@@ -2,7 +2,9 @@
 
 public class XFile
 {
-    public string Name { get; set; } = string.Empty;
+    public string FilePath { get; set; } = string.Empty;
+    public string NameWithoutExtension => Path.GetFileNameWithoutExtension(FilePath);
+    public string Extension => Path.GetExtension(FilePath);
     public List<XSheet> Sheets { get; set; } = new();
 
     public Result AddSheet(XSheet sheet)

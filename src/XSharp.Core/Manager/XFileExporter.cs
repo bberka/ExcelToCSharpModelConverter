@@ -10,7 +10,7 @@ public class XFileExporter
     public XFileExporter(string filePath)
     {
         _filePath = filePath;
-        _fileName = Path.GetFileName(_filePath);
+        _fileName = Path.GetFileNameWithoutExtension(_filePath);
         var fileExtension = Path.GetExtension(_filePath);
         _structureBuilder = new XFileStructureBuilder(_fileName, fileExtension);
     }
@@ -26,7 +26,7 @@ public class XFileExporter
             var p = new ExcelPackage(_filePath);
             var sheets = p.Workbook.Worksheets;
             if (sheets.Count == 0) return Result.Warn("No WorkSheet found in Excel WorkBook");
-            var outFolder = Path.Combine(Directory.GetCurrentDirectory(), "Output");
+            var outFolder = Path.Combine(Directory.GetCurrentDirectory(), "Output_SheetModels");
             XPathLib.CheckDirectoryPath(outFolder);
             //_structureBuilder.AddXFile(fileName);
             var sheetExportResults = sheets.Select(x => new

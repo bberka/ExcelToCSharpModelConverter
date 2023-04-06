@@ -37,7 +37,7 @@ internal class XFileStructureBuilder
     internal void ExportJson()
     {
         var json = XSerializer.SerializeJson(_xStructure);
-        var dir = Path.Combine("StructureOutput");
+        var dir = Path.Combine("Output_FileModels_Json");
         if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
         var path = Path.Combine(dir, $"{_xStructure.FileName}.json");
         if (File.Exists(path)) File.Delete(path);
@@ -48,17 +48,17 @@ internal class XFileStructureBuilder
 
     internal void ExportModels()
     {
-        var dir = Path.Combine("StructureOutputModel");
+        var dir = Path.Combine("Output_FileModels");
         if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
         var fixedXFileName = _xStructure.FileName.FixXName();
         var sb = new StringBuilder();
         XBuilderHelper.AppendUsingList(sb);
-        XBuilderHelper.AppendNamespace(sb);
+        XBuilderHelper.AppendNamespace(sb, false);
         XBuilderHelper.AppendXFileNameAttribute(sb, _xStructure.FileName,_fileExt);
         XBuilderHelper.AppendClassStart(sb, fixedXFileName, false);
         foreach (var sheet in _xStructure.XSheetStructures)
         {
-            XBuilderHelper.AppendXSheetNameAttribute(sb, sheet.Name);
+            XBuilderHelper.AppendXSheetNameAttribute(sb, sheet.Name, true);
             XBuilderHelper.AppendProperty(sb, $"XSheet<{sheet.FixedName}>", fixedXFileName, sheet.FixedName);
         }
 

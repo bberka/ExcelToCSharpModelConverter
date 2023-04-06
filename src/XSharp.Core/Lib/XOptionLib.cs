@@ -5,7 +5,6 @@ namespace XSharp.Core.Lib;
 
 public class XOptionLib
 {
-    private const string JsonPath = "ExportOption.json";
 
     private static XOptionLib? _instance;
 
@@ -15,7 +14,6 @@ public class XOptionLib
     {
         Option = XKernel.This.GetInstance<XOption>();
         SetDefaults();
-        ReadJson();
     }
 
     public static XOptionLib This
@@ -40,38 +38,19 @@ public class XOptionLib
         _validator = validator;
     }
 
-    public void WriteJson()
-    {
-        var json = XSerializer.SerializeJson(Option);
-        File.WriteAllText(JsonPath, json);
-    }
 
-    public Result ReadJson()
+    public void Configure(Action<XOption> action)
     {
-        var fileExists = File.Exists(JsonPath);
-        if (!fileExists) return Result.Error("File not found: " + JsonPath);
-        var read = File.ReadAllText(JsonPath);
-        var option = XSerializer.DeserializeJson<XOption>(read);
-        if (option is null) return Result.Error("Option is null");
-
-        Option = option;
-        return Result.Success();
-    }
-
-    public void Configure(Action<XOption> option)
-    {
-        var xOption = new XOption();
-        option(xOption);
-        Option = xOption;
+        action(Option);
     }
 
     public void SetDefaults()
     {
         Option.DefaultValueType = ValueType.String;
-        Option.NameSpace = "XSharp.Test.ExportedModels";
+        Option.SheetModelNameSpace = "XSharp.Test.ExportedModels";
+        Option.FileModelNameSpace = "XSharp.Test.ExportedModels";
         Option.HeaderColumnNumber = 1;
         Option.SetValueTypesAtRowNumber = 2;
-        Option.ModelInheritanceList.Add("XSheetBase");
         Option.NullValueStrings = new List<string> { "<null>" };
         Option.UsingNameSpaceList = new List<string>
         {
@@ -80,12 +59,5 @@ public class XOptionLib
         };
     }
 
-    public void SetTestOption()
-    {
-        var option = new XOption();
-        option.NullValueStrings.Add("<null>");
-        option.NullValueStrings.Add("<empty>");
-        option.UsingNameSpaceList.Add("System");
-        Option = option;
-    }
+    
 }
