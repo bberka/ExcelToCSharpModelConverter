@@ -2,5 +2,5 @@
 
 public class XStructure
 {
-    public List<XFileStructure> XFileStructures { get; set; } = new();
+  public List<XFileStructure> XFileStructures { get; set; } = new();
 }

@@ -2,7 +2,7 @@
 
 public enum ModelType
 {
-    Class,
-    Struct,
-    Record
+  Class,
+  Struct,
+  Record
 }

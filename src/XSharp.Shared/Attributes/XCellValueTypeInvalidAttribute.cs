@@ -1,5 +1,3 @@
 namespace XSharp.Shared.Attributes;
 
-public class XCellValueTypeInvalidAttribute : Attribute
-{
-}
+public class XCellValueTypeInvalidAttribute : Attribute { }

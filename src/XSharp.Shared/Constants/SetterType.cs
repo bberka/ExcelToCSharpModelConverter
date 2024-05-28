@@ -2,6 +2,6 @@
 
 public enum SetterType
 {
-    Set,
-    Init
+  Set,
+  Init
 }

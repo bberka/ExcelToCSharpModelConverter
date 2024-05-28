@@ -1,298 +1,308 @@
 ﻿using System.Reflection;
+using EasMe.Extensions;
+using Serilog;
 using XSharp.Shared;
 
 namespace XSharp.Core.Manager;
 
 public class XSheetManager : IDisposable
 {
-    private static readonly IEasLog logger = EasLogFactory.CreateLogger();
-    private readonly string _fileName;
-    private readonly ExcelWorksheet _worksheet;
+  private readonly string _fileName;
+  private readonly ExcelWorksheet _worksheet;
 
-    public XSheetManager(ExcelWorksheet worksheet, string fileName)
-    {
-        _worksheet = worksheet;
-        _fileName = fileName;
-    }
+  public XSheetManager(ExcelWorksheet worksheet, string fileName) {
+    _worksheet = worksheet;
+    _fileName = fileName;
+  }
 
-    public void Dispose()
-    {
-        _worksheet.Dispose();
-    }
+  public void Dispose() {
+    _worksheet.Dispose();
+  }
 
-    public Result Export(string outPath, out XSheetStructure? structure)
-    {
-        structure = null;
-        //if (worksheet is null) return Result.Warn("Worksheet is null");
-        if (_worksheet.Dimension is null) return Result.Warn("Worksheet dimension is null or empty");
-        var validator = XOptionLib.This.GetValidator();
-        var fixedName = validator.GetValidSheetName(_worksheet.Name).FixXName();
-        if (fixedName.IsNullOrEmpty())
-            return Result.Warn("FixedSheetName is null or empty. SheetName: " + _worksheet.Name);
-        var isIgnore = validator.IsIgnoreSheetByName(_worksheet.Name) || validator.IsIgnoreSheetByFixedName(fixedName);
-        if (isIgnore) return Result.Warn("Sheet is ignored: " + _worksheet.Name);
-        var headers = GetHeaders();
-        if (headers.Count == 0) return Result.Warn("Worksheet has no valid headers");
-        isIgnore = validator.IsIgnoreSheetByHeaders(headers);
-        if (isIgnore)
-            return Result.Warn("Sheet is ignored by headers: " + _worksheet.Name + " FixedName: " + fixedName);
-        structure = new XSheetStructure
-        {
-            FixedName = fixedName,
-            Name = _worksheet.Name
-        };
-        return XSheetModelBuilder.ExportSharpModel(headers, _worksheet.Name, fixedName, outPath);
-    }
+  public void Export(string outPath, out XSheetStructure? structure) {
+    structure = null;
+    //if (worksheet is null) return Result.Warn("Worksheet is null");
+    if (_worksheet.Dimension is null)
+      throw new Exception("Worksheet dimension is null or empty");
+    var validator = XOptionLib.This.GetValidator();
+    var fixedName = validator.GetValidSheetName(_worksheet.Name).FixXName();
+    if (fixedName.IsNullOrEmpty())
+      throw new Exception("FixedSheetName is null or empty. SheetName: " + _worksheet.Name);
+    var isIgnore = validator.IsIgnoreSheetByName(_worksheet.Name) || validator.IsIgnoreSheetByFixedName(fixedName);
+    if (isIgnore)
+      throw new Exception("Sheet is ignored: " + _worksheet.Name);
+    var headers = GetHeaders().ToList();
+    if (headers.Count == 0)
+      throw new Exception("Worksheet has no valid headers");
+    isIgnore = validator.IsIgnoreSheetByHeaders(headers);
+    if (isIgnore)
+      throw new Exception("Sheet is ignored by headers: " + _worksheet.Name + " FixedName: " + fixedName);
+    structure = new XSheetStructure {
+      FixedName = fixedName,
+      Name = _worksheet.Name
+    };
+    XSheetModelBuilder.ExportSharpModel(headers, _worksheet.Name, fixedName, outPath);
+  }
 
-    public ResultData<XSheet> Read(Type type)
-    {
-        //if (sheet is null) return Result.Warn("Worksheet is null");
-        if (_worksheet.Dimension is null) return Result.Warn("Worksheet dimension is null or empty");
-        var headers = GetHeaders();
-        if (headers.Count == 0) return Result.Warn("Worksheet has no valid headers");
-        if (_worksheet.Name.IsNullOrEmpty()) return Result.Warn("WorkSheet name is null or empty");
-        var fixedName = _worksheet.Name.FixXName();
-        if (fixedName.IsNullOrEmpty())
-            return Result.Warn("FixedSheetName is null or empty. SheetName: " + _worksheet.Name);
-        var xSheet = new XSheet();
-        xSheet.Name = _worksheet.Name;
-        xSheet.Dimension = _worksheet.Dimension;
-        xSheet.FixedName = fixedName;
-        xSheet.Headers = headers;
-        xSheet.FileName = _fileName;
-        var rows = ReadRows(headers, type);
-        xSheet.Rows = rows;
-        return xSheet;
-    }
+  public static void ClearEmptyRowsAndColumns(ExcelPackage excelPackage) {
+    foreach (var worksheet in excelPackage.Workbook.Worksheets) {
+      var start = worksheet.Dimension.Start;
+      var end = worksheet.Dimension.End;
 
-    public List<XRow<object>> ReadRows(IReadOnlyCollection<XHeader> headers, Type type)
-    {
-        var start = _worksheet.Dimension.Start;
-        var end = _worksheet.Dimension.End;
-        var rows = new List<XRow<object>>();
-        var validator = XOptionLib.This.GetValidator();
-
-        Parallel.For(start.Row, end.Row + 1, new ParallelOptions()
-        {
-            MaxDegreeOfParallelism = 1000,
-        }, row =>
-        {
-            if (row == XOptionLib.This.Option.HeaderColumnNumber) return;
-            var item = Activator.CreateInstance(type)!;
-            var isSetAnyValue = false;
-            var isIgnoredRow = false;
-            for (var col = start.Column; col <= end.Column; col++)
-                try
-                {
-                    var cell = _worksheet.Cells[row, col];
-                    var value = cell.Value;
-                    if (value is null) continue;
-                    if (validator?.IsIgnoreCell(value) == true) continue;
-                    value = validator?.GetValidCellValue(value) ?? value;
-                    var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
-                    if (currentHeader is null) continue;
-                    isIgnoredRow = validator?.IsIgnoreRow(currentHeader, row, value) == true;
-                    if (isIgnoredRow) break;
-                    var property = type.GetProperty(currentHeader.FixedName ?? "",
-                        BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    if (property is null) continue;
-                    var isConvertSuccess =
-                        XValueConverter.TryConvert(value?.ToString(), property.PropertyType, out var convertedVal);
-                    if (!isConvertSuccess || convertedVal is null) continue;
-                    property.SetValue(item, convertedVal);
-
-                    isSetAnyValue = true;
-                }
-                catch (Exception ex)
-                {
-                    logger.Exception(ex, "Error while reading table: " + _worksheet.Name);
-                }
-
-            if (!isSetAnyValue || isIgnoredRow) return;
-            lock (rows)
-            {
-                rows.Add(new XRow<object>
-                {
-                    Data = item,
-                    Index = row
-                });
-            }
-            
-        });
-        //for (var row = start.Row; row <= end.Row; row++)
-        //{
-        //    if (row == XOptionLib.This.Option.HeaderColumnNumber) continue;
-        //    var item = Activator.CreateInstance(type)!;
-        //    var isSetAnyValue = false;
-        //    var isIgnoredRow = false;
-        //    for (var col = start.Column; col <= end.Column; col++)
-        //        try
-        //        {
-        //            var cell = _worksheet.Cells[row, col];
-        //            var value = cell.Value;
-        //            if (value is null) continue;
-        //            if (validator?.IsIgnoreCell(value) == true) continue;
-        //            value = validator?.GetValidCellValue(value) ?? value;
-        //            var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
-        //            if (currentHeader is null) continue;
-        //            isIgnoredRow = validator?.IsIgnoreRow(currentHeader, row, value) == true;
-        //            if (isIgnoredRow) break;
-        //            var property = type.GetProperty(currentHeader.FixedName ?? "",
-        //                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-        //            if (property is null) continue;
-        //            var isConvertSuccess =
-        //                XValueConverter.TryConvert(value?.ToString(), property.PropertyType, out var convertedVal);
-        //            if (!isConvertSuccess || convertedVal is null) continue;
-        //            property.SetValue(item, convertedVal);
-
-        //            isSetAnyValue = true;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            logger.Exception(ex, "Error while reading table: " + _worksheet.Name);
-        //        }
-
-        //    if (!isSetAnyValue || isIgnoredRow) continue;
-        //    rows.Add(new XRow<object>
-        //    {
-        //        Data = item,
-        //        Index = row
-        //    });
-        //}
-
-        return rows.OrderBy(x => x.Index).ToList();
-    }
-
-    public ResultData<XSheet<T>> Read<T>()
-    {
-        return Read(typeof(T))
-            .SelectAs(x => new XSheet<T>
-            {
-                Name = x.Data.Name,
-                Dimension = x.Data.Dimension,
-                FixedName = x.Data.FixedName,
-                Headers = x.Data.Headers,
-                Rows = x.Data.GetRowsAs<T>(),
-                FileName = x.Data.FileName
-            });
-    }
-
-    public List<XRow<T>> ReadRows<T>(IReadOnlyCollection<XHeader> headers)
-    {
-        return ReadRows(headers, typeof(T)).Select(x => new XRow<T>
-        {
-            Index = x.Index,
-            Data = (T)x.Data
-        }).ToList();
-    }
-
-    public IEnumerable<XCell> ReadCells()
-    {
-        var startRow = _worksheet.Dimension?.Start.Row;
-        var startCol = _worksheet.Dimension?.Start.Column;
-        var endRow = _worksheet.Dimension?.End.Row;
-        var endCol = _worksheet.Dimension?.End.Column;
-        for (var row = startRow ?? 0; row <= (endRow ?? 0); row++)
-        for (var col = startCol ?? 0; col <= (endCol ?? 0); col++)
-        {
-            var cell = _worksheet.Cells[row, col];
-            yield return new XCell(cell, row, col);
-        }
-    }
-
-    public IEnumerable<IGrouping<int, XCell>> ReadRows()
-    {
-        return ReadCells().GroupBy(x => x.RowIndex);
-    }
-
-
-    private List<XRow<object>> ReadRows_New(IReadOnlyCollection<XHeader> headers, Type type)
-    {
-        var start = _worksheet.Dimension.Start;
-        var end = _worksheet.Dimension.End;
-        var rows = new List<XRow<object>>();
-        var validator = XOptionLib.This.GetValidator();
-        var list = ReadRows();
-        foreach (var item in list)
-        {
-            if (item.Key == XOptionLib.This.Option.HeaderColumnNumber) continue;
-            var obj = Activator.CreateInstance(type)!;
-            var isSetAnyValue = false;
-            var isIgnoredRow = false;
-            foreach (var cell in item)
-                try
-                {
-                    var value = cell.Value;
-                    if (value is null) continue;
-                    if (validator?.IsIgnoreCell(value) == true) continue;
-                    value = validator?.GetValidCellValue(value) ?? value;
-                    var currentHeader = headers.FirstOrDefault(x => x.Index == cell.ColumnIndex - 1);
-                    if (currentHeader is null) continue;
-                    isIgnoredRow = validator?.IsIgnoreRow(currentHeader, cell.RowIndex, value) == true;
-                    if (isIgnoredRow) break;
-
-                    var property = type.GetProperty(currentHeader.FixedName ?? "",
-                        BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    if (property is null) continue;
-                    var isConvertSuccess =
-                        XValueConverter.TryConvert(value?.ToString(), property.PropertyType, out var convertedVal);
-                    if (!isConvertSuccess || convertedVal is null) continue;
-                    property.SetValue(obj, convertedVal);
-                    isSetAnyValue = true;
-                }
-                catch (Exception ex)
-                {
-                    logger.Exception(ex, "Error while reading table: " + _worksheet.Name);
-                }
-
-            if (!isSetAnyValue || isIgnoredRow) continue;
-            rows.Add(new XRow<object>
-            {
-                Data = obj,
-                Index = item.Key
-            });
+      // Remove empty rows
+      for (var row = end.Row; row >= start.Row; row--) {
+        var isEmptyRow = true;
+        for (var col = start.Column; col <= end.Column; col++) {
+          var cellValue = worksheet.Cells[row, col].Value;
+          if (cellValue != null && !string.IsNullOrEmpty(cellValue.ToString())) {
+            isEmptyRow = false;
+            break;
+          }
         }
 
-        return rows;
+        if (isEmptyRow) worksheet.DeleteRow(row, 1);
+      }
+
+      // Remove empty columns
+      for (var col = end.Column; col >= start.Column; col--) {
+        var isEmptyColumn = true;
+        for (var row = start.Row; row <= end.Row; row++) {
+          var cellValue = worksheet.Cells[row, col].Value;
+          if (cellValue != null && !string.IsNullOrEmpty(cellValue.ToString())) {
+            isEmptyColumn = false;
+            break;
+          }
+        }
+
+        if (isEmptyColumn) worksheet.DeleteColumn(col, 1);
+      }
     }
 
-    public List<XHeader> GetHeaders()
-    {
-        var validator = XOptionLib.This.GetValidator();
-        var valueTypeRow = XOptionLib.This.Option.SetValueTypesAtRowNumber;
-        var firstRow = _worksheet.Dimension?.Start.Row;
-        var firstRowData = _worksheet.Cells[firstRow ?? 0, 1, firstRow ?? 0, _worksheet.Dimension?.End.Column ?? 0];
-        var exampleRowData = _worksheet.Cells[valueTypeRow, 1, valueTypeRow, _worksheet.Dimension?.End.Column ?? 0];
-        var columns = firstRowData.Select((c, i) =>
-        {
-            if (c.Value is null) return null;
-            var cellToGetValue = exampleRowData[valueTypeRow, i + 1].Value;
-            var xHeader = XKernel.This.GetInstance<XHeader>();
-            xHeader.Index = i;
-            var headerValue = c.Value?.ToString()?.RemoveLineEndings();
-            if (headerValue.IsNullOrEmpty() || headerValue == null)
-            {
-                logger.Debug($"Header value is null or empty at index {i}. SheetName: " + _worksheet.Name);
-                return null;
-            }
+    excelPackage.Save();
+  }
 
-            var tryType =
-                XValueConverter.GetTryType(cellToGetValue?.ToString(),
-                    typeof(string)); //Todo: OptionLib.This.Option.DefaultValueType use this
-            var type = validator.GetHeaderType(headerValue, cellToGetValue, tryType);
-            xHeader.Name = headerValue;
-            xHeader.ValueType = type;
-            xHeader.FixedName = xHeader.Name.FixXName();
-            var isIgnore = validator.IsIgnoreHeader(xHeader);
-            if (isIgnore) return null;
-            if (xHeader.FixedName.IsNullOrEmpty() || xHeader.Name.IsNullOrEmpty()) return null;
+  public XSheet Read(Type type) {
+    //if (sheet is null) return Result.Warn("Worksheet is null");
+    if (_worksheet.Dimension is null)
+      throw new Exception("Worksheet dimension is null or empty");
+    var headers = GetHeaders().ToList();
+    if (headers.Count == 0)
+      throw new Exception("Worksheet has no valid headers");
+    if (_worksheet.Name.IsNullOrEmpty())
+      throw new Exception("Worksheet name is null or empty");
+    var fixedName = _worksheet.Name.FixXName();
+    if (fixedName.IsNullOrEmpty())
+      throw new Exception("FixedSheetName is null or empty. SheetName: " + _worksheet.Name);
+    var xSheet = new XSheet {
+      Name = _worksheet.Name,
+      Dimension = _worksheet.Dimension,
+      FixedName = fixedName,
+      Headers = headers,
+      FileName = _fileName,
+      Rows = ReadRows(headers, type, _worksheet)
+    };
+    return xSheet;
+  }
 
-            xHeader.Comment = c?.Comment?.Text;
-            return xHeader;
-        }).ToList();
-        columns.RemoveAll(x => x is null);
-        return columns.Count == 0
-            ? new List<XHeader>()
-            : columns.DistinctBy(x => x!.Name).DistinctBy(x => x!.FixedName).ToList()!;
+  public static IEnumerable<XRow<object>> ReadRows(IReadOnlyCollection<XHeader> headers, Type type, ExcelWorksheet worksheet) {
+    var start = worksheet.Dimension.Start;
+    var end = worksheet.Dimension.End;
+    //var rows = new List<XRow<object>>();
+    var validator = XOptionLib.This.GetValidator();
+    for (var row = start.Row; row < end.Row + 1; row++) {
+      if (row == XOptionLib.This.Option.HeaderColumnNumber) continue;
+      var item = Activator.CreateInstance(type)!;
+      var isSetAnyValue = false;
+      var isIgnoredRow = false;
+      for (var col = start.Column; col <= end.Column; col++)
+        try {
+          var cell = worksheet.Cells[row, col];
+          var value = cell.Value;
+          if (value is null) continue;
+          if (validator?.IsIgnoreCell(value) == true) continue;
+          value = validator?.GetValidCellValue(value) ?? value;
+          var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
+          if (currentHeader is null) continue;
+          isIgnoredRow = validator?.IsIgnoreRow(currentHeader, row, value) == true;
+          if (isIgnoredRow) break;
+          var property = type.GetProperty(currentHeader.FixedName ?? "",
+                                          BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+          if (property is null) continue;
+          var isConvertSuccess =
+            XValueConverter.TryConvert(value?.ToString(), property.PropertyType, out var convertedVal);
+          if (!isConvertSuccess || convertedVal is null) continue;
+          property.SetValue(item, convertedVal);
+
+          isSetAnyValue = true;
+        }
+        catch (Exception ex) {
+          Log.Fatal(ex, "Error while reading table: " + worksheet.Name);
+        }
+
+      if (!isSetAnyValue || isIgnoredRow) continue;
+      var xRow = new XRow<object> {
+        Data = item,
+        Index = row
+      };
+      yield return xRow;
     }
+  }
+
+  public XSheet<T> Read<T>() {
+    var sheet = Read(typeof(T))
+      .As(x => new XSheet<T> {
+        Name = x.Name,
+        Dimension = x.Dimension,
+        FixedName = x.FixedName,
+        Headers = x.Headers,
+        FileName = x.FileName,
+        Rows = x.GetRowsAs<T>()
+      });
+    return sheet;
+  }
+
+  public IEnumerable<XRow<T>> ReadRows<T>(IReadOnlyCollection<XHeader> headers, ExcelWorksheet worksheet) {
+    return ReadRows(headers, typeof(T), worksheet).Select(x => new XRow<T> {
+      Index = x.Index,
+      Data = (T)x.Data
+    });
+  }
+
+  public IEnumerable<XCell> ReadCells() {
+    var startRow = _worksheet.Dimension?.Start.Row;
+    var startCol = _worksheet.Dimension?.Start.Column;
+    var endRow = _worksheet.Dimension?.End.Row;
+    var endCol = _worksheet.Dimension?.End.Column;
+    for (var row = startRow ?? 0; row <= (endRow ?? 0); row++)
+    for (var col = startCol ?? 0; col <= (endCol ?? 0); col++) {
+      var cell = _worksheet.Cells[row, col];
+      yield return new XCell(cell, row, col);
+    }
+  }
+
+  public IEnumerable<IGrouping<int, XCell>> ReadRows() {
+    return ReadCells().GroupBy(x => x.RowIndex);
+  }
+
+
+  //private IEnumerable<XRow<object>> ReadRows_New(IReadOnlyCollection<XHeader> headers, Type type) {
+  //  var start = _worksheet.Dimension.Start;
+  //  var end = _worksheet.Dimension.End;
+  //  var rows = new List<XRow<object>>();
+  //  var validator = XOptionLib.This.GetValidator();
+  //  var list = ReadRows();
+  //  foreach (var item in list) {
+  //    if (item.Key == XOptionLib.This.Option.HeaderColumnNumber) continue;
+  //    var obj = Activator.CreateInstance(type)!;
+  //    var isSetAnyValue = false;
+  //    var isIgnoredRow = false;
+  //    foreach (var cell in item)
+  //      try {
+  //        var value = cell.Value;
+  //        if (value is null) continue;
+  //        if (validator?.IsIgnoreCell(value) == true) continue;
+  //        value = validator?.GetValidCellValue(value) ?? value;
+  //        var currentHeader = headers.FirstOrDefault(x => x.Index == cell.ColumnIndex - 1);
+  //        if (currentHeader is null) continue;
+  //        isIgnoredRow = validator?.IsIgnoreRow(currentHeader, cell.RowIndex, value) == true;
+  //        if (isIgnoredRow) break;
+
+  //        var property = type.GetProperty(currentHeader.FixedName ?? "",
+  //            BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+  //        if (property is null) continue;
+  //        var isConvertSuccess =
+  //            XValueConverter.TryConvert(value?.ToString(), property.PropertyType, out var convertedVal);
+  //        if (!isConvertSuccess || convertedVal is null) continue;
+  //        property.SetValue(obj, convertedVal);
+  //        isSetAnyValue = true;
+  //      } catch (Exception ex) {
+  //        logger.Exception(ex, "Error while reading table: " + _worksheet.Name);
+  //      }
+
+  //    if (!isSetAnyValue || isIgnoredRow) continue;
+  //    yield return new XRow<object> {
+  //      Data = obj,
+  //      Index = item.Key
+  //    };
+  //  }
+  //}
+
+  public List<XHeader> GetHeaders() {
+    var validator = XOptionLib.This.GetValidator();
+    var valueTypeRow = XOptionLib.This.Option.SetValueTypesAtRowNumber;
+    var firstRow = _worksheet.Dimension?.Start.Row;
+    var firstRowData = _worksheet.Cells[firstRow ?? 0, 1, firstRow ?? 0, _worksheet.Dimension?.End.Column ?? 0];
+    var exampleRowData = _worksheet.Cells[valueTypeRow, 1, valueTypeRow, _worksheet.Dimension?.End.Column ?? 0];
+    var columns = firstRowData.Select((c, i) => {
+      if (c.Value is null) return null;
+      var cellToGetValue = exampleRowData[valueTypeRow, i + 1].Value;
+      var xHeader = XKernel.This.GetInstance<XHeader>();
+      xHeader.Index = i;
+      var headerValue = c.Value?.ToString()?.RemoveLineEndings();
+      if (headerValue.IsNullOrEmpty() || headerValue == null) {
+        Log.Debug($"Header value is null or empty at index {i}. SheetName: " + _worksheet.Name);
+        return null;
+      }
+
+      var tryType =
+        XValueConverter.GetTryType(cellToGetValue?.ToString(),
+                                   typeof(string)); //Todo: OptionLib.This.Option.DefaultValueType use this
+      var type = validator.GetHeaderType(headerValue, cellToGetValue, tryType);
+      xHeader.Name = headerValue;
+      xHeader.ValueType = type;
+      xHeader.FixedName = xHeader.Name.FixXName();
+      var isIgnore = validator.IsIgnoreHeader(xHeader);
+      if (isIgnore) return null;
+      if (xHeader.FixedName.IsNullOrEmpty() || xHeader.Name.IsNullOrEmpty()) return null;
+
+      xHeader.Comment = c?.Comment?.Text;
+      return xHeader;
+    }).ToList();
+    columns.RemoveAll(x => x is null);
+    return columns.Count == 0
+             ? new List<XHeader>()
+             : columns.DistinctBy(x => x!.Name).DistinctBy(x => x!.FixedName).ToList()!;
+  }
+
+  //public IEnumerable<XHeader> GetHeaders() {
+  //  var validator = XOptionLib.This.GetValidator();
+  //  var valueTypeRow = XOptionLib.This.Option.SetValueTypesAtRowNumber;
+  //  var firstRow = _worksheet.Dimension?.Start.Row;
+  //  var firstRowData = _worksheet.Cells[firstRow ?? 0, 1, firstRow ?? 0, _worksheet.Dimension?.End.Column ?? 0];
+  //  var exampleRowData = _worksheet.Cells[valueTypeRow, 1, valueTypeRow, _worksheet.Dimension?.End.Column ?? 0];
+
+  //  var cols = new List<string>();
+
+  //  for (var i = 0; i < firstRowData.Columns; i++) {
+  //    var c = firstRowData[1, i];
+  //    if (c.Value is null) {
+  //      continue;
+  //    }
+  //    var cellToGetValue = exampleRowData[valueTypeRow, i + 1].Value;
+  //    var xHeader = XKernel.This.GetInstance<XHeader>();
+  //    xHeader.Index = i;
+  //    var headerValue = c.Value?.ToString()?.RemoveLineEndings();
+  //    if (headerValue.IsNullOrEmpty() || headerValue == null) {
+  //      logger.Debug($"Header value is null or empty at index {i}. SheetName: " + _worksheet.Name);
+  //      continue;
+  //    }
+  //    var tryType = XValueConverter.GetTryType(cellToGetValue?.ToString(), typeof(string));
+  //    var type = validator.GetHeaderType(headerValue, cellToGetValue, tryType);
+  //    xHeader.Name = headerValue;
+  //    xHeader.ValueType = type;
+  //    xHeader.FixedName = xHeader.Name.FixXName();
+  //    var isIgnore = validator.IsIgnoreHeader(xHeader);
+  //    if (isIgnore) {
+  //      continue;
+  //    }
+  //    if (xHeader.FixedName.IsNullOrEmpty() || xHeader.Name.IsNullOrEmpty()) {
+  //      continue;
+  //    }
+  //    xHeader.Comment = c.Comment?.Text;
+  //    var isExist = cols.Contains(xHeader.FixedName);
+  //    if (isExist) continue;
+  //    cols.Add(xHeader.FixedName);
+  //    yield return xHeader;
+  //  }
+  //}
 }

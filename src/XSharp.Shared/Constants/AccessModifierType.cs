@@ -2,9 +2,9 @@
 
 public enum AccessModifierType
 {
-    None,
-    Public,
-    Private,
-    Protected,
-    Internal
+  None,
+  Public,
+  Private,
+  Protected,
+  Internal
 }
