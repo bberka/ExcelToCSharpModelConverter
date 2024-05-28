@@ -18,7 +18,7 @@ public sealed class XFileExporter
     _structureBuilder = new XFileStructureBuilder(_fileName, fileExtension, options);
   }
 
-  public void ExportExcelFile() {
+  public void ExportExcelFile(string outputDir) {
     var isIgnoreFile = _options.XValidator.IsIgnoreFileByPath(_filePath!);
     if (isIgnoreFile)
       return; //ignore file
@@ -29,32 +29,34 @@ public sealed class XFileExporter
       return;
     }
 
-    var outFolder = Path.Combine(Directory.GetCurrentDirectory(), "Output_SheetModels");
+    var outFolder = Path.Combine(outputDir, "SheetModels");
     XPathLib.CheckDirectoryPath(outFolder);
     var sheetExportResults = sheets.Select(x => {
                                      try {
                                        new XSheetManager(x, _fileName, _options).Export(outFolder, out var structure);
                                        return structure;
                                      }
-                                     catch {
+                                     catch(Exception ex) {
+                                       _options.Logger.LogError(ex, "Error while exporting sheet: {SheetName}", x.Name);
                                        return null;
                                      }
                                    })
                                    .ToList();
     var structures = sheetExportResults.Where(x => x is not null).ToList();
     _structureBuilder.SetXSheets(structures!);
-    _structureBuilder.ExportJson();
-    _structureBuilder.ExportModels();
+    _structureBuilder.ExportJson(outputDir);
+    _structureBuilder.ExportModels(outputDir);
+    _options.Logger.LogInformation("Exported models for file: {FileName} {SheetCount}", _fileName, structures.Count);
   }
 
-  public static void ExportExcelFilesInDirectory(string folderPath, XSharpOptions options, bool isParallel = false) {
+  public static void ExportExcelFilesInDirectory(string folderPath, XSharpOptions options, int parallelismCount = 3, string outputDir = "Output") {
     var excelFiles = XPathLib.GetExcelFilesFromFolder(folderPath);
     if (excelFiles.Count == 0)
       throw new Exception("No excel file found in folder: " + folderPath);
-    if (isParallel)
-      Parallel.ForEach(excelFiles, x => new XFileExporter(x, options).ExportExcelFile());
-    else
-      foreach (var file in excelFiles)
-        new XFileExporter(file, options).ExportExcelFile();
+    Parallel.ForEach(excelFiles,
+                     new ParallelOptions {
+                       MaxDegreeOfParallelism = parallelismCount,
+                     },
+                     x => new XFileExporter(x, options).ExportExcelFile(outputDir));
   }
 }

@@ -1,4 +1,6 @@
-﻿namespace XSharp.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace XSharp.Models;
 
 public class XSheet<T>
 {
@@ -36,6 +38,7 @@ public class XSheet
 
   public string Name { get; set; }
   public string? FixedName { get; set; }
+  [NotMapped]
   public ExcelAddressBase Dimension { get; set; }
 
   /// <summary>

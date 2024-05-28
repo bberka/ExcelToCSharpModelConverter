@@ -29,7 +29,7 @@ internal static class XBuilderHelper
     sb.AppendLine("    /// " + comment
                                .RemoveText("<")
                                .RemoveText(">")
-                               .ReplaceLineEndings(Environment.NewLine + "  /// <br/>"));
+                               .ReplaceLineEndings(Environment.NewLine + "    /// <br/>"));
     sb.AppendLine("    /// </summary>");
   }
 
@@ -74,21 +74,18 @@ internal static class XBuilderHelper
     stringBuilder.AppendLine(" { get; set; }");
   }
 
-  internal static void AppendHeaderIndexAttribute(StringBuilder sb, int index) {
-    sb.AppendLine($"    [{nameof(XHeaderIndexAttribute).RemoveText("Attribute")}({index})]");
-  }
 
-  internal static void AppendXHeaderNameAttribute(StringBuilder sb, string colName, string fixedColumnName) {
-    sb.AppendLine($"    [{nameof(XHeaderNameAttribute).RemoveText("Attribute")}(\"{colName}\")]");
+  internal static void AppendXHeaderAttribute(StringBuilder sb, int index, string colName, string fixedColumnName) {
+    sb.AppendLine($"    [{nameof(XHeaderAttribute).RemoveText("Attribute")}({index},\"{colName}\")]");
   }
 
   internal static void AppendXSheetNameAttribute(StringBuilder sb, string sheetName, bool isOnProperty) {
     if (isOnProperty) {
-      sb.AppendLine($"    [{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
+      sb.AppendLine($"[{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
       return;
     }
 
-    sb.AppendLine($"    [{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
+    sb.AppendLine($"[{nameof(XSheetNameAttribute).RemoveText("Attribute")}(\"{sheetName}\")]");
   }
 
   internal static void AppendXFileNameAttribute(StringBuilder sb, string name, string ext) {

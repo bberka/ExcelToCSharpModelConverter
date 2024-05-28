@@ -1,4 +1,5 @@
-﻿using XSharp.Models;
+﻿using Microsoft.Extensions.Logging;
+using XSharp.Models;
 
 namespace XSharp.Manager;
 
@@ -24,10 +25,12 @@ internal static class XSheetModelBuilder
     XBuilderHelper.AppendXSheetNameAttribute(sb, realSheetName, false);
     XBuilderHelper.AppendClassStart(sb, fixedSheetName, true, options);
     foreach (var col in headers) {
+      if (!col.FixedName.HasContent() || !col.Name.HasContent()) {
+         options.Logger.LogWarning("Column name or fixed name is empty. Sheet: {SheetName}", realSheetName);
+         continue;
+      }
       XBuilderHelper.AppendPropertySummaryIfExists(sb, col.Comment);
-      XBuilderHelper.AppendXHeaderNameAttribute(sb, col.Name, col.FixedName);
-      XBuilderHelper.AppendHeaderIndexAttribute(sb, col.Index);
-
+      XBuilderHelper.AppendXHeaderAttribute(sb, col.Index, col.Name, col.FixedName);
       XBuilderHelper.AppendProperty(sb, "string", fixedSheetName, col.FixedName, options);
     }
 

@@ -24,25 +24,25 @@ public static class XAttributeHelper
   public static string GetHeaderName<T>(string propertyName) {
     var type = typeof(T);
     var property = type.GetProperty(propertyName);
-    var attribute = property?.GetCustomAttribute<XHeaderNameAttribute>(false);
+    var attribute = property?.GetCustomAttribute<XHeaderAttribute>(false);
     return attribute?.Name ?? propertyName;
   }
 
   public static string GetHeaderName(PropertyInfo propInfo, string propertyName) {
-    var attribute = propInfo?.GetCustomAttribute<XHeaderNameAttribute>(false);
+    var attribute = propInfo?.GetCustomAttribute<XHeaderAttribute>(false);
     return attribute?.Name ?? propertyName;
   }
 
 
   public static int GetHeaderIndex(PropertyInfo propInfo) {
-    var attribute = propInfo?.GetCustomAttribute<XHeaderIndexAttribute>(false);
+    var attribute = propInfo?.GetCustomAttribute<XHeaderAttribute>(false);
     return attribute?.Index ?? -1;
   }
 
   public static int GetHeaderIndex<T>(string propertyName) {
     var type = typeof(T);
     var property = type.GetProperty(propertyName);
-    var attribute = property?.GetCustomAttribute<XHeaderIndexAttribute>(false);
+    var attribute = property?.GetCustomAttribute<XHeaderAttribute>(false);
     return attribute?.Index ?? -1;
   }
 }

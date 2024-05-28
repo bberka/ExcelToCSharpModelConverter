@@ -33,9 +33,9 @@ internal class XFileStructureBuilder
   }
 
 
-  internal void ExportJson() {
+  internal void ExportJson(string outputDir) {
     var json = XSerializer.SerializeJson(_xStructure);
-    var dir = Path.Combine("Output_FileModels_Json");
+    var dir = Path.Combine(outputDir,"Json");
     if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
     var path = Path.Combine(dir, $"{_xStructure.FileName}.json");
     if (File.Exists(path)) File.Delete(path);
@@ -43,8 +43,8 @@ internal class XFileStructureBuilder
   }
 
 
-  internal void ExportModels() {
-    var dir = Path.Combine("Output_FileModels");
+  internal void ExportModels(string outputDir) {
+    var dir = Path.Combine(outputDir,"FileModels");
     if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
     var fixedXFileName = _xStructure.FileName.FixXName();
     var sb = new StringBuilder();

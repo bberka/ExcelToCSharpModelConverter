@@ -27,6 +27,7 @@ public sealed class XSharpOptions
   public IXValidator XValidator { get; set; } = new XDefaultValidator();
 
   public MapHeadersBehaviourType MapHeadersBehaviour { get; set; } = MapHeadersBehaviourType.Index;
+
   // public XHeader? XHeader { get; set; } 
   // public XCell? XCell { get; set; } 
 

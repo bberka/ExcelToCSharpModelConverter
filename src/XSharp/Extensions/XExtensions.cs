@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace XSharp.Extensions;
 
 public static class XExtensions
@@ -25,7 +27,7 @@ public static class XExtensions
         if (char.IsDigit(ch))
           sb.Append('_');
         if (char.IsLower(ch))
-          ch = char.ToUpper(ch);
+          ch = char.ToUpper(ch, CultureInfo.InvariantCulture);
       }
 
       sb.Append(ch);

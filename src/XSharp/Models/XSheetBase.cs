@@ -1,3 +1,6 @@
 ﻿namespace XSharp.Models;
 
-public abstract class XSheetBase { }
+public abstract class XSheetBase
+{
+  
+}

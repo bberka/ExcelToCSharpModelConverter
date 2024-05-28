@@ -8,6 +8,7 @@
 /src/ExcelToCSharpModelConverter.Shared/obj/
 /src/ExcelToCSharpModelConverter.Test/bin/
 /src/ExcelToCSharpModelConverter.Test/obj/
+/src/XSharp.Test
 */**/bin/
 */**/obj/
 */**/bin/Debug

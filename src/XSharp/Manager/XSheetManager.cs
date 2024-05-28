@@ -119,7 +119,7 @@ public sealed class XSheetManager : IDisposable
           var cell = worksheet.Cells[row, col];
           var value = cell.Value;
           if (value is null) continue;
-          if (validator?.IsIgnoreCell(value) == true) continue;
+          if (validator?.IsIgnoreCell(col, row, value) == true) continue;
           value = validator?.GetValidCellValue(value) ?? value;
           var currentHeader = headers.FirstOrDefault(x => x.Index == col - 1);
           if (currentHeader is null) continue;
@@ -203,7 +203,7 @@ public sealed class XSheetManager : IDisposable
         try {
           var value = cell.Value;
           if (value is null) continue;
-          if (validator?.IsIgnoreCell(value) == true) continue;
+          if (validator?.IsIgnoreCell(cell.RowIndex, cell.ColumnIndex, value) == true) continue;
           value = validator?.GetValidCellValue(value) ?? value;
           var currentHeader = headers.FirstOrDefault(x => x.Index == cell.ColumnIndex - 1);
           if (currentHeader is null) continue;

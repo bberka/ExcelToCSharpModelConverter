@@ -10,7 +10,7 @@ public interface IXValidator
   public bool IsIgnoreSheetByHeaders(List<XHeader> headers);
   public bool IsIgnoreHeader(XHeader header);
   public bool IsIgnoreFileByPath(string filePath);
-  public bool IsIgnoreCell(object? value);
+  public bool IsIgnoreCell(int rowIndex, int colIndex, object? cellValue);
   public string GetValidSheetName(string name);
   public object? GetValidCellValue(object? value);
 }

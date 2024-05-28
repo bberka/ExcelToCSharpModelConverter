@@ -1,10 +1,10 @@
-﻿namespace XSharp.Attributes;
-
-public class XHeaderIndexAttribute : Attribute
-{
-  public XHeaderIndexAttribute(int index) {
-    Index = index;
-  }
-
-  public int Index { get; set; }
-}
+﻿// namespace XSharp.Attributes;
+//
+// public class XHeaderIndexAttribute : Attribute
+// {
+//   public XHeaderIndexAttribute(int index) {
+//     Index = index;
+//   }
+//
+//   public int Index { get; set; }
+// }

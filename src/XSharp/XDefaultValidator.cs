@@ -29,7 +29,7 @@ public class XDefaultValidator : IXValidator
     return false;
   }
 
-  public bool IsIgnoreCell(object? value) {
+  public bool IsIgnoreCell(int rowIndex, int colIndex, object? cellValue) {
     return false;
   }
 
@@ -41,7 +41,4 @@ public class XDefaultValidator : IXValidator
     return value;
   }
 
-  public Type GetHeaderType(XHeader header, Type defaultType) {
-    return defaultType;
-  }
 }
